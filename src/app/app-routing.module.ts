@@ -2,10 +2,21 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path:'',// 'popup',
+    pathMatch: 'full',
+    loadChildren: () => import('./modules/popup/popup.module').then(m => m.PopupModule)
+  },
+  // {
+  //   path: 'options',
+  //   pathMatch: 'full',
+  //   loadChildren: () => import('./modules/options/options.module').then(m => m.OptionsModule)
+  // }
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Ntk-Cms-Web-Qwp-Angular"
+    }
+  },
+  "defaultProject": "Ntk-Cms-Web-Qwp-Angular",
+  "cli": {
+    "analytics": "231e323e-3c90-43a4-a328-d9da106e3007"
+  }
 }
