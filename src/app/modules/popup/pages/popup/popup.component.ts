@@ -1,4 +1,4 @@
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
   AfterViewInit,
   ChangeDetectorRef,
@@ -7,22 +7,22 @@ import {
   Inject,
   OnInit,
   ViewChild,
-} from "@angular/core";
-import { bindCallback, Subscription } from "rxjs";
-import { catchError, map, retry, tap } from "rxjs/operators";
-import { CmsService } from "src/app/cmsService/cms.service";
-import { CaptchaModel } from "src/app/models/CaptchaModel";
-import { ComponentOptionModel } from "src/app/models/componentOptionModel";
-import { LinkManagementTargetShortLinkGetDtoModel } from "src/app/models/LinkManagement/linkManagementTargetShortLinkGetDtoModel";
-import { LinkManagementTargetShortLinkGetResponceModel } from "src/app/models/LinkManagement/linkManagementTargetShortLinkGetResponceModel";
-import { LinkManagementTargetShortLinkSetDtoModel } from "src/app/models/LinkManagement/linkManagementTargetShortLinkSetDtoModel";
-import { LinkManagementTargetShortLinkSetResponceModel } from "src/app/models/LinkManagement/linkManagementTargetShortLinkSetResponceModel";
+} from '@angular/core';
+import { bindCallback, interval, Subscription } from 'rxjs';
+import { catchError, map, retry, tap } from 'rxjs/operators';
+import { CmsService } from 'src/app/cmsService/cms.service';
+import { CaptchaModel } from 'src/app/models/CaptchaModel';
+import { ComponentOptionModel } from 'src/app/models/componentOptionModel';
+import { LinkManagementTargetShortLinkGetDtoModel } from 'src/app/models/LinkManagement/linkManagementTargetShortLinkGetDtoModel';
+import { LinkManagementTargetShortLinkGetResponceModel } from 'src/app/models/LinkManagement/linkManagementTargetShortLinkGetResponceModel';
+import { LinkManagementTargetShortLinkSetDtoModel } from 'src/app/models/LinkManagement/linkManagementTargetShortLinkSetDtoModel';
+import { LinkManagementTargetShortLinkSetResponceModel } from 'src/app/models/LinkManagement/linkManagementTargetShortLinkSetResponceModel';
 //import { TAB, TAB_ID } from "../../../../providers/tab-id.provider";
 
 @Component({
-  selector: "app-popup",
-  templateUrl: "popup.component.html",
-  styleUrls: ["popup.component.scss"],
+  selector: 'app-popup',
+  templateUrl: 'popup.component.html',
+  styleUrls: ['popup.component.scss'],
 })
 export class PopupComponent implements OnInit {
   message: string;
@@ -36,6 +36,8 @@ export class PopupComponent implements OnInit {
     private http: HttpClient,
     private cmsService: CmsService
   ) {}
+  //emit value in sequence every 10 second
+  source = interval(1000 * 60 * 5);
 
   submitted = false;
   subManager = new Subscription();
@@ -50,8 +52,8 @@ export class PopupComponent implements OnInit {
   fileToUpload: File = null;
   selectedUserTab = 1;
 
-  uploadedfileName: string = "";
-  uploadedfileKey: string = "";
+  uploadedfileName: string = '';
+  uploadedfileKey: string = '';
   tabs = [
     {
       name:
@@ -85,25 +87,28 @@ export class PopupComponent implements OnInit {
     this.optionsUploadFile.actions = {
       onActionSelect: (model) => this.onActionSelectFile(model),
     };
+    this.subManager = this.source.subscribe((val) => this.onCaptchaOrder());
 
     //if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
   }
+  ngOnDestroy() {
+    this.subManager.unsubscribe();
+  }
   onActionSelectFile(model: any) {
-    console.log("model", model);
+    console.log('model', model);
 
     if (model && model.fileKey) {
       this.modelTargetSetDto.UploadFileKey = model.fileKey;
       this.uploadedfileName = model.fileName;
       if (this.uploadedfileKey.length > 0)
-        this.uploadedfileKey = this.uploadedfileKey + ",";
+        this.uploadedfileKey = this.uploadedfileKey + ',';
       this.uploadedfileKey = this.uploadedfileKey + model.fileKey;
     }
   }
 
-
   onCaptchaOrder() {
-    this.modelTargetSetDto.CaptchaText = "";
-    this.modelTargetGetDto.CaptchaText = "";
+    this.modelTargetSetDto.CaptchaText = '';
+    this.modelTargetGetDto.CaptchaText = '';
     this.subManager.add(
       this.cmsService.ServiceCaptcha().subscribe(
         (next) => {
@@ -111,8 +116,8 @@ export class PopupComponent implements OnInit {
           this.modelTargetSetDto.CaptchaKey = this.captchaModel.Key;
         },
         (error) => {
-          this.message = "خطا در دریافت عکس کپچا";
-          this.modelTargetSetDto.CaptchaKey = "";
+          this.message = 'خطا در دریافت عکس کپچا';
+          this.modelTargetSetDto.CaptchaKey = '';
           this.captchaModel = new CaptchaModel();
         }
       )
@@ -125,18 +130,18 @@ export class PopupComponent implements OnInit {
     this.modelTargetSetResponceSetDescription = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
     this.modelTargetGetDto.CaptchaKey = this.captchaModel.Key;
-    var res = this.modelTargetGetDto.Key.split("@");
+    var res = this.modelTargetGetDto.Key.split('@');
     if (res.length < 2) {
-      this.messageShortLinkGet = "Key Is Worng.";
+      this.messageShortLinkGet = 'Key Is Worng.';
       return;
     }
-    this.messageShortLinkGet = "Runing ...";
+    this.messageShortLinkGet = 'Runing ...';
 
     this.subManager.add(
       this.cmsService.ServiceShortLinkGet(this.modelTargetGetDto).subscribe(
         (next) => {
           if (next.IsSuccess) {
-            this.messageShortLinkGet = "Is Success";
+            this.messageShortLinkGet = 'Is Success';
             this.modelTargetGetResponce = next.Item;
           } else {
             this.messageShortLinkGet = next.ErrorMessage;
@@ -144,7 +149,7 @@ export class PopupComponent implements OnInit {
           this.onCaptchaOrder();
         },
         (error) => {
-          this.messageShortLinkGet = "Error.";
+          this.messageShortLinkGet = 'Error.';
 
           this.onCaptchaOrder();
         }
@@ -152,7 +157,7 @@ export class PopupComponent implements OnInit {
     );
   }
   onSubmitSetLink() {
-    this.messageShortLinkSetLink = "Runing ...";
+    this.messageShortLinkSetLink = 'Runing ...';
 
     this.submitted = true;
     this.modelTargetSetResponceSetLink = new LinkManagementTargetShortLinkSetResponceModel();
@@ -164,7 +169,7 @@ export class PopupComponent implements OnInit {
       this.cmsService.ServiceShortLinkSet(this.modelTargetSetDto).subscribe(
         (next) => {
           if (next.IsSuccess) {
-            this.messageShortLinkSetLink = "Is Success";
+            this.messageShortLinkSetLink = 'Is Success';
             this.modelTargetSetResponceSetLink = next.Item;
           } else {
             this.messageShortLinkSetLink = next.ErrorMessage;
@@ -172,27 +177,27 @@ export class PopupComponent implements OnInit {
           this.onCaptchaOrder();
         },
         (error) => {
-          this.messageShortLinkSetLink = "Error ...";
+          this.messageShortLinkSetLink = 'Error ...';
           this.onCaptchaOrder();
         }
       )
     );
   }
   onSubmitSetDescription() {
-    this.messageShortLinkSetDescription = "Runing ...";
+    this.messageShortLinkSetDescription = 'Runing ...';
 
     this.submitted = true;
     this.modelTargetSetResponceSetLink = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetSetResponceSetFile = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetSetResponceSetDescription = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
-    this.modelTargetSetDto.UrlAddress = "";
-    this.modelTargetSetDto.UploadFileKey = "";
+    this.modelTargetSetDto.UrlAddress = '';
+    this.modelTargetSetDto.UploadFileKey = '';
     this.subManager.add(
       this.cmsService.ServiceShortLinkSet(this.modelTargetSetDto).subscribe(
         (next) => {
           if (next.IsSuccess) {
-            this.messageShortLinkSetDescription = "Is Success";
+            this.messageShortLinkSetDescription = 'Is Success';
             this.modelTargetSetResponceSetDescription = next.Item;
           } else {
             this.messageShortLinkSetDescription = next.ErrorMessage;
@@ -200,26 +205,26 @@ export class PopupComponent implements OnInit {
           this.onCaptchaOrder();
         },
         (error) => {
-          this.messageShortLinkSetDescription = "Error";
+          this.messageShortLinkSetDescription = 'Error';
           this.onCaptchaOrder();
         }
       )
     );
   }
   onSubmitSetFile() {
-    this.messageShortLinkSetFile = "Runing ...";
+    this.messageShortLinkSetFile = 'Runing ...';
     this.submitted = true;
     this.modelTargetSetResponceSetLink = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetSetResponceSetFile = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetSetResponceSetDescription = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
-    this.modelTargetSetDto.UrlAddress = "";
-    this.modelTargetSetDto.Description = "";
+    this.modelTargetSetDto.UrlAddress = '';
+    this.modelTargetSetDto.Description = '';
     this.subManager.add(
       this.cmsService.ServiceShortLinkSet(this.modelTargetSetDto).subscribe(
         (next) => {
           if (next.IsSuccess) {
-            this.messageShortLinkSetFile = "Is Success";
+            this.messageShortLinkSetFile = 'Is Success';
             this.modelTargetSetResponceSetFile = next.Item;
           } else {
             this.messageShortLinkSetFile = next.ErrorMessage;
@@ -227,7 +232,7 @@ export class PopupComponent implements OnInit {
           this.onCaptchaOrder();
         },
         (error) => {
-          this.messageShortLinkSetFile = "Error";
+          this.messageShortLinkSetFile = 'Error';
           this.onCaptchaOrder();
         }
       )
@@ -236,7 +241,7 @@ export class PopupComponent implements OnInit {
 
   tabChange(selectedTab) {
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
-    this.modelTargetGetDto.Key="";
+    this.modelTargetGetDto.Key = '';
     this.selectedUserTab = selectedTab.key;
     for (let tab of this.tabs) {
       if (tab.key === selectedTab.key) {
@@ -249,22 +254,22 @@ export class PopupComponent implements OnInit {
   /* To copy Text from Textbox */
   copyInputMessage(inputElement) {
     inputElement.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
   }
 
   /* To copy any Text */
   copyText(val: string) {
-    let selBox = document.createElement("textarea");
-    selBox.style.position = "fixed";
-    selBox.style.left = "0";
-    selBox.style.top = "0";
-    selBox.style.opacity = "0";
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
     selBox.value = val;
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
-    document.execCommand("copy");
+    document.execCommand('copy');
     document.body.removeChild(selBox);
   }
 }
