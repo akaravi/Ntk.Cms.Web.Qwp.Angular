@@ -12,7 +12,7 @@ import { Subscription } from "rxjs";
 import { ComponentOptionModel } from 'src/app/models/componentOptionModel';
 import { environment } from 'src/environments/environment';
 
-const URL = environment.configApiServerPath+"/FileContent/Upload/";
+const URL = environment.configApiServerPath+"FileContent/Upload/";
 //const URL = "http://localhost:2390/api/v1/FileContent/Upload/";
 @Component({
   selector: "app-upload-file",
