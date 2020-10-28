@@ -5,38 +5,42 @@ import {
   Component,
   Directive,
   Inject,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { bindCallback, interval, Subscription } from 'rxjs';
-import { catchError, map, retry, tap } from 'rxjs/operators';
-import { CmsService } from 'src/app/cmsService/cms.service';
-import { CaptchaModel } from 'src/app/models/CaptchaModel';
 import { ComponentOptionModel } from 'src/app/models/componentOptionModel';
-import { LinkManagementTargetShortLinkGetDtoModel } from 'src/app/models/LinkManagement/linkManagementTargetShortLinkGetDtoModel';
-import { LinkManagementTargetShortLinkGetResponceModel } from 'src/app/models/LinkManagement/linkManagementTargetShortLinkGetResponceModel';
-import { LinkManagementTargetShortLinkSetDtoModel } from 'src/app/models/LinkManagement/linkManagementTargetShortLinkSetDtoModel';
-import { LinkManagementTargetShortLinkSetResponceModel } from 'src/app/models/LinkManagement/linkManagementTargetShortLinkSetResponceModel';
-//import { TAB, TAB_ID } from "../../../../providers/tab-id.provider";
+// import { TAB, TAB_ID } from "../../../../providers/tab-id.provider";
+import {
+  CaptchaModel,
+  CoreAuthService,
+  LinkManagementTargetShortLinkGetDtoModel,
+  LinkManagementTargetShortLinkGetResponceModel,
+  LinkManagementTargetShortLinkSetDtoModel,
+  LinkManagementTargetShortLinkSetResponceModel,
+} from 'ntk-cms-api';
+import { LinkManagementTargetService } from 'ntk-cms-api/dist/cmsService/linkManagement/linkManagementTarget.service';
 
 @Component({
   selector: 'app-popup',
   templateUrl: 'popup.component.html',
   styleUrls: ['popup.component.scss'],
 })
-export class PopupComponent implements OnInit {
+export class PopupComponent implements OnInit, OnDestroy {
   message: string;
   messageShortLinkGet: string;
   messageShortLinkSetLink: string;
   messageShortLinkSetFile: string;
   messageShortLinkSetDescription: string;
   constructor(
-    //@Inject(TAB) readonly tab: any,
-    //@Inject(TAB_ID) readonly tabId: number,
+    // @Inject(TAB) readonly tab: any,
+    // @Inject(TAB_ID) readonly tabId: number,
     private http: HttpClient,
-    private cmsService: CmsService
+    private coreAuthService: CoreAuthService,
+    private linkManagementTargetService: LinkManagementTargetService
   ) {}
-  //emit value in sequence every 10 second
+  // emit value in sequence every 10 second
   source = interval(1000 * 60 * 5);
 
   submitted = false;
@@ -52,8 +56,8 @@ export class PopupComponent implements OnInit {
   fileToUpload: File = null;
   selectedUserTab = 1;
 
-  uploadedfileName: string = '';
-  uploadedfileKey: string = '';
+  uploadedfileName = '';
+  uploadedfileKey = '';
   tabs = [
     {
       name:
@@ -89,7 +93,7 @@ export class PopupComponent implements OnInit {
     };
     this.subManager = this.source.subscribe((val) => this.onCaptchaOrder());
 
-    //if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
+    // if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
   }
   ngOnDestroy() {
     this.subManager.unsubscribe();
@@ -100,8 +104,9 @@ export class PopupComponent implements OnInit {
     if (model && model.fileKey) {
       this.modelTargetSetDto.UploadFileKey = model.fileKey;
       this.uploadedfileName = model.fileName;
-      if (this.uploadedfileKey.length > 0)
+      if (this.uploadedfileKey.length > 0) {
         this.uploadedfileKey = this.uploadedfileKey + ',';
+      }
       this.uploadedfileKey = this.uploadedfileKey + model.fileKey;
     }
   }
@@ -110,7 +115,7 @@ export class PopupComponent implements OnInit {
     this.modelTargetSetDto.CaptchaText = '';
     this.modelTargetGetDto.CaptchaText = '';
     this.subManager.add(
-      this.cmsService.ServiceCaptcha().subscribe(
+      this.coreAuthService.ServiceCaptcha().subscribe(
         (next) => {
           this.captchaModel = next.Item;
           this.modelTargetSetDto.CaptchaKey = this.captchaModel.Key;
@@ -130,7 +135,7 @@ export class PopupComponent implements OnInit {
     this.modelTargetSetResponceSetDescription = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
     this.modelTargetGetDto.CaptchaKey = this.captchaModel.Key;
-    var res = this.modelTargetGetDto.Key.split('@');
+    const res = this.modelTargetGetDto.Key.split('@');
     if (res.length < 2) {
       this.messageShortLinkGet = 'Key Is Worng.';
       return;
@@ -138,22 +143,24 @@ export class PopupComponent implements OnInit {
     this.messageShortLinkGet = 'Runing ...';
 
     this.subManager.add(
-      this.cmsService.ServiceShortLinkGet(this.modelTargetGetDto).subscribe(
-        (next) => {
-          if (next.IsSuccess) {
-            this.messageShortLinkGet = 'Is Success';
-            this.modelTargetGetResponce = next.Item;
-          } else {
-            this.messageShortLinkGet = next.ErrorMessage;
-          }
-          this.onCaptchaOrder();
-        },
-        (error) => {
-          this.messageShortLinkGet = 'Error.';
+      this.linkManagementTargetService
+        .ServiceShortLinkGet(this.modelTargetGetDto)
+        .subscribe(
+          (next) => {
+            if (next.IsSuccess) {
+              this.messageShortLinkGet = 'Is Success';
+              this.modelTargetGetResponce = next.Item;
+            } else {
+              this.messageShortLinkGet = next.ErrorMessage;
+            }
+            this.onCaptchaOrder();
+          },
+          (error) => {
+            this.messageShortLinkGet = 'Error.';
 
-          this.onCaptchaOrder();
-        }
-      )
+            this.onCaptchaOrder();
+          }
+        )
     );
   }
   onSubmitSetLink() {
@@ -166,21 +173,23 @@ export class PopupComponent implements OnInit {
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
 
     this.subManager.add(
-      this.cmsService.ServiceShortLinkSet(this.modelTargetSetDto).subscribe(
-        (next) => {
-          if (next.IsSuccess) {
-            this.messageShortLinkSetLink = 'Is Success';
-            this.modelTargetSetResponceSetLink = next.Item;
-          } else {
-            this.messageShortLinkSetLink = next.ErrorMessage;
+      this.linkManagementTargetService
+        .ServiceShortLinkSet(this.modelTargetSetDto)
+        .subscribe(
+          (next) => {
+            if (next.IsSuccess) {
+              this.messageShortLinkSetLink = 'Is Success';
+              this.modelTargetSetResponceSetLink = next.Item;
+            } else {
+              this.messageShortLinkSetLink = next.ErrorMessage;
+            }
+            this.onCaptchaOrder();
+          },
+          (error) => {
+            this.messageShortLinkSetLink = 'Error ...';
+            this.onCaptchaOrder();
           }
-          this.onCaptchaOrder();
-        },
-        (error) => {
-          this.messageShortLinkSetLink = 'Error ...';
-          this.onCaptchaOrder();
-        }
-      )
+        )
     );
   }
   onSubmitSetDescription() {
@@ -194,21 +203,23 @@ export class PopupComponent implements OnInit {
     this.modelTargetSetDto.UrlAddress = '';
     this.modelTargetSetDto.UploadFileKey = '';
     this.subManager.add(
-      this.cmsService.ServiceShortLinkSet(this.modelTargetSetDto).subscribe(
-        (next) => {
-          if (next.IsSuccess) {
-            this.messageShortLinkSetDescription = 'Is Success';
-            this.modelTargetSetResponceSetDescription = next.Item;
-          } else {
-            this.messageShortLinkSetDescription = next.ErrorMessage;
+      this.linkManagementTargetService
+        .ServiceShortLinkSet(this.modelTargetSetDto)
+        .subscribe(
+          (next) => {
+            if (next.IsSuccess) {
+              this.messageShortLinkSetDescription = 'Is Success';
+              this.modelTargetSetResponceSetDescription = next.Item;
+            } else {
+              this.messageShortLinkSetDescription = next.ErrorMessage;
+            }
+            this.onCaptchaOrder();
+          },
+          (error) => {
+            this.messageShortLinkSetDescription = 'Error';
+            this.onCaptchaOrder();
           }
-          this.onCaptchaOrder();
-        },
-        (error) => {
-          this.messageShortLinkSetDescription = 'Error';
-          this.onCaptchaOrder();
-        }
-      )
+        )
     );
   }
   onSubmitSetFile() {
@@ -221,21 +232,23 @@ export class PopupComponent implements OnInit {
     this.modelTargetSetDto.UrlAddress = '';
     this.modelTargetSetDto.Description = '';
     this.subManager.add(
-      this.cmsService.ServiceShortLinkSet(this.modelTargetSetDto).subscribe(
-        (next) => {
-          if (next.IsSuccess) {
-            this.messageShortLinkSetFile = 'Is Success';
-            this.modelTargetSetResponceSetFile = next.Item;
-          } else {
-            this.messageShortLinkSetFile = next.ErrorMessage;
+      this.linkManagementTargetService
+        .ServiceShortLinkSet(this.modelTargetSetDto)
+        .subscribe(
+          (next) => {
+            if (next.IsSuccess) {
+              this.messageShortLinkSetFile = 'Is Success';
+              this.modelTargetSetResponceSetFile = next.Item;
+            } else {
+              this.messageShortLinkSetFile = next.ErrorMessage;
+            }
+            this.onCaptchaOrder();
+          },
+          (error) => {
+            this.messageShortLinkSetFile = 'Error';
+            this.onCaptchaOrder();
           }
-          this.onCaptchaOrder();
-        },
-        (error) => {
-          this.messageShortLinkSetFile = 'Error';
-          this.onCaptchaOrder();
-        }
-      )
+        )
     );
   }
 
@@ -243,7 +256,7 @@ export class PopupComponent implements OnInit {
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
     this.modelTargetGetDto.Key = '';
     this.selectedUserTab = selectedTab.key;
-    for (let tab of this.tabs) {
+    for (const tab of this.tabs) {
       if (tab.key === selectedTab.key) {
         tab.active = true;
       } else {
@@ -260,7 +273,7 @@ export class PopupComponent implements OnInit {
 
   /* To copy any Text */
   copyText(val: string) {
-    let selBox = document.createElement('textarea');
+    const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
     selBox.style.top = '0';

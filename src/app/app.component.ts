@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -8,7 +8,7 @@ import { Router } from "@angular/router";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'qwp.ir';
   searchForm: FormGroup;
 
@@ -23,7 +23,7 @@ export class AppComponent {
   }
 
   onSearch() {
-    if (!this.searchForm.valid) return;
+    if (!this.searchForm.valid) { return; }
     this.router.navigate(['search'], { queryParams: {query: this.searchForm.get('search').value}});
   }
 }
