@@ -19,6 +19,7 @@ import {
   LinkManagementTargetShortLinkGetResponceModel,
   LinkManagementTargetShortLinkSetDtoModel,
   LinkManagementTargetShortLinkSetResponceModel,
+  TokenDeviceClientInfoDtoModel,
 } from 'ntk-cms-api';
 import { LinkManagementTargetService } from 'ntk-cms-api/dist/cmsService/linkManagement/linkManagementTarget.service';
 
@@ -127,7 +128,24 @@ export class PopupComponent implements OnInit, OnDestroy {
         }
       )
     );
+    //this.onCaptchaOrder2();
   }
+  // onCaptchaOrder2() {
+  //   this.coreAuthService.baseUrl ='http://localhost:2390/api/v1/';
+  //   this.coreAuthService.s
+  //   let model = new TokenDeviceClientInfoDtoModel();
+  //   model.SecurityKey = '12345';
+  //   this.subManager.add(
+  //     this.coreAuthService.ServiceGetTokenDevice(model).subscribe(
+  //       (next) => {},
+  //       (error) => {
+  //         this.message = 'خطا در دریافت عکس کپچا';
+  //         this.modelTargetSetDto.CaptchaKey = '';
+  //         this.captchaModel = new CaptchaModel();
+  //       }
+  //     )
+  //   );
+  // }
   onSubmitGet() {
     this.submitted = true;
     this.modelTargetSetResponceSetLink = new LinkManagementTargetShortLinkSetResponceModel();
