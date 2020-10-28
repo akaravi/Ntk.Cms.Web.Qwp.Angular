@@ -141,7 +141,7 @@ export class PopupComponent implements OnInit, OnDestroy {
       return;
     }
     this.messageShortLinkGet = 'Runing ...';
-
+    // this.linkManagementTargetService.baseUrl ='http://localhost:2390/api/v1/';
     this.subManager.add(
       this.linkManagementTargetService
         .ServiceShortLinkGet(this.modelTargetGetDto)
