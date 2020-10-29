@@ -1,22 +1,29 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
+import { CoreAboutUsComponent } from './pages/core/core-about-us/core-about-us.component';
+import { CoreContactUsComponent } from './pages/core/core-contact-us/core-contact-us.component';
+import { LinkManagementShortLinkComponent } from './pages/linkManagement/link-management-short-link/link-management-short-link.component';
 
 const routes: Routes = [
   {
-    path:'',// 'popup',
+    path: '',
     pathMatch: 'full',
-    loadChildren: () => import('./modules/popup/popup.module').then(m => m.PopupModule)
+    component: LinkManagementShortLinkComponent,
   },
-  // {
-  //   path: 'options',
-  //   pathMatch: 'full',
-  //   loadChildren: () => import('./modules/options/options.module').then(m => m.OptionsModule)
-  // }
+  {
+    path: 'aboutus',
+    // pathMatch: 'full',
+    component: CoreAboutUsComponent,
+  },
+  {
+    path: 'countactus',
+    // pathMatch: 'full',
+    component: CoreContactUsComponent,
+  },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -11,7 +11,7 @@
   <div class="col-xs-9" style="padding-left: 2px; padding-right: 2px">
     <div class="tab-content">
       <div
-        class="tab-pane active"
+        class="tab-pane "
         [ngClass]="{
           showTab: selectedUserTab == 1,
           hideTab: selectedUserTab != 1
@@ -250,7 +250,7 @@
       </div>
 
       <div
-        class="tab-pane active"
+        class="tab-pane "
         [ngClass]="{
           showTab: selectedUserTab == 2,
           hideTab: selectedUserTab != 2
@@ -416,7 +416,7 @@
       </div>
 
       <div
-        class="tab-pane active"
+        class="tab-pane "
         [ngClass]="{
           showTab: selectedUserTab == 3,
           hideTab: selectedUserTab != 3
@@ -439,9 +439,9 @@
                   "
                 >
                   <div *ngIf="uploadedfileKey.length == 0">
-                    <app-upload-file
+                    <app-file-upload
                       [options]="optionsUploadFile"
-                    ></app-upload-file>
+                    ></app-file-upload>
                   </div>
                   <div *ngIf="uploadedfileKey.length > 0">
                     ✅ Uploaded you file.
@@ -564,7 +564,7 @@
       </div>
 
       <div
-        class="tab-pane active"
+        class="tab-pane "
         [ngClass]="{
           showTab: selectedUserTab == 4,
           hideTab: selectedUserTab != 4
@@ -738,11 +738,33 @@
           </div>
         </div>
       </div>
+
+
+      <div
+        class="tab-pane "
+        [ngClass]="{
+          showTab: selectedUserTab == 5,
+          hideTab: selectedUserTab != 5
+        }"
+      >
+        <!-- stripe account tab -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <i style="color: deepskyblue">Key </i>
+            <b style="color: deeppink">History</b>
+          </div>
+          <div class="panel-body">
+            <div *ngFor="let item of modelHistoryList" (click)="onClickHistory(item)">
+              {{ item }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- 
+<!--
 
 
 <button (click)="onClick()">Click me to test</button>

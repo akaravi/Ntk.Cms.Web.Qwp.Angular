@@ -5,10 +5,9 @@
 export const environment = {
   production: false,
   configApiServerPath: 'https://apicms.ir/api/v1/',
-  //configApiServerPath: 'http://localhost:2390/api/v1/',
-  configApiRetry:1
+  // configApiServerPath: 'http://localhost:2390/api/v1/',
+  configApiRetry: 1,
 };
-
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

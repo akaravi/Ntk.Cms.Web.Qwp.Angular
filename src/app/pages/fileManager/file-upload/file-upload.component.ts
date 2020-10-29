@@ -10,18 +10,18 @@ import {
 } from '@angular/core';
 import { FlowDirective, Transfer } from '@flowjs/ngx-flow';
 import { Subscription } from 'rxjs';
-import { ComponentOptionModel } from 'src/app/models/componentOptionModel';
+import { ComponentOptionModel } from 'src/app/core/cmsModels/componentOptionModel';
+
 import { environment } from 'src/environments/environment';
 
 const URL = environment.configApiServerPath + 'FileContent/Upload/';
-// const URL = "http://localhost:2390/api/v1/FileContent/Upload/";
 @Component({
-  selector: 'app-upload-file',
-  templateUrl: './upload-file.component.html',
-  styleUrls: ['./upload-file.component.scss'],
+  selector: 'app-file-upload',
+  templateUrl: './file-upload.component.html',
+  styleUrls: ['./file-upload.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class UploadFileComponent implements AfterViewInit, OnInit, OnDestroy {
+export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private cd: ChangeDetectorRef) {}
   @Input()
   set options(model: ComponentOptionModel) {
@@ -37,9 +37,10 @@ export class UploadFileComponent implements AfterViewInit, OnInit, OnDestroy {
   autoUploadSubscription: Subscription;
   flowOption: flowjs.FlowOptions;
   uploadViewImage = false;
-  ngOnInit() {
+  ngOnInit(): void {
     this.flowOption = {
       target: URL,
+      // tslint:disable-next-line: typedef
       query(flowFile, flowChunk) {
         if (flowFile.myparams) {
           return flowFile.myparams;
@@ -58,9 +59,8 @@ export class UploadFileComponent implements AfterViewInit, OnInit, OnDestroy {
     };
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
     this.autoUploadSubscription = this.flow.events$.subscribe((event) => {
-      console.log('event', event);
       switch (event.type) {
         case 'filesSubmitted':
           return this.flow.upload();
@@ -71,26 +71,28 @@ export class UploadFileComponent implements AfterViewInit, OnInit, OnDestroy {
       }
     });
   }
-  fileSuccess(event: any) {
+  fileSuccess(event: any): void {
     if (event && event.event) {
-
-      if (this.dateOptionInput && this.dateOptionInput.actions && this.dateOptionInput.actions.onActionSelect) {
+      if (
+        this.dateOptionInput &&
+        this.dateOptionInput.actions &&
+        this.dateOptionInput.actions.onActionSelect
+      ) {
         const model = {
           fileName: event.event[0].name,
-          fileKey: event.event[1]
+          fileKey: event.event[1],
         };
 
-
         this.dateOptionInput.actions.onActionSelect(model);
-        this.dateOptionInput.dataModel = {Select: model};
+        this.dateOptionInput.data = { Select: model };
       }
     }
   }
-  trackTransfer(transfer: Transfer) {
+  trackTransfer(transfer: Transfer): string {
     return transfer.id;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.autoUploadSubscription.unsubscribe();
   }
 }

@@ -1,9 +1,7 @@
 @import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
-body {
-  margin: 0;
-  font-family: sans-serif;
-}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 h1, h2 {
   text-align: center;

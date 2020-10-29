@@ -10,7 +10,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { bindCallback, interval, Subscription } from 'rxjs';
-import { ComponentOptionModel } from 'src/app/models/componentOptionModel';
+
 // import { TAB, TAB_ID } from "../../../../providers/tab-id.provider";
 import {
   CaptchaModel,
@@ -22,18 +22,20 @@ import {
   TokenDeviceClientInfoDtoModel,
 } from 'ntk-cms-api';
 import { LinkManagementTargetService } from 'ntk-cms-api/dist/cmsService/linkManagement/linkManagementTarget.service';
+import { ComponentOptionModel } from '../../../core/cmsModels/componentOptionModel';
 
 @Component({
-  selector: 'app-popup',
-  templateUrl: 'popup.component.html',
-  styleUrls: ['popup.component.scss'],
+  selector: 'app-link-management-short-link',
+  templateUrl: './link-management-short-link.component.html',
+  styleUrls: ['./link-management-short-link.component.css'],
 })
-export class PopupComponent implements OnInit, OnDestroy {
+export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
   message: string;
   messageShortLinkGet: string;
   messageShortLinkSetLink: string;
   messageShortLinkSetFile: string;
   messageShortLinkSetDescription: string;
+  modelHistoryList: string[];
   constructor(
     // @Inject(TAB) readonly tab: any,
     // @Inject(TAB_ID) readonly tabId: number,
@@ -84,22 +86,28 @@ export class PopupComponent implements OnInit, OnDestroy {
       key: 4,
       active: false,
     },
+    {
+      name:
+        '<b style="color: deepskyblue">Key</b> <i style="color: deeppink">History</i>',
+      key: 5,
+      active: false,
+    },
   ];
   optionsUploadFile: ComponentOptionModel = new ComponentOptionModel();
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.onCaptchaOrder();
     this.optionsUploadFile.actions = {
       onActionSelect: (model) => this.onActionSelectFile(model),
     };
     this.subManager = this.source.subscribe((val) => this.onCaptchaOrder());
-
+    this.getHistory();
     // if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
   }
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.subManager.unsubscribe();
   }
-  onActionSelectFile(model: any) {
+  onActionSelectFile(model: any): void {
     console.log('model', model);
 
     if (model && model.fileKey) {
@@ -112,7 +120,7 @@ export class PopupComponent implements OnInit, OnDestroy {
     }
   }
 
-  onCaptchaOrder() {
+  onCaptchaOrder(): void {
     this.modelTargetSetDto.CaptchaText = '';
     this.modelTargetGetDto.CaptchaText = '';
     this.subManager.add(
@@ -128,7 +136,7 @@ export class PopupComponent implements OnInit, OnDestroy {
         }
       )
     );
-    //this.onCaptchaOrder2();
+    // this.onCaptchaOrder2();
   }
   // onCaptchaOrder2() {
   //   this.coreAuthService.baseUrl ='http://localhost:2390/api/v1/';
@@ -146,7 +154,7 @@ export class PopupComponent implements OnInit, OnDestroy {
   //     )
   //   );
   // }
-  onSubmitGet() {
+  onSubmitGet(): void {
     this.submitted = true;
     this.modelTargetSetResponceSetLink = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetSetResponceSetFile = new LinkManagementTargetShortLinkSetResponceModel();
@@ -168,6 +176,7 @@ export class PopupComponent implements OnInit, OnDestroy {
             if (next.IsSuccess) {
               this.messageShortLinkGet = 'Is Success';
               this.modelTargetGetResponce = next.Item;
+              this.addHistory(next.Item.Key);
             } else {
               this.messageShortLinkGet = next.ErrorMessage;
             }
@@ -181,7 +190,7 @@ export class PopupComponent implements OnInit, OnDestroy {
         )
     );
   }
-  onSubmitSetLink() {
+  onSubmitSetLink(): void {
     this.messageShortLinkSetLink = 'Runing ...';
 
     this.submitted = true;
@@ -198,6 +207,7 @@ export class PopupComponent implements OnInit, OnDestroy {
             if (next.IsSuccess) {
               this.messageShortLinkSetLink = 'Is Success';
               this.modelTargetSetResponceSetLink = next.Item;
+              this.addHistory(next.Item.Key);
             } else {
               this.messageShortLinkSetLink = next.ErrorMessage;
             }
@@ -210,7 +220,7 @@ export class PopupComponent implements OnInit, OnDestroy {
         )
     );
   }
-  onSubmitSetDescription() {
+  onSubmitSetDescription(): void {
     this.messageShortLinkSetDescription = 'Runing ...';
 
     this.submitted = true;
@@ -228,6 +238,7 @@ export class PopupComponent implements OnInit, OnDestroy {
             if (next.IsSuccess) {
               this.messageShortLinkSetDescription = 'Is Success';
               this.modelTargetSetResponceSetDescription = next.Item;
+              this.addHistory(next.Item.Key);
             } else {
               this.messageShortLinkSetDescription = next.ErrorMessage;
             }
@@ -240,7 +251,7 @@ export class PopupComponent implements OnInit, OnDestroy {
         )
     );
   }
-  onSubmitSetFile() {
+  onSubmitSetFile(): void {
     this.messageShortLinkSetFile = 'Runing ...';
     this.submitted = true;
     this.modelTargetSetResponceSetLink = new LinkManagementTargetShortLinkSetResponceModel();
@@ -257,6 +268,7 @@ export class PopupComponent implements OnInit, OnDestroy {
             if (next.IsSuccess) {
               this.messageShortLinkSetFile = 'Is Success';
               this.modelTargetSetResponceSetFile = next.Item;
+              this.addHistory(next.Item.Key);
             } else {
               this.messageShortLinkSetFile = next.ErrorMessage;
             }
@@ -270,7 +282,7 @@ export class PopupComponent implements OnInit, OnDestroy {
     );
   }
 
-  tabChange(selectedTab) {
+  tabChange(selectedTab): void {
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
     this.modelTargetGetDto.Key = '';
     this.selectedUserTab = selectedTab.key;
@@ -283,14 +295,14 @@ export class PopupComponent implements OnInit, OnDestroy {
     }
   }
   /* To copy Text from Textbox */
-  copyInputMessage(inputElement) {
+  copyInputMessage(inputElement): void {
     inputElement.select();
     document.execCommand('copy');
     inputElement.setSelectionRange(0, 0);
   }
 
   /* To copy any Text */
-  copyText(val: string) {
+  copyText(val: string): void {
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -302,5 +314,33 @@ export class PopupComponent implements OnInit, OnDestroy {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+  }
+  onClickHistory(item: string): void {
+    if (item && item.length > 0) {
+      this.tabChange({ key: 1 });
+      this.modelTargetGetDto.Key = item;
+    }
+  }
+  addHistory(item: string): void {
+    let history = localStorage.getItem('history');
+    // debugger;
+    if (history && history.length > 0) {
+      if (history.indexOf(item) < 0) {
+        history = history + ',' + item;
+      }
+    } else {
+      history = item;
+    }
+    localStorage.setItem('history', history);
+    this.modelHistoryList = history.split(',');
+  }
+  getHistory(): void {
+    const history = localStorage.getItem('history');
+    if (history && history.length > 0) {
+      this.modelHistoryList = history.split(',');
+    } else {
+      localStorage.setItem('history', '');
+    }
+    this.modelHistoryList = history.split(',');
   }
 }

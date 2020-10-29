@@ -45,7 +45,7 @@
                 cancel</button> -->
         </div>
     </div>
-    <button type="button" (click)="flow.upload()" [disabled]="!(flow.somethingToUpload$ | async)" class="btn btn-success btn-xs">
+    <button type="button" (click)="flow.upload()" [disabled]="!(flow.somethingToUpload$ | async).valueOf()" class="btn btn-success btn-xs">
         <span _ngcontent-mnn-c53="" class="glyphicon glyphicon-upload"></span>
         Start upload</button>
     <button type="button" (click)="flow.cancel()" [disabled]="!(flow.transfers$ | async).transfers.length" class="btn btn-warning btn-xs">
