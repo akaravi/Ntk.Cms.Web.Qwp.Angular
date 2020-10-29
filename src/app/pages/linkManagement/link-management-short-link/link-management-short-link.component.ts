@@ -9,7 +9,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { bindCallback, interval, Subscription } from 'rxjs';
+import { bindCallback, interval, Subscription, Observable } from 'rxjs';
 
 // import { TAB, TAB_ID } from "../../../../providers/tab-id.provider";
 import {
@@ -20,9 +20,11 @@ import {
   LinkManagementTargetShortLinkSetDtoModel,
   LinkManagementTargetShortLinkSetResponceModel,
   TokenDeviceClientInfoDtoModel,
+  TokenInfoModel,
 } from 'ntk-cms-api';
 import { LinkManagementTargetService } from 'ntk-cms-api/dist/cmsService/linkManagement/linkManagementTarget.service';
 import { ComponentOptionModel } from '../../../core/cmsModels/componentOptionModel';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-link-management-short-link',
@@ -41,7 +43,8 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     // @Inject(TAB_ID) readonly tabId: number,
     private http: HttpClient,
     private coreAuthService: CoreAuthService,
-    private linkManagementTargetService: LinkManagementTargetService
+    private linkManagementTargetService: LinkManagementTargetService,
+    private activatedRoute: ActivatedRoute
   ) {}
   // emit value in sequence every 10 second
   source = interval(1000 * 60 * 5);
@@ -94,15 +97,26 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     },
   ];
   optionsUploadFile: ComponentOptionModel = new ComponentOptionModel();
-
+  tokenInfoModel: TokenInfoModel;
   ngOnInit(): void {
-    this.onCaptchaOrder();
+
     this.optionsUploadFile.actions = {
       onActionSelect: (model) => this.onActionSelectFile(model),
     };
     this.subManager = this.source.subscribe((val) => this.onCaptchaOrder());
     this.getHistory();
     // if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
+
+    this.tokenInfoModel = this.activatedRoute?.snapshot?.data?.item?.Item as TokenInfoModel;
+    if (
+      this.tokenInfoModel &&
+      this.tokenInfoModel.Token &&
+      this.tokenInfoModel.Token.length > 0
+    ) {
+      this.coreAuthService.token = this.tokenInfoModel.Token;
+      this.linkManagementTargetService.token = this.tokenInfoModel.Token;
+    }
+    this.onCaptchaOrder();
   }
   ngOnDestroy(): void {
     this.subManager.unsubscribe();
@@ -123,6 +137,7 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
   onCaptchaOrder(): void {
     this.modelTargetSetDto.CaptchaText = '';
     this.modelTargetGetDto.CaptchaText = '';
+
     this.subManager.add(
       this.coreAuthService.ServiceCaptcha().subscribe(
         (next) => {
@@ -260,6 +275,7 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
     this.modelTargetSetDto.UrlAddress = '';
     this.modelTargetSetDto.Description = '';
+
     this.subManager.add(
       this.linkManagementTargetService
         .ServiceShortLinkSet(this.modelTargetSetDto)
