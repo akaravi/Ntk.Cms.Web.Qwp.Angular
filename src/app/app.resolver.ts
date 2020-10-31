@@ -9,6 +9,7 @@ import {
   TokenInfoModel,
 } from 'ntk-cms-api';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,8 @@ export class AppResolver
   constructor(private service: CoreAuthService) {}
 
   resolve(): Observable<ErrorExcptionResult<TokenInfoModel>> {
+    this.service.baseUrl = environment.configApiServerPath;
+
     const model: TokenDeviceClientInfoDtoModel = {
       SecurityKey: '123456789',
       ClientMACAddress: '',
