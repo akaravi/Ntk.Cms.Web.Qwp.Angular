@@ -5,6 +5,7 @@ import { CoreContactUsComponent } from './pages/core/core-contact-us/core-contac
 import { LinkManagementShortLinkComponent } from './pages/linkManagement/link-management-short-link/link-management-short-link.component';
 import { AppComponent } from './app.component';
 import { AppResolver } from './app.resolver';
+import { NewsContentListComponent } from './pages/news/news-content-list/news-content-list.component';
 
 const routes: Routes = [
 
@@ -24,6 +25,11 @@ const routes: Routes = [
     path: 'countactus',
     // pathMatch: 'full',
     component: CoreContactUsComponent,
+  },
+  {
+    path: 'news',
+    // pathMatch: 'full',
+    component: NewsContentListComponent,
   },
 ];
 

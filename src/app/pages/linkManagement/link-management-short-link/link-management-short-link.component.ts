@@ -25,6 +25,7 @@ import {
 import { LinkManagementTargetService } from 'ntk-cms-api/dist/cmsService/linkManagement/linkManagementTarget.service';
 import { ComponentOptionModel } from '../../../core/cmsModels/componentOptionModel';
 import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-link-management-short-link',
@@ -99,7 +100,6 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
   optionsUploadFile: ComponentOptionModel = new ComponentOptionModel();
   tokenInfoModel: TokenInfoModel;
   ngOnInit(): void {
-
     this.optionsUploadFile.actions = {
       onActionSelect: (model) => this.onActionSelectFile(model),
     };
@@ -107,14 +107,18 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     this.getHistory();
     // if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
 
-    this.tokenInfoModel = this.activatedRoute?.snapshot?.data?.item?.Item as TokenInfoModel;
+    this.coreAuthService.baseUrl = environment.configApiServerPath;
+    this.linkManagementTargetService.baseUrl = environment.configApiServerPath;
+
+    this.tokenInfoModel = this.activatedRoute?.snapshot?.data?.item
+      ?.Item as TokenInfoModel;
     if (
       this.tokenInfoModel &&
-      this.tokenInfoModel.Token &&
-      this.tokenInfoModel.Token.length > 0
+      this.tokenInfoModel.DeviceToken &&
+      this.tokenInfoModel.DeviceToken.length > 0
     ) {
-      this.coreAuthService.token = this.tokenInfoModel.Token;
-      this.linkManagementTargetService.token = this.tokenInfoModel.Token;
+      // this.coreAuthService.deviceToken = this.tokenInfoModel.DeviceToken;
+      // this.linkManagementTargetService.deviceToken = this.tokenInfoModel.DeviceToken;
     }
     this.onCaptchaOrder();
   }
@@ -351,12 +355,13 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     this.modelHistoryList = history.split(',');
   }
   getHistory(): void {
-    const history = localStorage.getItem('history');
+    let history = localStorage.getItem('history');
     if (history && history.length > 0) {
       this.modelHistoryList = history.split(',');
-    } else {
-      localStorage.setItem('history', '');
+      return;
     }
+    history = '';
+    localStorage.setItem('history', history);
     this.modelHistoryList = history.split(',');
   }
 }
