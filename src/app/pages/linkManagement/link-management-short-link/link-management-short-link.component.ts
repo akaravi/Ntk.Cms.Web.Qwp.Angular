@@ -113,9 +113,9 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     this.tokenInfoModel = this.activatedRoute?.snapshot?.data?.item
       ?.Item as TokenInfoModel;
     if (
-      this.tokenInfoModel &&
-      this.tokenInfoModel.DeviceToken &&
-      this.tokenInfoModel.DeviceToken.length > 0
+      this.tokenInfoModel
+      // this.tokenInfoModel.DeviceToken &&
+      // this.tokenInfoModel.DeviceToken.length > 0
     ) {
       // this.coreAuthService.deviceToken = this.tokenInfoModel.DeviceToken;
       // this.linkManagementTargetService.deviceToken = this.tokenInfoModel.DeviceToken;
