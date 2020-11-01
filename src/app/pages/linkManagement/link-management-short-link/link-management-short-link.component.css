@@ -109,9 +109,23 @@
   display: none !important;
 }
 .panel-body{
-  height: 400px;
+  height: 359px;
 }
 .input-ntk{
   margin-top: 3px;
   margin-bottom: 3px;
+}
+img{
+  margin-bottom: 12px;
+
+}
+.alert-danger{
+  padding: 5px !important;
+  margin-top: 4px !important;
+}
+.panel-default{
+  height: 439px;
+}
+.subLink:hover{
+  color: green !important;
 }
