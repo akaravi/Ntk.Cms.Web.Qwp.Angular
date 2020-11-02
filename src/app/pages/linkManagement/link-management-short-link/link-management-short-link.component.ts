@@ -107,19 +107,11 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     this.getHistory();
     // if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
 
-    this.coreAuthService.baseUrl = environment.configApiServerPath;
-    this.linkManagementTargetService.baseUrl = environment.configApiServerPath;
+    // this.coreAuthService.baseUrl = environment.cmsServerConfig.configApiServerPath;
+    // this.linkManagementTargetService.baseUrl = environment.cmsServerConfig.configApiServerPath;
 
     this.tokenInfoModel = this.activatedRoute?.snapshot?.data?.item
       ?.Item as TokenInfoModel;
-    if (
-      this.tokenInfoModel
-      // this.tokenInfoModel.DeviceToken &&
-      // this.tokenInfoModel.DeviceToken.length > 0
-    ) {
-      // this.coreAuthService.deviceToken = this.tokenInfoModel.DeviceToken;
-      // this.linkManagementTargetService.deviceToken = this.tokenInfoModel.DeviceToken;
-    }
     this.onCaptchaOrder();
   }
   ngOnDestroy(): void {

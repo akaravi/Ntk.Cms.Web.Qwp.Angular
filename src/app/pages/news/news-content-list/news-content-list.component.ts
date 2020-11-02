@@ -4,7 +4,6 @@ import {
   FilterModel,
   NewsContentService,
 } from 'ntk-cms-api';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-news-content-list',
@@ -22,7 +21,6 @@ export class NewsContentListComponent implements OnInit {
   }
   getContentList(): void {
     this.filterModelContent.AccessLoad = true;
-    this.newsContentService.baseUrl = environment.configApiServerPath;
     this.newsContentService
       .ServiceGetAll(this.filterModelContent)
       .subscribe((res) => {

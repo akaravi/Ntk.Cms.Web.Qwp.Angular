@@ -19,7 +19,7 @@ export class AppResolver
   constructor(private service: CoreAuthService) {}
 
   resolve(): Observable<ErrorExcptionResult<TokenInfoModel>> {
-    this.service.baseUrl = environment.configApiServerPath;
+    this.service.baseUrl = environment.cmsServerConfig.configApiServerPath;
 
     const model: TokenDeviceClientInfoDtoModel = {
       SecurityKey: '123456789',
