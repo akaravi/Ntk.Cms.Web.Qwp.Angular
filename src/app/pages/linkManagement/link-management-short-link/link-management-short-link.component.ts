@@ -15,6 +15,7 @@ import { bindCallback, interval, Subscription, Observable } from 'rxjs';
 import {
   CaptchaModel,
   CoreAuthService,
+  LinkManagementTargetService,
   LinkManagementTargetShortLinkGetDtoModel,
   LinkManagementTargetShortLinkGetResponceModel,
   LinkManagementTargetShortLinkSetDtoModel,
@@ -22,7 +23,7 @@ import {
   TokenDeviceClientInfoDtoModel,
   TokenInfoModel,
 } from 'ntk-cms-api';
-import { LinkManagementTargetService } from 'ntk-cms-api/dist/cmsService/linkManagement/linkManagementTarget.service';
+
 import { ComponentOptionModel } from '../../../core/cmsModels/componentOptionModel';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from 'src/environments/environment';
