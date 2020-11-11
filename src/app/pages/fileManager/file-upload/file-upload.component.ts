@@ -14,7 +14,7 @@ import { ComponentOptionModel } from 'src/app/core/cmsModels/componentOptionMode
 
 import { environment } from 'src/environments/environment';
 
-const URL = environment.cmsServerConfig.configApiServerPath + 'FileContent/Upload/';
+const URL = environment.cmsServerConfig.configRouteUploadFileContent ;
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',

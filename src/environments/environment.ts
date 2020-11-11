@@ -15,7 +15,7 @@ export const environment = {
     configRouteUploadFileContent: 'https://apicms.ir/api/v1/FileContent/upload/',
   },
   cmsTokenConfig : {
-    SecurityKey: '123456789',
+    SecurityKey: 'qwp123456',
     ClientMACAddress: '',
     OSType: EnumOperatingSystemType.Windows,
     DeviceType: EnumDeviceType.WebSite,

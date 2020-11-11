@@ -47,7 +47,7 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     private coreAuthService: CoreAuthService,
     private linkManagementTargetService: LinkManagementTargetService,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
   // emit value in sequence every 10 second
   source = interval(1000 * 60 * 5);
 
@@ -108,8 +108,6 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     this.getHistory();
     // if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
 
-    // this.coreAuthService.baseUrl = environment.cmsServerConfig.configApiServerPath;
-    // this.linkManagementTargetService.baseUrl = environment.cmsServerConfig.configApiServerPath;
 
     this.tokenInfoModel = this.activatedRoute?.snapshot?.data?.item
       ?.Item as TokenInfoModel;
@@ -140,6 +138,12 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
         (next) => {
           this.captchaModel = next.Item;
           this.modelTargetSetDto.CaptchaKey = this.captchaModel.Key;
+          const startDate = new Date();
+          const endDate = new Date(next.Item.Expire);
+          const seconds = (endDate.getTime() - startDate.getTime());
+          setTimeout(() => {
+            this.onCaptchaOrder();
+          }, seconds);
         },
         (error) => {
           this.message = 'خطا در دریافت عکس کپچا';
@@ -148,24 +152,8 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
         }
       )
     );
-    // this.onCaptchaOrder2();
   }
-  // onCaptchaOrder2() {
-  //   this.coreAuthService.baseUrl ='http://localhost:2390/api/v1/';
-  //   this.coreAuthService.s
-  //   let model = new TokenDeviceClientInfoDtoModel();
-  //   model.SecurityKey = '12345';
-  //   this.subManager.add(
-  //     this.coreAuthService.ServiceGetTokenDevice(model).subscribe(
-  //       (next) => {},
-  //       (error) => {
-  //         this.message = 'خطا در دریافت عکس کپچا';
-  //         this.modelTargetSetDto.CaptchaKey = '';
-  //         this.captchaModel = new CaptchaModel();
-  //       }
-  //     )
-  //   );
-  // }
+
   onSubmitGet(): void {
     this.submitted = true;
     this.modelTargetSetResponceSetLink = new LinkManagementTargetShortLinkSetResponceModel();
@@ -339,13 +327,17 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     // debugger;
     if (history && history.length > 0) {
       if (history.indexOf(item) < 0) {
-        history = history + ',' + item;
+        history = item + ',' + history;
       }
     } else {
       history = item;
     }
-    localStorage.setItem('history', history);
+
     this.modelHistoryList = history.split(',');
+    if (this.modelHistoryList.length > 10) {
+      this.modelHistoryList.length = 10;
+    }
+    localStorage.setItem('history', this.modelHistoryList.join(','));
   }
   getHistory(): void {
     let history = localStorage.getItem('history');

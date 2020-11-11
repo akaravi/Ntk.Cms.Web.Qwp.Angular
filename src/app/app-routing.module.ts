@@ -4,7 +4,6 @@ import { CoreAboutUsComponent } from './pages/core/core-about-us/core-about-us.c
 import { CoreContactUsComponent } from './pages/core/core-contact-us/core-contact-us.component';
 import { LinkManagementShortLinkComponent } from './pages/linkManagement/link-management-short-link/link-management-short-link.component';
 import { AppComponent } from './app.component';
-import { AppResolver } from './app.resolver';
 import { NewsContentListComponent } from './pages/news/news-content-list/news-content-list.component';
 
 const routes: Routes = [
@@ -13,7 +12,7 @@ const routes: Routes = [
     path: '',
     pathMatch: 'full',
     component: LinkManagementShortLinkComponent,
-    resolve: {item: AppResolver}
+    // resolve: {item: AppResolver}
 
   },
   {
@@ -22,7 +21,7 @@ const routes: Routes = [
     component: CoreAboutUsComponent,
   },
   {
-    path: 'countactus',
+    path: 'contactus',
     // pathMatch: 'full',
     component: CoreContactUsComponent,
   },
