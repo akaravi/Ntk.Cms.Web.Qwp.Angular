@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import {
+  CaptchaModel, CoreAuthService, ErrorExcptionResult, FormInfoModel,
+  TicketingDepartemenModel, TicketingDepartemenService, TicketingTaskDtoModel, TicketingTaskModel, TicketingTaskService
+} from 'ntk-cms-api';
+
+import { CmsToastrService } from 'src/app/core/base/cmsToastr.service';
 
 @Component({
   selector: 'app-core-contact-us',
@@ -7,9 +14,93 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoreContactUsComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private ticketingTaskService: TicketingTaskService,
+              private coreAuthService: CoreAuthService,
+              private ticketingDepartemenService: TicketingDepartemenService,
+              private toasterService: CmsToastrService) { }
+  dataModel: TicketingTaskDtoModel = new TicketingTaskDtoModel();
+  dataModelResult: ErrorExcptionResult<TicketingTaskModel> = new ErrorExcptionResult<TicketingTaskModel>();
+  dataModelResultDepartemen: ErrorExcptionResult<TicketingDepartemenModel> = new ErrorExcptionResult<TicketingDepartemenModel>();
+  loadingStatus = false;
+  formInfo: FormInfoModel = new FormInfoModel();
+  singUpContentForm: FormGroup;
+  captchaModel: CaptchaModel = new CaptchaModel();
   ngOnInit(): void {
+    this.singUpContentForm = new FormGroup({
+      status: new FormControl(null),
+      title: new FormControl(null),
+
+    });
+    this.getDataDepartemen();
+    this.onCaptchaOrder();
+  }
+  onCaptchaOrder(): void {
+    this.dataModel.CaptchaText = '';
+    this.coreAuthService.ServiceCaptcha().subscribe(
+      (next) => {
+        this.captchaModel = next.Item;
+        this.dataModel.CaptchaKey = this.captchaModel.Key;
+        const startDate = new Date();
+        const endDate = new Date(next.Item.Expire);
+        const seconds = (endDate.getTime() - startDate.getTime());
+        setTimeout(() => {
+          this.onCaptchaOrder();
+        }, seconds);
+      },
+      (error) => {
+        this.dataModel.CaptchaKey = '';
+        this.captchaModel = new CaptchaModel();
+      }
+    );
+
+  }
+  getDataDepartemen(): void {
+    this.ticketingDepartemenService.ServiceGetAll(null).subscribe((next) => {
+      this.loadingStatus = false;
+      this.formInfo.formAllowSubmit = !next.IsSuccess;
+      this.dataModelResultDepartemen = next;
+      if (next.IsSuccess) {
+        this.dataModelResultDepartemen = next;
+      } else {
+        this.toasterService.typeErrorGetAll(next.ErrorMessage);
+      }
+    },
+      (error) => {
+        this.loadingStatus = false;
+        this.formInfo.formAllowSubmit = true;
+        this.toasterService.typeError(error);
+      });
+  }
+  onFormSubmit(): void {
+    if (this.singUpContentForm.valid) {
+      this.formInfo.formAllowSubmit = false;
+      this.DataAddContent();
+    }
   }
 
+  DataAddContent(): void {
+    this.formInfo.formAlert = 'در حال ارسال اطلاعات به سرور';
+    this.formInfo.formError = '';
+    this.loadingStatus = true;
+    this.ticketingTaskService
+      .ServiceContactUS(this.dataModel)
+      .subscribe(
+        (next) => {
+          this.loadingStatus = false;
+          this.formInfo.formAllowSubmit = !next.IsSuccess;
+          this.dataModelResult = next;
+          if (next.IsSuccess) {
+            this.formInfo.formAlert = 'ثبت با موفقت انجام شد';
+            this.toasterService.typeSuccessAdd();
+          } else {
+            this.toasterService.typeErrorAdd(next.ErrorMessage);
+          }
+        },
+        (error) => {
+          this.loadingStatus = false;
+          this.formInfo.formAllowSubmit = true;
+          this.toasterService.typeError(error);
+        }
+      );
+  }
 }

@@ -8,7 +8,7 @@ import { LinkManagementShortLinkComponent } from './pages/linkManagement/link-ma
 import { FileUploadComponent } from './pages/fileManager/file-upload/file-upload.component';
 import {
   CoreAuthService, EnumDeviceType, EnumOperatingSystemType, LinkManagementTargetService,
-  NewsContentService, TokenDeviceClientInfoDtoModel
+  NewsContentService, TicketingTaskService, TokenDeviceClientInfoDtoModel
 } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlowInjectionToken, NgxFlowModule } from '@flowjs/ngx-flow';
@@ -32,6 +32,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { AuthInterceptor } from './core/interceptor/auth-interceptor.service';
 import { CmsToastrService } from './core/base/cmsToastr.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { TicketingDepartemenService } from 'ntk-cms-api';
 @NgModule({
   declarations: [
     AppComponent,
@@ -66,11 +67,12 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
   ],
   providers: [
     ToastrService,
+    CoreAuthService,
     LinkManagementTargetService,
     NewsContentService,
+    TicketingTaskService,
+    TicketingDepartemenService,
 
-
-    CoreAuthService,
     {
       provide: FlowInjectionToken,
       useValue: Flow,
