@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Ntk-Cms-Web-Qwp-Angular": {
+    "ntk-cms-web-qwp": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/Ntk-Cms-Web-Qwp-Angular",
+            "outputPath": "dist/ntk-cms-web-qwp",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -66,18 +66,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "Ntk-Cms-Web-Qwp-Angular:build"
+            "browserTarget": "ntk-cms-web-qwp:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "Ntk-Cms-Web-Qwp-Angular:build:production"
+              "browserTarget": "ntk-cms-web-qwp:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Ntk-Cms-Web-Qwp-Angular:build"
+            "browserTarget": "ntk-cms-web-qwp:build"
           }
         },
         "test": {
@@ -116,18 +116,18 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "Ntk-Cms-Web-Qwp-Angular:serve"
+            "devServerTarget": "ntk-cms-web-qwp:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "Ntk-Cms-Web-Qwp-Angular:serve:production"
+              "devServerTarget": "ntk-cms-web-qwp:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "Ntk-Cms-Web-Qwp-Angular",
+  "defaultProject": "ntk-cms-web-qwp",
   "cli": {
     "analytics": "fdb06ea5-71ce-45f2-87ca-fa994e45e6a6"
   }

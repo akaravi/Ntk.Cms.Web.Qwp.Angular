@@ -2,16 +2,16 @@
 ng build --prod
 http-server -p 8080 -c-1 dist/<project-name>
 ============================
-ng add @angular/pwa --project Ntk-Cms-Web-Qwp-Angular
+ng add @angular/pwa --project ntk-cms-web-qwp
 
 ng build --prod --source-map
 
 npm install -g http-server-spa@1.3.0
-http-server-spa dist/Ntk-Cms-Web-Qwp-Angular/ index.html 8080
+http-server-spa dist/ntk-cms-web-qwp/ index.html 8080
 
 ============================PWA
 ng build --prod
-http-server -p 8080 -c-1 dist/Ntk-Cms-Web-Qwp-Angular
+http-server -p 8080 -c-1 dist/ntk-cms-web-qwp
 
 ============================PWA
 
@@ -29,7 +29,7 @@ tns run android --bundle
 ============================
 ============================ method 2
 ng add @capacitor/angular
->>change              "outputPath": "dist/Ntk-Cms-Web-Qwp-Angular", to             "outputPath": "www",
+>>change              "outputPath": "dist/ntk-cms-web-qwp", to             "outputPath": "www",
 
 
 ng build --prod

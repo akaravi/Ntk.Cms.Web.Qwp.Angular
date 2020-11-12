@@ -10,7 +10,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Ntk-Cms-Web-Qwp-Angular app is running!');
+    expect(page.getTitleText()).toEqual('ntk-cms-web-qwp app is running!');
   });
 
   afterEach(async () => {

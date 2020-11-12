@@ -13,16 +13,6 @@ import {
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlowInjectionToken, NgxFlowModule } from '@flowjs/ngx-flow';
 import Flow from '@flowjs/flow.js';
-import {
-  MatToolbarModule,
-  MatMenuModule,
-  MatIconModule,
-  MatCardModule,
-  MatButtonModule,
-  MatTableModule,
-  MatDividerModule,
-  MatProgressSpinnerModule,
-} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreAboutUsComponent } from './pages/core/core-about-us/core-about-us.component';
 import { CoreContactUsComponent } from './pages/core/core-contact-us/core-contact-us.component';
@@ -30,9 +20,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NewsContentListComponent } from './pages/news/news-content-list/news-content-list.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AuthInterceptor } from './core/interceptor/auth-interceptor.service';
-import { CmsToastrService } from './core/base/cmsToastr.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { TicketingDepartemenService } from 'ntk-cms-api';
+import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,17 +42,9 @@ import { TicketingDepartemenService } from 'ntk-cms-api';
     ToastrModule.forRoot(),
     NgxFlowModule,
     HttpClientModule,
-    // FlexLayoutModule,
+    SharedModule,
     FormsModule,
     ReactiveFormsModule,
-    MatToolbarModule,
-    MatMenuModule,
-    MatIconModule,
-    MatCardModule,
-    MatButtonModule,
-    MatTableModule,
-    MatDividerModule,
-    MatProgressSpinnerModule,
     BrowserAnimationsModule,
   ],
   providers: [
