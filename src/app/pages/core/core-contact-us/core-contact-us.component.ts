@@ -57,7 +57,7 @@ export class CoreContactUsComponent implements OnInit {
   getDataDepartemen(): void {
     this.ticketingDepartemenService.ServiceGetAll(null).subscribe((next) => {
       this.loadingStatus = false;
-      this.formInfo.formAllowSubmit = !next.IsSuccess;
+      this.formInfo.FormAllowSubmit = !next.IsSuccess;
       this.dataModelResultDepartemen = next;
       if (next.IsSuccess) {
         this.dataModelResultDepartemen = next;
@@ -67,30 +67,30 @@ export class CoreContactUsComponent implements OnInit {
     },
       (error) => {
         this.loadingStatus = false;
-        this.formInfo.formAllowSubmit = true;
+        this.formInfo.FormAllowSubmit = true;
         this.toasterService.typeError(error);
       });
   }
   onFormSubmit(): void {
     if (this.singUpContentForm.valid) {
-      this.formInfo.formAllowSubmit = false;
+      this.formInfo.FormAllowSubmit = false;
       this.DataAddContent();
     }
   }
 
   DataAddContent(): void {
-    this.formInfo.formAlert = 'در حال ارسال اطلاعات به سرور';
-    this.formInfo.formError = '';
+    this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
+    this.formInfo.FormError = '';
     this.loadingStatus = true;
     this.ticketingTaskService
       .ServiceContactUS(this.dataModel)
       .subscribe(
         (next) => {
           this.loadingStatus = false;
-          this.formInfo.formAllowSubmit = !next.IsSuccess;
+          this.formInfo.FormAllowSubmit = !next.IsSuccess;
           this.dataModelResult = next;
           if (next.IsSuccess) {
-            this.formInfo.formAlert = 'ثبت با موفقت انجام شد';
+            this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
             this.toasterService.typeSuccessAdd();
           } else {
             this.toasterService.typeErrorAdd(next.ErrorMessage);
@@ -98,7 +98,7 @@ export class CoreContactUsComponent implements OnInit {
         },
         (error) => {
           this.loadingStatus = false;
-          this.formInfo.formAllowSubmit = true;
+          this.formInfo.FormAllowSubmit = true;
           this.toasterService.typeError(error);
         }
       );

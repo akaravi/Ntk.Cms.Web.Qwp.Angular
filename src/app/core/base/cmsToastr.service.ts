@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { ErrorExcptionResultBase } from 'ntk-cms-api';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'

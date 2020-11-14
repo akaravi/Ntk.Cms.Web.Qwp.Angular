@@ -82,7 +82,7 @@
                       </div>
                       <div *ngIf="dataModelResultDepartemen && dataModelResultDepartemen.IsSuccess " class="form-group set-select">
                         <label for="webType">Departemen</label>
-                        <select [(ngModel)]="dataModel.linkTicketingDepartemenId" name="linkTicketingDepartemenId" class="form-control" >
+                        <select [(ngModel)]="dataModel.LinkTicketingDepartemenId" name="linkTicketingDepartemenId" class="form-control" >
                           <option *ngFor="let item of dataModelResultDepartemen.ListItems; index as i;" value="{{item.Id}}"  [attr.selected]="i==0 ? 'selected' : null" >{{item.Title}}</option>
                         </select>
                       </div>
@@ -101,11 +101,11 @@
 
                       <div class="form-group mb-1">
                         <label for="description">description</label>
-                        <textarea [(ngModel)]="dataModel.htmlBody" name="Description" class="form-control resize-none" id="description" rows="3"></textarea>
+                        <textarea [(ngModel)]="dataModel.HtmlBody" name="Description" class="form-control resize-none" id="description" rows="3"></textarea>
                       </div>
                     </div>
 
-                    <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()"/>
+                    <img src="{{ captchaModel.Image }}" (click)="onCaptchaOrder()"/>
                     <input [(ngModel)]="dataModel.CaptchaText" type="captchaText" name="captchaText"
                            #captchaTextGet="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
                            placeholder="Captcha Text" required/>

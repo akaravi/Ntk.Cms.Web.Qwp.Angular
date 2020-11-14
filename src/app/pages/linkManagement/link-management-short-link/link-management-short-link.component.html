@@ -36,7 +36,7 @@
                     </div>
                   </div>
 
-                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()"/>
+                  <img src="{{ captchaModel.Image }}" (click)="onCaptchaOrder()"/>
                   <input [(ngModel)]="modelTargetGetDto.CaptchaText" type="captchaText" name="captchaText"
                          #captchaTextGet="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
                          placeholder="Captcha Text" required/>
@@ -161,7 +161,7 @@
                       Url must be at least 6 characters long.
                     </div>
                   </div>
-                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()"/>
+                  <img src="{{ captchaModel.Image }}" (click)="onCaptchaOrder()"/>
                   <input [(ngModel)]="modelTargetSetDto.CaptchaText" type="captchaText" name="captchaText"
                          #captchaTextSetUrlAddress="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
                          placeholder="Captcha Text" required/>
@@ -252,7 +252,7 @@
                     {{ uploadedfileName }}
                   </div>
 
-                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()"/>
+                  <img src="{{ captchaModel.Image }}" (click)="onCaptchaOrder()"/>
                   <input [(ngModel)]="modelTargetSetDto.CaptchaText" type="captchaText" name="captchaText"
                          #captchaTextSetFile="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
                          placeholder="Captcha Text" required/>
@@ -348,7 +348,7 @@
                       Url must be at least 6 characters long.
                     </div>
                   </div>
-                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()"/>
+                  <img src="{{ captchaModel.Image }}" (click)="onCaptchaOrder()"/>
                   <input [(ngModel)]="modelTargetSetDto.CaptchaText" type="captchaText" name="captchaText"
                          #captchaTextSetDescription="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
                          placeholder="Captcha Text" required/>
