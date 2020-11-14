@@ -54,7 +54,6 @@ import { SharedModule } from './shared/shared.module';
     NewsContentService,
     TicketingTaskService,
     TicketingDepartemenService,
-
     {
       provide: FlowInjectionToken,
       useValue: Flow,
@@ -63,8 +62,6 @@ import { SharedModule } from './shared/shared.module';
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
       multi: true,
-      // deps: [CmsToastrService]
-
     }
   ],
   bootstrap: [AppComponent],
