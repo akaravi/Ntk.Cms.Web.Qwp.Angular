@@ -1,15 +1,9 @@
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
   Component,
-  Directive,
-  Inject,
   OnDestroy,
   OnInit,
-  ViewChild,
 } from '@angular/core';
-import { bindCallback, interval, Subscription, Observable } from 'rxjs';
+import { interval, Subscription } from 'rxjs';
 
 // import { TAB, TAB_ID } from "../../../../providers/tab-id.provider";
 import {
@@ -20,20 +14,18 @@ import {
   LinkManagementTargetShortLinkGetResponceModel,
   LinkManagementTargetShortLinkSetDtoModel,
   LinkManagementTargetShortLinkSetResponceModel,
-  TokenDeviceClientInfoDtoModel,
   TokenInfoModel,
 } from 'ntk-cms-api';
 
 import { ComponentOptionModel } from '../../../core/cmsModels/componentOptionModel';
 import { ActivatedRoute } from '@angular/router';
-import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-link-management-short-link',
   templateUrl: './link-management-short-link.component.html',
   styleUrls: ['./link-management-short-link.component.css'],
 })
-export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
+export class LinkManagementShortLinkComponent implements OnInit {
   message: string;
   messageShortLinkGet: string;
   messageShortLinkSetLink: string;
@@ -41,18 +33,14 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
   messageShortLinkSetDescription: string;
   modelHistoryList: string[];
   constructor(
-    // @Inject(TAB) readonly tab: any,
-    // @Inject(TAB_ID) readonly tabId: number,
-    private http: HttpClient,
     private coreAuthService: CoreAuthService,
     private linkManagementTargetService: LinkManagementTargetService,
     private activatedRoute: ActivatedRoute
   ) { }
-  // emit value in sequence every 10 second
-  source = interval(1000 * 60 * 5);
+
 
   submitted = false;
-  subManager = new Subscription();
+
   captchaModel: CaptchaModel = new CaptchaModel();
   modelTargetGetDto: LinkManagementTargetShortLinkGetDtoModel = new LinkManagementTargetShortLinkGetDtoModel();
   modelTargetGetResponce: LinkManagementTargetShortLinkGetResponceModel = new LinkManagementTargetShortLinkGetResponceModel();
@@ -104,18 +92,14 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     this.optionsUploadFile.actions = {
       onActionSelect: (model) => this.onActionSelectFile(model),
     };
-    this.subManager = this.source.subscribe((val) => this.onCaptchaOrder());
+
     this.getHistory();
-    // if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
-
-
     this.tokenInfoModel = this.activatedRoute?.snapshot?.data?.item
       ?.Item as TokenInfoModel;
     this.onCaptchaOrder();
+    // if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
   }
-  ngOnDestroy(): void {
-    this.subManager.unsubscribe();
-  }
+
   onActionSelectFile(model: any): void {
     console.log('model', model);
 
@@ -132,26 +116,24 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
   onCaptchaOrder(): void {
     this.modelTargetSetDto.CaptchaText = '';
     this.modelTargetGetDto.CaptchaText = '';
-
-    this.subManager.add(
-      this.coreAuthService.ServiceCaptcha().subscribe(
-        (next) => {
-          this.captchaModel = next.Item;
-          this.modelTargetSetDto.CaptchaKey = this.captchaModel.Key;
-          const startDate = new Date();
-          const endDate = new Date(next.Item.Expire);
-          const seconds = (endDate.getTime() - startDate.getTime());
-          setTimeout(() => {
-            this.onCaptchaOrder();
-          }, seconds);
-        },
-        (error) => {
-          this.message = 'خطا در دریافت عکس کپچا';
-          this.modelTargetSetDto.CaptchaKey = '';
-          this.captchaModel = new CaptchaModel();
-        }
-      )
+    this.coreAuthService.ServiceCaptcha().subscribe(
+      (next) => {
+        this.captchaModel = next.Item;
+        this.modelTargetSetDto.CaptchaKey = this.captchaModel.Key;
+        const startDate = new Date();
+        const endDate = new Date(next.Item.Expire);
+        const seconds = (endDate.getTime() - startDate.getTime());
+        setTimeout(() => {
+          this.onCaptchaOrder();
+        }, seconds);
+      },
+      () => {
+        this.message = 'خطا در دریافت عکس کپچا';
+        this.modelTargetSetDto.CaptchaKey = '';
+        this.captchaModel = new CaptchaModel();
+      }
     );
+
   }
 
   onSubmitGet(): void {
@@ -167,28 +149,26 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
       return;
     }
     this.messageShortLinkGet = 'Runing ...';
-    // this.linkManagementTargetService.baseUrl ='http://localhost:2390/api/v1/';
-    this.subManager.add(
-      this.linkManagementTargetService
-        .ServiceShortLinkGet(this.modelTargetGetDto)
-        .subscribe(
-          (next) => {
-            if (next.IsSuccess) {
-              this.messageShortLinkGet = 'Is Success';
-              this.modelTargetGetResponce = next.Item;
-              this.addHistory(next.Item.Key);
-            } else {
-              this.messageShortLinkGet = next.ErrorMessage;
-            }
-            this.onCaptchaOrder();
-          },
-          (error) => {
-            this.messageShortLinkGet = 'Error.';
 
-            this.onCaptchaOrder();
+    this.linkManagementTargetService
+      .ServiceShortLinkGet(this.modelTargetGetDto)
+      .subscribe(
+        (next) => {
+          if (next.IsSuccess) {
+            this.messageShortLinkGet = 'Is Success';
+            this.modelTargetGetResponce = next.Item;
+            this.addHistory(next.Item.Key);
+          } else {
+            this.messageShortLinkGet = next.ErrorMessage;
           }
-        )
-    );
+          this.onCaptchaOrder();
+        },
+        () => {
+          this.messageShortLinkGet = 'Error.';
+
+          this.onCaptchaOrder();
+        }
+      );
   }
   onSubmitSetLink(): void {
     this.messageShortLinkSetLink = 'Runing ...';
@@ -199,26 +179,26 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     this.modelTargetSetResponceSetDescription = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
 
-    this.subManager.add(
-      this.linkManagementTargetService
-        .ServiceShortLinkSet(this.modelTargetSetDto)
-        .subscribe(
-          (next) => {
-            if (next.IsSuccess) {
-              this.messageShortLinkSetLink = 'Is Success';
-              this.modelTargetSetResponceSetLink = next.Item;
-              this.addHistory(next.Item.Key);
-            } else {
-              this.messageShortLinkSetLink = next.ErrorMessage;
-            }
-            this.onCaptchaOrder();
-          },
-          (error) => {
-            this.messageShortLinkSetLink = 'Error ...';
-            this.onCaptchaOrder();
+
+    this.linkManagementTargetService
+      .ServiceShortLinkSet(this.modelTargetSetDto)
+      .subscribe(
+        (next) => {
+          if (next.IsSuccess) {
+            this.messageShortLinkSetLink = 'Is Success';
+            this.modelTargetSetResponceSetLink = next.Item;
+            this.addHistory(next.Item.Key);
+          } else {
+            this.messageShortLinkSetLink = next.ErrorMessage;
           }
-        )
-    );
+          this.onCaptchaOrder();
+        },
+        () => {
+          this.messageShortLinkSetLink = 'Error ...';
+          this.onCaptchaOrder();
+        }
+      );
+
   }
   onSubmitSetDescription(): void {
     this.messageShortLinkSetDescription = 'Runing ...';
@@ -230,26 +210,26 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
     this.modelTargetSetDto.UrlAddress = '';
     this.modelTargetSetDto.UploadFileKey = '';
-    this.subManager.add(
-      this.linkManagementTargetService
-        .ServiceShortLinkSet(this.modelTargetSetDto)
-        .subscribe(
-          (next) => {
-            if (next.IsSuccess) {
-              this.messageShortLinkSetDescription = 'Is Success';
-              this.modelTargetSetResponceSetDescription = next.Item;
-              this.addHistory(next.Item.Key);
-            } else {
-              this.messageShortLinkSetDescription = next.ErrorMessage;
-            }
-            this.onCaptchaOrder();
-          },
-          (error) => {
-            this.messageShortLinkSetDescription = 'Error';
-            this.onCaptchaOrder();
+
+    this.linkManagementTargetService
+      .ServiceShortLinkSet(this.modelTargetSetDto)
+      .subscribe(
+        (next) => {
+          if (next.IsSuccess) {
+            this.messageShortLinkSetDescription = 'Is Success';
+            this.modelTargetSetResponceSetDescription = next.Item;
+            this.addHistory(next.Item.Key);
+          } else {
+            this.messageShortLinkSetDescription = next.ErrorMessage;
           }
-        )
-    );
+          this.onCaptchaOrder();
+        },
+        () => {
+          this.messageShortLinkSetDescription = 'Error';
+          this.onCaptchaOrder();
+        }
+      );
+
   }
   onSubmitSetFile(): void {
     this.messageShortLinkSetFile = 'Runing ...';
@@ -261,26 +241,26 @@ export class LinkManagementShortLinkComponent implements OnInit, OnDestroy {
     this.modelTargetSetDto.UrlAddress = '';
     this.modelTargetSetDto.Description = '';
 
-    this.subManager.add(
-      this.linkManagementTargetService
-        .ServiceShortLinkSet(this.modelTargetSetDto)
-        .subscribe(
-          (next) => {
-            if (next.IsSuccess) {
-              this.messageShortLinkSetFile = 'Is Success';
-              this.modelTargetSetResponceSetFile = next.Item;
-              this.addHistory(next.Item.Key);
-            } else {
-              this.messageShortLinkSetFile = next.ErrorMessage;
-            }
-            this.onCaptchaOrder();
-          },
-          (error) => {
-            this.messageShortLinkSetFile = 'Error';
-            this.onCaptchaOrder();
+
+    this.linkManagementTargetService
+      .ServiceShortLinkSet(this.modelTargetSetDto)
+      .subscribe(
+        (next) => {
+          if (next.IsSuccess) {
+            this.messageShortLinkSetFile = 'Is Success';
+            this.modelTargetSetResponceSetFile = next.Item;
+            this.addHistory(next.Item.Key);
+          } else {
+            this.messageShortLinkSetFile = next.ErrorMessage;
           }
-        )
-    );
+          this.onCaptchaOrder();
+        },
+        () => {
+          this.messageShortLinkSetFile = 'Error';
+          this.onCaptchaOrder();
+        }
+      );
+
   }
 
   tabChange(selectedTab): void {

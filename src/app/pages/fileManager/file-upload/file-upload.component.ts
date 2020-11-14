@@ -11,7 +11,6 @@ import {
 import { FlowDirective, Transfer } from '@flowjs/ngx-flow';
 import { Subscription } from 'rxjs';
 import { ComponentOptionModel } from 'src/app/core/cmsModels/componentOptionModel';
-
 import { environment } from 'src/environments/environment';
 
 const URL = environment.cmsServerConfig.configRouteUploadFileContent ;
