@@ -3,8 +3,6 @@ import {
   OnDestroy,
   OnInit,
 } from '@angular/core';
-import { interval, Subscription } from 'rxjs';
-
 // import { TAB, TAB_ID } from "../../../../providers/tab-id.provider";
 import {
   CaptchaModel,

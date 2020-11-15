@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { LinkManagementShortLinkComponent } from './pages/linkManagement/link-management-short-link/link-management-short-link.component';
-import { FileUploadComponent } from './pages/fileManager/file-upload/file-upload.component';
+import { FileUploadComponent } from './pages/fileManager/file-upload/fileUpload.component';
 import {
   CoreAuthService, EnumDeviceType, EnumOperatingSystemType, LinkManagementTargetService,
   NewsContentService, TicketingTaskService, TokenDeviceClientInfoDtoModel
@@ -35,6 +35,7 @@ import { SharedModule } from './shared/shared.module';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
@@ -43,7 +44,6 @@ import { SharedModule } from './shared/shared.module';
     NgxFlowModule,
     HttpClientModule,
     SharedModule,
-    FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
   ],

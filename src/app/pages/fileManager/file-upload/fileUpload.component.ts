@@ -16,8 +16,8 @@ import { environment } from 'src/environments/environment';
 const URL = environment.cmsServerConfig.configRouteUploadFileContent ;
 @Component({
   selector: 'app-file-upload',
-  templateUrl: './file-upload.component.html',
-  styleUrls: ['./file-upload.component.css'],
+  templateUrl: './fileUpload.component.html',
+  styleUrls: ['./fileUpload.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
