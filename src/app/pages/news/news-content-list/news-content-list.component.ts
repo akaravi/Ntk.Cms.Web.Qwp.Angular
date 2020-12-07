@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {
-  ErrorExcptionResult,
+  ErrorExceptionResult,
   FilterModel,
   NewsContentService,
 } from 'ntk-cms-api';
@@ -12,7 +12,7 @@ import {
 })
 export class NewsContentListComponent implements OnInit {
   filterModelContent = new FilterModel();
-  dataModelResult: ErrorExcptionResult<any> = new ErrorExcptionResult<any>();
+  dataModelResult: ErrorExceptionResult<any> = new ErrorExceptionResult<any>();
 
   constructor(private newsContentService: NewsContentService) {}
 

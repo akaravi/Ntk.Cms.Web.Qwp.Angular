@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import {
-  CaptchaModel, CoreAuthService, ErrorExcptionResult, FormInfoModel,
+  CaptchaModel, CoreAuthService, ErrorExceptionResult, FormInfoModel,
   TicketingDepartemenModel, TicketingDepartemenService, TicketingTaskDtoModel, TicketingTaskModel, TicketingTaskService
 } from 'ntk-cms-api';
 
@@ -19,8 +19,8 @@ export class CoreContactUsComponent implements OnInit {
               private ticketingDepartemenService: TicketingDepartemenService,
               private toasterService: CmsToastrService) { }
   dataModel: TicketingTaskDtoModel = new TicketingTaskDtoModel();
-  dataModelResult: ErrorExcptionResult<TicketingTaskModel> = new ErrorExcptionResult<TicketingTaskModel>();
-  dataModelResultDepartemen: ErrorExcptionResult<TicketingDepartemenModel> = new ErrorExcptionResult<TicketingDepartemenModel>();
+  dataModelResult: ErrorExceptionResult<TicketingTaskModel> = new ErrorExceptionResult<TicketingTaskModel>();
+  dataModelResultDepartemen: ErrorExceptionResult<TicketingDepartemenModel> = new ErrorExceptionResult<TicketingDepartemenModel>();
   loadingStatus = false;
   formInfo: FormInfoModel = new FormInfoModel();
   singUpContentForm: FormGroup;

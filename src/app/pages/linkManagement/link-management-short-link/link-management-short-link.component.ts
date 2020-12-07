@@ -24,17 +24,17 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./link-management-short-link.component.css'],
 })
 export class LinkManagementShortLinkComponent implements OnInit {
+  constructor(
+    private coreAuthService: CoreAuthService,
+    private linkManagementTargetService: LinkManagementTargetService,
+    private activatedRoute: ActivatedRoute
+  ) { }
   message: string;
   messageShortLinkGet: string;
   messageShortLinkSetLink: string;
   messageShortLinkSetFile: string;
   messageShortLinkSetDescription: string;
   modelHistoryList: string[];
-  constructor(
-    private coreAuthService: CoreAuthService,
-    private linkManagementTargetService: LinkManagementTargetService,
-    private activatedRoute: ActivatedRoute
-  ) { }
 
 
   submitted = false;
@@ -86,6 +86,7 @@ export class LinkManagementShortLinkComponent implements OnInit {
   ];
   optionsUploadFile: ComponentOptionModel = new ComponentOptionModel();
   tokenInfoModel: TokenInfoModel;
+  aoutoCaptchaOrder = 1;
   ngOnInit(): void {
     this.optionsUploadFile.actions = {
       onActionSelect: (model) => this.onActionSelectFile(model),
@@ -99,7 +100,7 @@ export class LinkManagementShortLinkComponent implements OnInit {
   }
 
   onActionSelectFile(model: any): void {
-    console.log('model', model);
+    // console.log('model', model);
 
     if (model && model.fileKey) {
       this.modelTargetSetDto.UploadFileKey = model.fileKey;
@@ -110,7 +111,6 @@ export class LinkManagementShortLinkComponent implements OnInit {
       this.uploadedfileKey = this.uploadedfileKey + model.fileKey;
     }
   }
-
   onCaptchaOrder(): void {
     this.modelTargetSetDto.CaptchaText = '';
     this.modelTargetGetDto.CaptchaText = '';
@@ -121,9 +121,10 @@ export class LinkManagementShortLinkComponent implements OnInit {
         const startDate = new Date();
         const endDate = new Date(next.Item.Expire);
         const seconds = (endDate.getTime() - startDate.getTime());
-        setTimeout(() => {
-          this.onCaptchaOrder();
-        }, seconds);
+        if (this.aoutoCaptchaOrder < 10) {
+          this.aoutoCaptchaOrder = this.aoutoCaptchaOrder + 1;
+          setTimeout(() => { this.onCaptchaOrder(); }, seconds);
+        }
       },
       () => {
         this.message = 'خطا در دریافت عکس کپچا';

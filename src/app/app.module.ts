@@ -23,6 +23,7 @@ import { AuthInterceptor } from './core/interceptor/auth-interceptor.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { TicketingDepartemenService } from 'ntk-cms-api';
 import { SharedModule } from './shared/shared.module';
+import { ActivatedRoute } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,6 +82,15 @@ export class AppModule {
         OSType: EnumOperatingSystemType.none,
         DeviceType: EnumDeviceType.WebSite,
         PackageName: '',
+        AppBuildVer: 0,
+        AppSourceVer: '',
+        Country: '',
+        DeviceBrand: '',
+        Language: '',
+        LocationLat: '',
+        LocationLong: '',
+        NotificationId: '',
+        SimCard: '',
       };
 
 
