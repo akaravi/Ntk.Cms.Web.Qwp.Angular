@@ -7,6 +7,8 @@ import {
 import {
   CaptchaModel,
   CoreAuthService,
+  ErrorExceptionResult,
+  FileUploadedModel,
   LinkManagementTargetService,
   LinkManagementTargetShortLinkGetDtoModel,
   LinkManagementTargetShortLinkGetResponceModel,
@@ -99,16 +101,19 @@ export class LinkManagementShortLinkComponent implements OnInit {
     // if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
   }
 
-  onActionSelectFile(model: any): void {
+  onActionSelectFile(model: ErrorExceptionResult<FileUploadedModel>): void {
     // console.log('model', model);
-
-    if (model && model.fileKey) {
-      this.modelTargetSetDto.UploadFileKey = model.fileKey;
-      this.uploadedfileName = model.fileName;
+    if (model && !model.IsSuccess) {
+      this.message = 'خطا در دریافت عکس کپچا';
+      return;
+    }
+    if (model && model.IsSuccess && model.Item.FileKey) {
+      this.modelTargetSetDto.UploadFileGUID = model.Item.FileKey;
+      this.uploadedfileName = model.Item.FileName;
       if (this.uploadedfileKey.length > 0) {
         this.uploadedfileKey = this.uploadedfileKey + ',';
       }
-      this.uploadedfileKey = this.uploadedfileKey + model.fileKey;
+      this.uploadedfileKey = this.uploadedfileKey + model.Item.FileKey;
     }
   }
   onCaptchaOrder(): void {
@@ -208,7 +213,7 @@ export class LinkManagementShortLinkComponent implements OnInit {
     this.modelTargetSetResponceSetDescription = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
     this.modelTargetSetDto.UrlAddress = '';
-    this.modelTargetSetDto.UploadFileKey = '';
+    this.modelTargetSetDto.UploadFileGUID = '';
 
     this.linkManagementTargetService
       .ServiceShortLinkSet(this.modelTargetSetDto)
