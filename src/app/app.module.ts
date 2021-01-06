@@ -23,7 +23,6 @@ import { AuthInterceptor } from './core/interceptor/auth-interceptor.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { TicketingDepartemenService } from 'ntk-cms-api';
 import { SharedModule } from './shared/shared.module';
-import { ActivatedRoute } from '@angular/router';
 @NgModule({
   declarations: [
     AppComponent,
