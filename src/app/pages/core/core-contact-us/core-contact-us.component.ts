@@ -15,9 +15,9 @@ import { CmsToastrService } from 'src/app/core/base/cmsToastr.service';
 export class CoreContactUsComponent implements OnInit {
 
   constructor(private ticketingTaskService: TicketingTaskService,
-              private coreAuthService: CoreAuthService,
-              private ticketingDepartemenService: TicketingDepartemenService,
-              private toasterService: CmsToastrService) { }
+    private coreAuthService: CoreAuthService,
+    private ticketingDepartemenService: TicketingDepartemenService,
+    private toasterService: CmsToastrService) { }
   dataModel: TicketingTaskDtoModel = new TicketingTaskDtoModel();
   dataModelResult: ErrorExceptionResult<TicketingTaskModel> = new ErrorExceptionResult<TicketingTaskModel>();
   dataModelResultDepartemen: ErrorExceptionResult<TicketingDepartemenModel> = new ErrorExceptionResult<TicketingDepartemenModel>();
@@ -57,7 +57,7 @@ export class CoreContactUsComponent implements OnInit {
   getDataDepartemen(): void {
     this.ticketingDepartemenService.ServiceGetAll(null).subscribe((next) => {
       this.loadingStatus = false;
-      this.formInfo.FormAllowSubmit = !next.IsSuccess;
+      this.formInfo.FormSubmitAllow = !next.IsSuccess;
       this.dataModelResultDepartemen = next;
       if (next.IsSuccess) {
         this.dataModelResultDepartemen = next;
@@ -67,13 +67,13 @@ export class CoreContactUsComponent implements OnInit {
     },
       (error) => {
         this.loadingStatus = false;
-        this.formInfo.FormAllowSubmit = true;
+        this.formInfo.FormSubmitAllow = true;
         this.toasterService.typeError(error);
       });
   }
   onFormSubmit(): void {
     if (this.singUpContentForm.valid) {
-      this.formInfo.FormAllowSubmit = false;
+      this.formInfo.FormSubmitAllow = false;
       this.DataAddContent();
     }
   }
@@ -87,7 +87,7 @@ export class CoreContactUsComponent implements OnInit {
       .subscribe(
         (next) => {
           this.loadingStatus = false;
-          this.formInfo.FormAllowSubmit = !next.IsSuccess;
+          this.formInfo.FormSubmitAllow = !next.IsSuccess;
           this.dataModelResult = next;
           if (next.IsSuccess) {
             this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
@@ -98,7 +98,7 @@ export class CoreContactUsComponent implements OnInit {
         },
         (error) => {
           this.loadingStatus = false;
-          this.formInfo.FormAllowSubmit = true;
+          this.formInfo.FormSubmitAllow = true;
           this.toasterService.typeError(error);
         }
       );

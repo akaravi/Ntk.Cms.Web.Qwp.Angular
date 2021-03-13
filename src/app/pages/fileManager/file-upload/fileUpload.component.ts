@@ -22,7 +22,7 @@ import { environment } from 'src/environments/environment';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef) { }
   @Input()
   set options(model: ComponentOptionModel) {
     this.dateOptionInput = model;
@@ -82,9 +82,8 @@ export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
           fileName: event.event[0].name,
           fileKey: event.event[1],
         };
-        debugger
-        const retUpload=JSON.parse( event.event[1]) as ErrorExceptionResult<FileUploadedModel>;
-        retUpload.Item.FileName=event.event[0].name
+        const retUpload = JSON.parse(event.event[1]) as ErrorExceptionResult<FileUploadedModel>;
+        retUpload.Item.FileName = event.event[0].name;
         this.dateOptionInput.actions.onActionSelect(retUpload);
         this.dateOptionInput.data = { Select: retUpload };
       }
