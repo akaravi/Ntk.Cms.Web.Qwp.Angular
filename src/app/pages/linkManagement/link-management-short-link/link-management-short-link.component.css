@@ -129,3 +129,6 @@ img{
 .subLink:hover{
   color: green !important;
 }
+.color{
+  color: rgb(8, 39, 65);
+}

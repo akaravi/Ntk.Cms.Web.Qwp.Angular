@@ -57,31 +57,31 @@ export class LinkManagementShortLinkComponent implements OnInit {
   tabs = [
     {
       name:
-        '<b style="color: deepskyblue">Get</b> <i style="color: deeppink">Link</i>',
+        '<i style="color: deeppink">دریافت لینک</i>',
       key: 1,
       active: true,
     },
     {
       name:
-        '<b style="color: deepskyblue">Set</b> <i style="color: deeppink">Link</i>',
+        '<i style="color: deeppink">ارسال لینک</i>',
       key: 2,
       active: false,
     },
     {
       name:
-        '<b style="color: deepskyblue">Set</b> <i style="color: deeppink">File</i>',
+        '<i style="color: deeppink">ارسال فایل</i>',
       key: 3,
       active: false,
     },
     {
       name:
-        '<b style="color: deepskyblue">Set</b> <i style="color: deeppink">Memo</i>',
+        '<i style="color: deeppink">ارسال پیام</i>',
       key: 4,
       active: false,
     },
     {
       name:
-        '<b style="color: deepskyblue">Key</b> <i style="color: deeppink">History</i>',
+        '<i style="color: deeppink">تاریخچه</i>',
       key: 5,
       active: false,
     },

@@ -35,14 +35,14 @@
     <button type="button" (click)="flow.upload()" [disabled]="!(flow.somethingToUpload$ | async).valueOf()"
             class="btn btn-success btn-xs">
       <span _ngcontent-mnn-c53="" class="glyphicon glyphicon-upload"></span>
-      Start upload
+      شروع آپلود
     </button>
     <button type="button" (click)="flow.cancel()" [disabled]="!(flow.transfers$ | async).transfers.length"
             class="btn btn-warning btn-xs">
       <span _ngcontent-eab-c53="" class="glyphicon glyphicon-ban-circle"></span>
-      Cancel all
+      لغو همه
     </button>
-    <p> Total progress: {{(flow.transfers$ | async).totalProgress | percent}}
+    <p> درصد پیشرفت: {{(flow.transfers$ | async).totalProgress | percent}}
     </p>
   </div>
 
