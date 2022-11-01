@@ -131,7 +131,7 @@ export class CmsToastrService {
     if (model.error) {
       errorExceptionResult = model.error;
       if (errorExceptionResult) {
-        if (errorExceptionResult.Status === 401) {
+        if (errorExceptionResult.status === 401) {
           message = 'نیاز به ورود مجدد' + ' ' + str;
 
           this.toastr.error(message, 'Error!');
@@ -144,9 +144,9 @@ export class CmsToastrService {
       message = 'View Console Log' + ' ' + str;
       this.toastr.error(message, 'Error!');
       return;
-    } else if (model && model.ErrorMessage) {
+    } else if (model && model.errorMessage) {
 
-      message = model.ErrorMessage + ' ' + str;
+      message = model.errorMessage + ' ' + str;
       this.toastr.error(message, 'Error!');
     }
     return;

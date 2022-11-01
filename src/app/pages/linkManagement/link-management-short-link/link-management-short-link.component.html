@@ -23,10 +23,10 @@
           <div class="panel-body">
             <form #registerForm="ngForm" (ngSubmit)="onSubmitGet()" aria-labelledby="title">
               <div class="row m-0">
-                <div class="col-lg-12" *ngIf="!modelTargetGetResponce.Key || modelTargetGetResponce.Key.length == 0">
+                <div class="col-lg-12" *ngIf="!modelTargetGetResponce.key || modelTargetGetResponce.key.length == 0">
                   <h5>شما میتوانید </h5>
                   <label for="key">: کلید لینک کوتاه شما</label>
-                  <input [(ngModel)]="modelTargetGetDto.Key" id="key" name="Key" type="text"
+                  <input [(ngModel)]="modelTargetGetDto.key" id="key" name="Key" type="text"
                     class="form-control input-ntk mb-3" placeholder="***@*****" #Key="ngModel" minlength="8" required />
                   <div *ngIf="Key.invalid && (Key.dirty || Key.touched)" class="alert alert-danger">
                     <div *ngIf="Key.errors.required">! پر کردن این فیلد الزامی است</div>
@@ -35,17 +35,17 @@
                     </div>
                   </div>
 
-                  <img src="{{ captchaModel.Image }}" (click)="onCaptchaOrder()" />
-                  <input [(ngModel)]="modelTargetGetDto.CaptchaText" type="captchaText" name="captchaText"
+                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()" />
+                  <input [(ngModel)]="modelTargetGetDto.captchaText" type="captchaText" name="captchaText"
                     #captchaTextGet="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
-                    placeholder="Captcha Text" required />
+                    placeholder="محتوای عکس امنیتی" required />
                   <div *ngIf="captchaTextGet.invalid && (captchaTextGet.dirty || captchaTextGet.touched) "
                     class="alert alert-danger">
                     <div *ngIf="captchaTextGet.errors.required">
                       ! پر کردن این فیلد الزامی است
                     </div>
                   </div>
-                  <button [disabled]="!modelTargetGetDto.Key || modelTargetGetDto.Key.length < 8"
+                  <button [disabled]="!modelTargetGetDto.key || modelTargetGetDto.key.length < 8"
                     class="btn btn-primary" style="width: 100%">
                     دریافت لینک
                   </button>
@@ -59,13 +59,13 @@
                 <!--View Get-->
                 <div class="col-lg-12" *ngIf="
                     modelTargetGetResponce &&
-                    modelTargetGetResponce.Key &&
-                    modelTargetGetResponce.Key.length > 0
+                    modelTargetGetResponce.key &&
+                    modelTargetGetResponce.key.length > 0
                   ">
                   <div class="input-group-button">
                     <h4 class="card-title mb-2">
-                      Key: {{ modelTargetGetResponce.Key }}
-                      <svg (click)="copyText(modelTargetGetResponce.Key)" viewBox="0 0 16 16" version="1.1" width="16"
+                      Key: {{ modelTargetGetResponce.key }}
+                      <svg (click)="copyText(modelTargetGetResponce.key)" viewBox="0 0 16 16" version="1.1" width="16"
                         height="16" aria-hidden="true">
                         <path fill-rule="evenodd"
                           d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
@@ -73,28 +73,28 @@
                       </svg>
                     </h4>
                   </div>
-                  <h4 class="card-title mb-2" *ngIf="modelTargetGetResponce.Description">
+                  <h4 class="card-title mb-2" *ngIf="modelTargetGetResponce.description">
                     <textarea>
-                                        {{ modelTargetGetResponce.Description }}
+                                        {{ modelTargetGetResponce.description }}
                                         </textarea>
-                    <svg (click)="copyText(modelTargetGetResponce.Description)" viewBox="0 0 16 16" version="1.1"
+                    <svg (click)="copyText(modelTargetGetResponce.description)" viewBox="0 0 16 16" version="1.1"
                       width="16" height="16" aria-hidden="true">
                       <path fill-rule="evenodd"
                         d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
                       </path>
                     </svg>
                   </h4>
-                  <h4 class="card-title mb-2" *ngIf="modelTargetGetResponce.UrlAddress">
-                    <input value="{{ modelTargetGetResponce.UrlAddress }}" type="text" readonly
+                  <h4 class="card-title mb-2" *ngIf="modelTargetGetResponce.urlAddress">
+                    <input value="{{ modelTargetGetResponce.urlAddress }}" type="text" readonly
                       class="form-control input-ntk mb-3" />
-                    <a href="{{ modelTargetGetResponce.UrlAddress }}" target="”_blank”">
+                    <a href="{{ modelTargetGetResponce.urlAddress }}" target="”_blank”">
                       <svg viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
                         <path fill-rule="evenodd"
                           d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM8 0a8 8 0 100 16A8 8 0 008 0zM6.379 5.227A.25.25 0 006 5.442v5.117a.25.25 0 00.379.214l4.264-2.559a.25.25 0 000-.428L6.379 5.227z">
                         </path>
                       </svg>
                     </a>
-                    <svg (click)="copyText(modelTargetGetResponce.UrlAddress)" viewBox="0 0 16 16" version="1.1"
+                    <svg (click)="copyText(modelTargetGetResponce.urlAddress)" viewBox="0 0 16 16" version="1.1"
                       width="16" height="16" aria-hidden="true">
                       <path fill-rule="evenodd"
                         d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
@@ -102,27 +102,27 @@
                     </svg>
                   </h4>
                   <div *ngIf="
-                      modelTargetGetResponce.FilesSrc &&
-                      modelTargetGetResponce.FilesSrc.length > 0
+                      modelTargetGetResponce.filesSrc &&
+                      modelTargetGetResponce.filesSrc.length > 0
                     ">
-                    <a *ngFor="let file of modelTargetGetResponce.FilesSrc" href="{{ file }}" target="”_blank”">
+                    <a *ngFor="let file of modelTargetGetResponce.filesSrc" href="{{ file }}" target="”_blank”">
                       {{ file }}
                     </a>
                   </div>
-                  <h4 class="card-title mb-2" *ngIf="modelTargetGetResponce.ShortLinkUrl">
-                    <a class="subLink" href="{{ modelTargetGetResponce.ShortLinkUrl }}" target="”_blank”">
-                      {{ modelTargetGetResponce.ShortLinkUrl }}
+                  <h4 class="card-title mb-2" *ngIf="modelTargetGetResponce.shortLinkUrl">
+                    <a class="subLink" href="{{ modelTargetGetResponce.shortLinkUrl }}" target="”_blank”">
+                      {{ modelTargetGetResponce.shortLinkUrl }}
                     </a>
-                    <svg (click)="copyText(modelTargetGetResponce.ShortLinkUrl)" viewBox="0 0 16 16" version="1.1"
+                    <svg (click)="copyText(modelTargetGetResponce.shortLinkUrl)" viewBox="0 0 16 16" version="1.1"
                       width="16" height="16" aria-hidden="true">
                       <path fill-rule="evenodd"
                         d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
                       </path>
                     </svg>
                   </h4>
-                  <div *ngIf="modelTargetGetResponce.ShortLinkQRCodeBase64">
-                    <a href="{{ modelTargetGetResponce.ShortLinkUrl }}" target="”_blank”">
-                      <img src="{{ modelTargetGetResponce.ShortLinkQRCodeBase64 }}" style="width: 195px" />
+                  <div *ngIf="modelTargetGetResponce.shortLinkQRCodeBase64">
+                    <a href="{{ modelTargetGetResponce.shortLinkUrl }}" target="”_blank”">
+                      <img src="{{ modelTargetGetResponce.shortLinkQRCodeBase64 }}" style="width: 195px" />
                     </a>
                   </div>
                 </div>
@@ -149,10 +149,10 @@
             <form #registerForm="ngForm" (ngSubmit)="onSubmitSetLink()">
               <div class="row m-0">
                 <div class="col-lg-12" *ngIf="
-                    !modelTargetSetResponceSetLink.Key ||
-                    modelTargetSetResponceSetLink.Key.length == 0
+                    !modelTargetSetResponceSetLink.key ||
+                    modelTargetSetResponceSetLink.key.length == 0
                   ">
-                  <input [(ngModel)]="modelTargetSetDto.UrlAddress" name="UrlAddress" #UrlAddress="ngModel" required
+                  <input [(ngModel)]="modelTargetSetDto.urlAddress" name="UrlAddress" #UrlAddress="ngModel" required
                     minlength="6" type="text" class="form-control input-ntk mb-3" placeholder="Url Address" required />
 
                   <div *ngIf="
@@ -166,10 +166,10 @@
                       طول آدرس باید حداقل 6 کارکتر باشد
                     </div>
                   </div>
-                  <img src="{{ captchaModel.Image }}" (click)="onCaptchaOrder()" />
-                  <input [(ngModel)]="modelTargetSetDto.CaptchaText" type="captchaText" name="captchaText"
+                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()" />
+                  <input [(ngModel)]="modelTargetSetDto.captchaText" type="captchaText" name="captchaText"
                     #captchaTextSetUrlAddress="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
-                    placeholder="Captcha Text" required />
+                    placeholder="محتوای عکس امنیتی" required />
                   <div *ngIf="
                       captchaTextSetUrlAddress.invalid &&
                       (captchaTextSetUrlAddress.dirty ||
@@ -180,8 +180,8 @@
                     </div>
                   </div>
                   <button [disabled]="
-                      !modelTargetSetDto.UrlAddress ||
-                      modelTargetSetDto.UrlAddress.length < 5
+                      !modelTargetSetDto.urlAddress ||
+                      modelTargetSetDto.urlAddress.length < 5
                     " class="btn btn-primary" style="width: 100%">
                     ارسال لینک
                   </button>
@@ -194,34 +194,34 @@
                 <!--View Set-->
                 <div class="col-lg-12" *ngIf="
                     modelTargetSetResponceSetLink &&
-                    modelTargetSetResponceSetLink.Key &&
-                    modelTargetSetResponceSetLink.Key.length > 0
+                    modelTargetSetResponceSetLink.key &&
+                    modelTargetSetResponceSetLink.key.length > 0
                   ">
                   <h4 class="card-title mb-2">
-                    Key: {{ modelTargetSetResponceSetLink.Key }}
-                    <svg (click)="copyText(modelTargetSetResponceSetLink.Key)" viewBox="0 0 16 16" version="1.1"
+                    Key: {{ modelTargetSetResponceSetLink.key }}
+                    <svg (click)="copyText(modelTargetSetResponceSetLink.key)" viewBox="0 0 16 16" version="1.1"
                       width="16" height="16" aria-hidden="true">
                       <path fill-rule="evenodd"
                         d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
                       </path>
                     </svg>
                   </h4>
-                  <h4 class="card-title mb-2" *ngIf="modelTargetSetResponceSetLink.ShortLinkUrl">
-                    <a href="{{ modelTargetSetResponceSetLink.ShortLinkUrl }}" target="”_blank”">
-                      {{ modelTargetSetResponceSetLink.ShortLinkUrl }}
+                  <h4 class="card-title mb-2" *ngIf="modelTargetSetResponceSetLink.shortLinkUrl">
+                    <a href="{{ modelTargetSetResponceSetLink.shortLinkUrl }}" target="”_blank”">
+                      {{ modelTargetSetResponceSetLink.shortLinkUrl }}
                     </a>
                     <svg (click)="
-                        copyText(modelTargetSetResponceSetLink.ShortLinkUrl)
+                        copyText(modelTargetSetResponceSetLink.shortLinkUrl)
                       " viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
                       <path fill-rule="evenodd"
                         d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
                       </path>
                     </svg>
                   </h4>
-                  <div *ngIf="modelTargetSetResponceSetLink.ShortLinkQRCodeBase64">
-                    <a href="{{ modelTargetSetResponceSetLink.ShortLinkUrl }}" target="”_blank”">
+                  <div *ngIf="modelTargetSetResponceSetLink.shortLinkQRCodeBase64">
+                    <a href="{{ modelTargetSetResponceSetLink.shortLinkUrl }}" target="”_blank”">
                       <img src="{{
-                          modelTargetSetResponceSetLink.ShortLinkQRCodeBase64
+                          modelTargetSetResponceSetLink.shortLinkQRCodeBase64
                         }}" style="width: 200px" />
                     </a>
                   </div>
@@ -247,8 +247,8 @@
             <form #registerForm="ngForm" (ngSubmit)="onSubmitSetFile()">
               <div class="row m-0">
                 <div class="col-lg-12" *ngIf="
-                    !modelTargetSetResponceSetFile.Key ||
-                    modelTargetSetResponceSetFile.Key.length == 0
+                    !modelTargetSetResponceSetFile.key ||
+                    modelTargetSetResponceSetFile.key.length == 0
                   ">
                   <div *ngIf="uploadedfileKey.length == 0">
                     <app-file-upload [options]="optionsUploadFile"></app-file-upload>
@@ -259,10 +259,10 @@
                     {{ uploadedfileName }}
                   </div>
 
-                  <img src="{{ captchaModel.Image }}" (click)="onCaptchaOrder()" />
-                  <input [(ngModel)]="modelTargetSetDto.CaptchaText" type="captchaText" name="captchaText"
+                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()" />
+                  <input [(ngModel)]="modelTargetSetDto.captchaText" type="captchaText" name="captchaText"
                     #captchaTextSetFile="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
-                    placeholder="Captcha Text" required />
+                    placeholder="محتوای عکس امنیتی" required />
                   <div *ngIf="
                       captchaTextSetFile.invalid &&
                       (captchaTextSetFile.dirty || captchaTextSetFile.touched)
@@ -272,10 +272,10 @@
                     </div>
                   </div>
                   <button [disabled]="
-                      !modelTargetSetDto.UploadFileGUID ||
-                      modelTargetSetDto.UploadFileGUID.length < 5
+                      !modelTargetSetDto.uploadFileGUID ||
+                      modelTargetSetDto.uploadFileGUID.length < 5
                     " class="btn btn-primary" style="width: 100%">
-                    Set Link
+                    ساخت لینک
                   </button>
                   <p style="color: deeppink">{{ messageShortLinkSetFile }}</p>
                   <p>
@@ -285,34 +285,33 @@
                 <!--View Set-->
                 <div class="col-lg-12" *ngIf="
                     modelTargetSetResponceSetFile &&
-                    modelTargetSetResponceSetFile.Key &&
-                    modelTargetSetResponceSetFile.Key.length > 0
+                    modelTargetSetResponceSetFile.key &&
+                    modelTargetSetResponceSetFile.key.length > 0
                   ">
                   <h4 class="card-title mb-2">
-                    Key: {{ modelTargetSetResponceSetFile.Key }}
-                    <svg (click)="copyText(modelTargetSetResponceSetFile.Key)" viewBox="0 0 16 16" version="1.1"
+                    Key: {{ modelTargetSetResponceSetFile.key }}
+                    <svg (click)="copyText(modelTargetSetResponceSetFile.key)" viewBox="0 0 16 16" version="1.1"
                       width="16" height="16" aria-hidden="true">
                       <path fill-rule="evenodd"
                         d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
                       </path>
                     </svg>
                   </h4>
-                  <h4 class="card-title mb-2" *ngIf="modelTargetSetResponceSetFile.ShortLinkUrl">
-                    <a href="{{ modelTargetSetResponceSetFile.ShortLinkUrl }}" target="”_blank”">
-                      {{ modelTargetSetResponceSetFile.ShortLinkUrl }}
+                  <h4 class="card-title mb-2" *ngIf="modelTargetSetResponceSetFile.shortLinkUrl">
+                    <a href="{{ modelTargetSetResponceSetFile.shortLinkUrl }}" target="”_blank”">
+                      {{ modelTargetSetResponceSetFile.shortLinkUrl }}
                     </a>
-                    <svg (click)="
-                        copyText(modelTargetSetResponceSetFile.ShortLinkUrl)
+                    <svg (click)="copyText(modelTargetSetResponceSetFile.shortLinkUrl)
                       " viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
                       <path fill-rule="evenodd"
                         d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
                       </path>
                     </svg>
                   </h4>
-                  <div *ngIf="modelTargetSetResponceSetFile.ShortLinkQRCodeBase64">
-                    <a href="{{ modelTargetSetResponceSetFile.ShortLinkUrl }}" target="”_blank”">
+                  <div *ngIf="modelTargetSetResponceSetFile.shortLinkQRCodeBase64">
+                    <a href="{{ modelTargetSetResponceSetFile.shortLinkUrl }}" target="”_blank”">
                       <img src="{{
-                          modelTargetSetResponceSetFile.ShortLinkQRCodeBase64
+                          modelTargetSetResponceSetFile.shortLinkQRCodeBase64
                         }}" style="width: 200px" />
                     </a>
                   </div>
@@ -338,10 +337,10 @@
             <form #registerForm="ngForm" (ngSubmit)="onSubmitSetDescription()">
               <div class="row m-0">
                 <div class="col-lg-12" *ngIf="
-                    !modelTargetSetResponceSetDescription.Key ||
-                    modelTargetSetResponceSetDescription.Key.length == 0
+                    !modelTargetSetResponceSetDescription.key ||
+                    modelTargetSetResponceSetDescription.key.length == 0
                   ">
-                  <textarea [(ngModel)]="modelTargetSetDto.Description" name="Description" #Description="ngModel"
+                  <textarea [(ngModel)]="modelTargetSetDto.description" name="Description" #Description="ngModel"
                     required minlength="6" type="text" class="form-control input-ntk mb-3" placeholder="متن پیام شما"
                     required>
                   </textarea>
@@ -356,10 +355,10 @@
                       طول پیام باید حداقل 6 کارکتر باشد
                     </div>
                   </div>
-                  <img src="{{ captchaModel.Image }}" (click)="onCaptchaOrder()" />
-                  <input [(ngModel)]="modelTargetSetDto.CaptchaText" type="captchaText" name="captchaText"
+                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()" />
+                  <input [(ngModel)]="modelTargetSetDto.captchaText" type="captchaText" name="captchaText"
                     #captchaTextSetDescription="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
-                    placeholder="Captcha Text" required />
+                    placeholder="محتوای عکس امنیتی" required />
                   <div *ngIf="
                       captchaTextSetDescription.invalid &&
                       (captchaTextSetDescription.dirty ||
@@ -370,10 +369,10 @@
                     </div>
                   </div>
                   <button [disabled]="
-                      !modelTargetSetDto.Description ||
-                      modelTargetSetDto.Description.length < 5
+                      !modelTargetSetDto.description ||
+                      modelTargetSetDto.description.length < 5
                     " class="btn btn-primary" style="width: 100%">
-                    Set Link
+                    ساخت لینک
                   </button>
                   <p style="color: deeppink">
                     {{ messageShortLinkSetDescription }}
@@ -385,28 +384,28 @@
                 <!--View Set-->
                 <div class="col-lg-12" *ngIf="
                     modelTargetSetResponceSetDescription &&
-                    modelTargetSetResponceSetDescription.Key &&
-                    modelTargetSetResponceSetDescription.Key.length > 0
+                    modelTargetSetResponceSetDescription.key &&
+                    modelTargetSetResponceSetDescription.key.length > 0
                   ">
                   <h4 class="card-title mb-2">
-                    Key: {{ modelTargetSetResponceSetDescription.Key }}
+                    Key: {{ modelTargetSetResponceSetDescription.key }}
                     <svg (click)="
-                        copyText(modelTargetSetResponceSetDescription.Key)
+                        copyText(modelTargetSetResponceSetDescription.key)
                       " viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
                       <path fill-rule="evenodd"
                         d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
                       </path>
                     </svg>
                   </h4>
-                  <h4 class="card-title mb-2" *ngIf="modelTargetSetResponceSetDescription.ShortLinkUrl">
+                  <h4 class="card-title mb-2" *ngIf="modelTargetSetResponceSetDescription.shortLinkUrl">
                     <a href="{{
-                        modelTargetSetResponceSetDescription.ShortLinkUrl
+                        modelTargetSetResponceSetDescription.shortLinkUrl
                       }}" target="”_blank”">
-                      {{ modelTargetSetResponceSetDescription.ShortLinkUrl }}
+                      {{ modelTargetSetResponceSetDescription.shortLinkUrl }}
                     </a>
                     <svg (click)="
                         copyText(
-                          modelTargetSetResponceSetDescription.ShortLinkUrl
+                          modelTargetSetResponceSetDescription.shortLinkUrl
                         )
                       " viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
                       <path fill-rule="evenodd"
@@ -415,13 +414,13 @@
                     </svg>
                   </h4>
                   <div *ngIf="
-                      modelTargetSetResponceSetDescription.ShortLinkQRCodeBase64
+                      modelTargetSetResponceSetDescription.shortLinkQRCodeBase64
                     ">
                     <a href="{{
-                        modelTargetSetResponceSetDescription.ShortLinkUrl
+                        modelTargetSetResponceSetDescription.shortLinkUrl
                       }}" target="”_blank”">
                       <img src="{{
-                          modelTargetSetResponceSetDescription.ShortLinkQRCodeBase64
+                          modelTargetSetResponceSetDescription.shortLinkQRCodeBase64
                         }}" style="width: 200px" />
                     </a>
                   </div>

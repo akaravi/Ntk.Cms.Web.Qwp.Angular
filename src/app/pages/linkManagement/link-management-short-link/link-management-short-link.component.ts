@@ -96,35 +96,35 @@ export class LinkManagementShortLinkComponent implements OnInit {
 
     this.getHistory();
     this.tokenInfoModel = this.activatedRoute?.snapshot?.data?.item
-      ?.Item as TokenInfoModel;
+      ?.item as TokenInfoModel;
     this.onCaptchaOrder();
-    // if (this.tab) this.modelTargetSetDto.UrlAddress = this.tab.url;
+    // if (this.tab) this.modelTargetSetDto.urlAddress = this.tab.url;
   }
 
   onActionSelectFile(model: ErrorExceptionResult<FileUploadedModel>): void {
     // console.log('model', model);
-    if (model && !model.IsSuccess) {
+    if (model && !model.isSuccess) {
       this.message = 'خطا در دریافت عکس کپچا';
       return;
     }
-    if (model && model.IsSuccess && model.Item.FileKey) {
-      this.modelTargetSetDto.UploadFileGUID = model.Item.FileKey;
-      this.uploadedfileName = model.Item.FileName;
+    if (model && model.isSuccess && model.item.fileKey) {
+      this.modelTargetSetDto.uploadFileGUID = model.item.fileKey;
+      this.uploadedfileName = model.item.fileName;
       if (this.uploadedfileKey.length > 0) {
         this.uploadedfileKey = this.uploadedfileKey + ',';
       }
-      this.uploadedfileKey = this.uploadedfileKey + model.Item.FileKey;
+      this.uploadedfileKey = this.uploadedfileKey + model.item.fileKey;
     }
   }
   onCaptchaOrder(): void {
-    this.modelTargetSetDto.CaptchaText = '';
-    this.modelTargetGetDto.CaptchaText = '';
+    this.modelTargetSetDto.captchaText = '';
+    this.modelTargetGetDto.captchaText = '';
     this.coreAuthService.ServiceCaptcha().subscribe(
       (next) => {
-        this.captchaModel = next.Item;
-        this.modelTargetSetDto.CaptchaKey = this.captchaModel.Key;
+        this.captchaModel = next.item;
+        this.modelTargetSetDto.captchaKey = this.captchaModel.key;
         const startDate = new Date();
-        const endDate = new Date(next.Item.Expire);
+        const endDate = new Date(next.item.expire);
         const seconds = (endDate.getTime() - startDate.getTime());
         if (this.aoutoCaptchaOrder < 10) {
           this.aoutoCaptchaOrder = this.aoutoCaptchaOrder + 1;
@@ -133,7 +133,7 @@ export class LinkManagementShortLinkComponent implements OnInit {
       },
       () => {
         this.message = 'خطا در دریافت عکس کپچا';
-        this.modelTargetSetDto.CaptchaKey = '';
+        this.modelTargetSetDto.captchaKey = '';
         this.captchaModel = new CaptchaModel();
       }
     );
@@ -146,8 +146,8 @@ export class LinkManagementShortLinkComponent implements OnInit {
     this.modelTargetSetResponceSetFile = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetSetResponceSetDescription = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
-    this.modelTargetGetDto.CaptchaKey = this.captchaModel.Key;
-    const res = this.modelTargetGetDto.Key.split('@');
+    this.modelTargetGetDto.captchaKey = this.captchaModel.key;
+    const res = this.modelTargetGetDto.key.split('@');
     if (res.length < 2) {
       this.messageShortLinkGet = 'Key Is Worng.';
       return;
@@ -158,12 +158,12 @@ export class LinkManagementShortLinkComponent implements OnInit {
       .ServiceShortLinkGet(this.modelTargetGetDto)
       .subscribe(
         (next) => {
-          if (next.IsSuccess) {
+          if (next.isSuccess) {
             this.messageShortLinkGet = 'Is Success';
-            this.modelTargetGetResponce = next.Item;
-            this.addHistory(next.Item.Key);
+            this.modelTargetGetResponce = next.item;
+            this.addHistory(next.item.key);
           } else {
-            this.messageShortLinkGet = next.ErrorMessage;
+            this.messageShortLinkGet = next.errorMessage;
           }
           this.onCaptchaOrder();
         },
@@ -188,12 +188,12 @@ export class LinkManagementShortLinkComponent implements OnInit {
       .ServiceShortLinkSet(this.modelTargetSetDto)
       .subscribe(
         (next) => {
-          if (next.IsSuccess) {
+          if (next.isSuccess) {
             this.messageShortLinkSetLink = 'Is Success';
-            this.modelTargetSetResponceSetLink = next.Item;
-            this.addHistory(next.Item.Key);
+            this.modelTargetSetResponceSetLink = next.item;
+            this.addHistory(next.item.key);
           } else {
-            this.messageShortLinkSetLink = next.ErrorMessage;
+            this.messageShortLinkSetLink = next.errorMessage;
           }
           this.onCaptchaOrder();
         },
@@ -212,19 +212,19 @@ export class LinkManagementShortLinkComponent implements OnInit {
     this.modelTargetSetResponceSetFile = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetSetResponceSetDescription = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
-    this.modelTargetSetDto.UrlAddress = '';
-    this.modelTargetSetDto.UploadFileGUID = '';
+    this.modelTargetSetDto.urlAddress = '';
+    this.modelTargetSetDto.uploadFileGUID = '';
 
     this.linkManagementTargetService
       .ServiceShortLinkSet(this.modelTargetSetDto)
       .subscribe(
         (next) => {
-          if (next.IsSuccess) {
+          if (next.isSuccess) {
             this.messageShortLinkSetDescription = 'Is Success';
-            this.modelTargetSetResponceSetDescription = next.Item;
-            this.addHistory(next.Item.Key);
+            this.modelTargetSetResponceSetDescription = next.item;
+            this.addHistory(next.item.key);
           } else {
-            this.messageShortLinkSetDescription = next.ErrorMessage;
+            this.messageShortLinkSetDescription = next.errorMessage;
           }
           this.onCaptchaOrder();
         },
@@ -242,20 +242,20 @@ export class LinkManagementShortLinkComponent implements OnInit {
     this.modelTargetSetResponceSetFile = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetSetResponceSetDescription = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
-    this.modelTargetSetDto.UrlAddress = '';
-    this.modelTargetSetDto.Description = '';
+    this.modelTargetSetDto.urlAddress = '';
+    this.modelTargetSetDto.description = '';
 
 
     this.linkManagementTargetService
       .ServiceShortLinkSet(this.modelTargetSetDto)
       .subscribe(
         (next) => {
-          if (next.IsSuccess) {
+          if (next.isSuccess) {
             this.messageShortLinkSetFile = 'Is Success';
-            this.modelTargetSetResponceSetFile = next.Item;
-            this.addHistory(next.Item.Key);
+            this.modelTargetSetResponceSetFile = next.item;
+            this.addHistory(next.item.key);
           } else {
-            this.messageShortLinkSetFile = next.ErrorMessage;
+            this.messageShortLinkSetFile = next.errorMessage;
           }
           this.onCaptchaOrder();
         },
@@ -269,7 +269,7 @@ export class LinkManagementShortLinkComponent implements OnInit {
 
   tabChange(selectedTab): void {
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
-    this.modelTargetGetDto.Key = '';
+    this.modelTargetGetDto.key = '';
     this.selectedUserTab = selectedTab.key;
     for (const tab of this.tabs) {
       if (tab.key === selectedTab.key) {
@@ -303,7 +303,7 @@ export class LinkManagementShortLinkComponent implements OnInit {
   onClickHistory(item: string): void {
     if (item && item.length > 0) {
       this.tabChange({ key: 1 });
-      this.modelTargetGetDto.Key = item;
+      this.modelTargetGetDto.key = item;
     }
   }
   addHistory(item: string): void {

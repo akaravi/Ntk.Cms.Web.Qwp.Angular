@@ -20,7 +20,7 @@ export class NewsContentListComponent implements OnInit {
     this.getContentList();
   }
   getContentList(): void {
-    this.filterModelContent.AccessLoad = true;
+    this.filterModelContent.accessLoad = true;
     this.newsContentService
       .ServiceGetAll(this.filterModelContent)
       .subscribe((res) => {

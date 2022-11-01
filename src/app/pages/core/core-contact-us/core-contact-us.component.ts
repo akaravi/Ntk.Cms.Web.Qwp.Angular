@@ -35,20 +35,20 @@ export class CoreContactUsComponent implements OnInit {
     this.onCaptchaOrder();
   }
   onCaptchaOrder(): void {
-    this.dataModel.CaptchaText = '';
+    this.dataModel.captchaText = '';
     this.coreAuthService.ServiceCaptcha().subscribe(
       (next) => {
-        this.captchaModel = next.Item;
-        this.dataModel.CaptchaKey = this.captchaModel.Key;
+        this.captchaModel = next.item;
+        this.dataModel.captchaKey = this.captchaModel.key;
         const startDate = new Date();
-        const endDate = new Date(next.Item.Expire);
+        const endDate = new Date(next.item.expire);
         const seconds = (endDate.getTime() - startDate.getTime());
         setTimeout(() => {
           this.onCaptchaOrder();
         }, seconds);
       },
       (error) => {
-        this.dataModel.CaptchaKey = '';
+        this.dataModel.captchaKey = '';
         this.captchaModel = new CaptchaModel();
       }
     );
@@ -57,48 +57,48 @@ export class CoreContactUsComponent implements OnInit {
   getDataDepartemen(): void {
     this.ticketingDepartemenService.ServiceGetAll(null).subscribe((next) => {
       this.loadingStatus = false;
-      this.formInfo.FormSubmitAllow = !next.IsSuccess;
+      this.formInfo.formSubmitAllow = !next.isSuccess;
       this.dataModelResultDepartemen = next;
-      if (next.IsSuccess) {
+      if (next.isSuccess) {
         this.dataModelResultDepartemen = next;
       } else {
-        this.toasterService.typeErrorGetAll(next.ErrorMessage);
+        this.toasterService.typeErrorGetAll(next.errorMessage);
       }
     },
       (error) => {
         this.loadingStatus = false;
-        this.formInfo.FormSubmitAllow = true;
+        this.formInfo.formSubmitAllow = true;
         this.toasterService.typeError(error);
       });
   }
   onFormSubmit(): void {
     if (this.singUpContentForm.valid) {
-      this.formInfo.FormSubmitAllow = false;
+      this.formInfo.formSubmitAllow = false;
       this.DataAddContent();
     }
   }
 
   DataAddContent(): void {
-    this.formInfo.FormAlert = 'در حال ارسال اطلاعات به سرور';
-    this.formInfo.FormError = '';
+    this.formInfo.formAlert = 'در حال ارسال اطلاعات به سرور';
+    this.formInfo.formError = '';
     this.loadingStatus = true;
     this.ticketingTaskService
       .ServiceContactUS(this.dataModel)
       .subscribe(
         (next) => {
           this.loadingStatus = false;
-          this.formInfo.FormSubmitAllow = !next.IsSuccess;
+          this.formInfo.formSubmitAllow = !next.isSuccess;
           this.dataModelResult = next;
-          if (next.IsSuccess) {
-            this.formInfo.FormAlert = 'ثبت با موفقت انجام شد';
+          if (next.isSuccess) {
+            this.formInfo.formAlert = 'ثبت با موفقت انجام شد';
             this.toasterService.typeSuccessAdd();
           } else {
-            this.toasterService.typeErrorAdd(next.ErrorMessage);
+            this.toasterService.typeErrorAdd(next.errorMessage);
           }
         },
         (error) => {
           this.loadingStatus = false;
-          this.formInfo.FormSubmitAllow = true;
+          this.formInfo.formSubmitAllow = true;
           this.toasterService.typeError(error);
         }
       );
