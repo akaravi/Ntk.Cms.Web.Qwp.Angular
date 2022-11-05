@@ -24,8 +24,8 @@
             <form #registerForm="ngForm" (ngSubmit)="onSubmitGet()" aria-labelledby="title">
               <div class="row m-0">
                 <div class="col-lg-12" *ngIf="!modelTargetGetResponce.key || modelTargetGetResponce.key.length == 0">
-                  <h5>شما میتوانید </h5>
-                  <label for="key">: کلید لینک کوتاه شما</label>
+                  <h5> شما میتوانید با وارد کردن کلید دریافتی لینک مورد نظر را دریافت کنید</h5>
+                  <label for="key"> کلید لینک کوتاه شما</label>
                   <input [(ngModel)]="modelTargetGetDto.key" id="key" name="Key" type="text"
                     class="form-control input-ntk mb-3" placeholder="***@*****" #Key="ngModel" minlength="8" required />
                   <div *ngIf="Key.invalid && (Key.dirty || Key.touched)" class="alert alert-danger">
@@ -152,6 +152,8 @@
                     !modelTargetSetResponceSetLink.key ||
                     modelTargetSetResponceSetLink.key.length == 0
                   ">
+                  <h5>  شما میتوانید با وارد کردن آدرس url خود لینک کوتاه شده بسازید و آن را با دیگران به اشتراک بگذارید</h5>
+                  <label for="UrlAddress"> آدرس url</label>
                   <input [(ngModel)]="modelTargetSetDto.urlAddress" name="UrlAddress" #UrlAddress="ngModel" required
                     minlength="6" type="text" class="form-control input-ntk mb-3" placeholder="Url Address" required />
 
@@ -250,6 +252,7 @@
                     !modelTargetSetResponceSetFile.key ||
                     modelTargetSetResponceSetFile.key.length == 0
                   ">
+                  <label for="uploadedfileKey"> با کلیک بر روی دکمه زیر فایل مورد نظر خود را انتخاب کنید</label>
                   <div *ngIf="uploadedfileKey.length == 0">
                     <app-file-upload [options]="optionsUploadFile"></app-file-upload>
                   </div>
@@ -340,6 +343,7 @@
                     !modelTargetSetResponceSetDescription.key ||
                     modelTargetSetResponceSetDescription.key.length == 0
                   ">
+                  <label for="Description"> متن پیام شما</label>
                   <textarea [(ngModel)]="modelTargetSetDto.description" name="Description" #Description="ngModel"
                     required minlength="6" type="text" class="form-control input-ntk mb-3" placeholder="متن پیام شما"
                     required>
@@ -442,6 +446,7 @@
             <i class="color">تاریخچه</i>
 
           </div>
+          <h5> شما میتوانید تاریخچه لیست لینک های ساخته شده خود را مشاهده نمایید</h5>
           <div class="panel-body">
             <div *ngFor="let item of modelHistoryList" (click)="onClickHistory(item)">
               {{ item }}
