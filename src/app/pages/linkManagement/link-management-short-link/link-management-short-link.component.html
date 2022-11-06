@@ -24,7 +24,7 @@
             <form #registerForm="ngForm" (ngSubmit)="onSubmitGet()" aria-labelledby="title">
               <div class="row m-0">
                 <div class="col-lg-12" *ngIf="!modelTargetGetResponce.key || modelTargetGetResponce.key.length == 0">
-                  <h5> شما میتوانید با وارد کردن کلید دریافتی لینک مورد نظر را دریافت کنید</h5>
+                  <h3> شما میتوانید با وارد کردن کلید دریافتی لینک مورد نظر را دریافت کنید</h3>
                   <label for="key"> کلید لینک کوتاه شما</label>
                   <input [(ngModel)]="modelTargetGetDto.key" id="key" name="Key" type="text"
                     class="form-control input-ntk mb-3" placeholder="***@*****" #Key="ngModel" minlength="8" required />
@@ -152,7 +152,7 @@
                     !modelTargetSetResponceSetLink.key ||
                     modelTargetSetResponceSetLink.key.length == 0
                   ">
-                  <h5>  شما میتوانید با وارد کردن آدرس url خود لینک کوتاه شده بسازید و آن را با دیگران به اشتراک بگذارید</h5>
+                  <h3>  شما میتوانید با وارد کردن آدرس url خود لینک کوتاه شده بسازید و آن را با دیگران به اشتراک بگذارید</h3>
                   <label for="UrlAddress"> آدرس url</label>
                   <input [(ngModel)]="modelTargetSetDto.urlAddress" name="UrlAddress" #UrlAddress="ngModel" required
                     minlength="6" type="text" class="form-control input-ntk mb-3" placeholder="Url Address" required />
@@ -446,8 +446,8 @@
             <i class="color">تاریخچه</i>
 
           </div>
-          <h5> شما میتوانید تاریخچه لیست لینک های ساخته شده خود را مشاهده نمایید</h5>
           <div class="panel-body">
+            <h3> شما میتوانید تاریخچه لیست لینک های ساخته شده خود را مشاهده نمایید</h3>
             <div *ngFor="let item of modelHistoryList" (click)="onClickHistory(item)">
               {{ item }}
               <svg (click)="onClickHistory(item)" viewBox="0 0 16 16" version="1.1" width="16" height="16"
