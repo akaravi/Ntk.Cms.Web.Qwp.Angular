@@ -8,7 +8,7 @@ import {
   Input,
   OnDestroy,
 } from '@angular/core';
-import { FlowDirective, Transfer } from '@flowjs/ngx-flow';
+import { FlowDirective, Transfer, } from '@flowjs/ngx-flow';
 import { ErrorExceptionResult, FileUploadedModel } from 'ntk-cms-api';
 import { Subscription } from 'rxjs';
 import { ComponentOptionModel } from 'src/app/core/cmsModels/componentOptionModel';

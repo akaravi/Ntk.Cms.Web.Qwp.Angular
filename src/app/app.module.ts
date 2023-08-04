@@ -7,7 +7,7 @@ import { environment } from '../environments/environment';
 import { LinkManagementShortLinkComponent } from './pages/linkManagement/link-management-short-link/link-management-short-link.component';
 import { FileUploadComponent } from './pages/fileManager/file-upload/fileUpload.component';
 import {
-  CoreAuthService, EnumDeviceType, EnumOperatingSystemType, LinkManagementTargetService,
+  CoreAuthService, DeviceTypeEnum, OperatingSystemTypeEnum, LinkManagementTargetService,
   NewsContentService, TicketingTaskService, TokenDeviceClientInfoDtoModel
 } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -78,8 +78,8 @@ export class AppModule {
       const model: TokenDeviceClientInfoDtoModel = {
         securityKey: environment.cmsTokenConfig.SecurityKey,
         clientMACAddress: '',
-        oSType: EnumOperatingSystemType.none,
-        deviceType: EnumDeviceType.WebSite,
+        oSType: OperatingSystemTypeEnum.none,
+        deviceType: DeviceTypeEnum.WebSite,
         packageName: '',
         appBuildVer: 0,
         appSourceVer: '',
