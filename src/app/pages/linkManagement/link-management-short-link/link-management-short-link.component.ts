@@ -110,7 +110,7 @@ export class LinkManagementShortLinkComponent implements OnInit {
     if (model && model.isSuccess && model.item.fileKey) {
       this.modelTargetSetDto.uploadFileGUID = model.item.fileKey;
       this.uploadedfileName = model.item.fileName;
-      if (this.uploadedfileKey.length > 0) {
+      if (this.uploadedfileKey?.length > 0) {
         this.uploadedfileKey = this.uploadedfileKey + ',';
       }
       this.uploadedfileKey = this.uploadedfileKey + model.item.fileKey;
@@ -148,7 +148,7 @@ export class LinkManagementShortLinkComponent implements OnInit {
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
     this.modelTargetGetDto.captchaKey = this.captchaModel.key;
     const res = this.modelTargetGetDto.key.split('@');
-    if (res.length < 2) {
+    if (res?.length < 2) {
       this.messageShortLinkGet = 'Key Is Worng.';
       return;
     }
@@ -318,7 +318,7 @@ export class LinkManagementShortLinkComponent implements OnInit {
     }
 
     this.modelHistoryList = history.split(',');
-    if (this.modelHistoryList.length > 10) {
+    if (this.modelHistoryList?.length > 10) {
       this.modelHistoryList.length = 10;
     }
     localStorage.setItem('history', this.modelHistoryList.join(','));

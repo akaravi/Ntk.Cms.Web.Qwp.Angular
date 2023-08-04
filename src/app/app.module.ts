@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRouting } from './app.routing';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -12,7 +11,7 @@ import {
 } from 'ntk-cms-api';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlowInjectionToken, NgxFlowModule } from '@flowjs/ngx-flow';
-import Flow from '@flowjs/flow.js';
+import * as Flow from '@flowjs/flow.js';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreAboutUsComponent } from './pages/core/core-about-us/core-about-us.component';
 import { CoreContactUsComponent } from './pages/core/core-contact-us/core-contact-us.component';

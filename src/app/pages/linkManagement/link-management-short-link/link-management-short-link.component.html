@@ -183,7 +183,7 @@
                   </div>
                   <button [disabled]="
                       !modelTargetSetDto.urlAddress ||
-                      modelTargetSetDto.urlAddress.length < 5
+                      modelTargetSetDto.urlAddress?.length < 5
                     " class="btn btn-primary" style="width: 100%">
                     ارسال لینک
                   </button>
@@ -250,13 +250,13 @@
               <div class="row m-0">
                 <div class="col-lg-12" *ngIf="
                     !modelTargetSetResponceSetFile.key ||
-                    modelTargetSetResponceSetFile.key.length == 0
+                    modelTargetSetResponceSetFile.key?.length == 0
                   ">
                   <label for="uploadedfileKey"> با کلیک بر روی دکمه زیر فایل مورد نظر خود را انتخاب کنید</label>
-                  <div *ngIf="uploadedfileKey.length == 0">
+                  <div *ngIf="uploadedfileKey?.length == 0">
                     <app-file-upload [options]="optionsUploadFile"></app-file-upload>
                   </div>
-                  <div *ngIf="uploadedfileKey.length > 0">
+                  <div *ngIf="uploadedfileKey?.length > 0">
                     ✅ Uploaded you file.
                     <br />
                     {{ uploadedfileName }}
@@ -276,7 +276,7 @@
                   </div>
                   <button [disabled]="
                       !modelTargetSetDto.uploadFileGUID ||
-                      modelTargetSetDto.uploadFileGUID.length < 5
+                      modelTargetSetDto.uploadFileGUID?.length < 5
                     " class="btn btn-primary" style="width: 100%">
                     ساخت لینک
                   </button>
@@ -341,7 +341,7 @@
               <div class="row m-0">
                 <div class="col-lg-12" *ngIf="
                     !modelTargetSetResponceSetDescription.key ||
-                    modelTargetSetResponceSetDescription.key.length == 0
+                    modelTargetSetResponceSetDescription.key?.length == 0
                   ">
                   <label for="Description"> متن پیام شما</label>
                   <textarea [(ngModel)]="modelTargetSetDto.description" name="Description" #Description="ngModel"
@@ -374,7 +374,7 @@
                   </div>
                   <button [disabled]="
                       !modelTargetSetDto.description ||
-                      modelTargetSetDto.description.length < 5
+                      modelTargetSetDto.description?.length < 5
                     " class="btn btn-primary" style="width: 100%">
                     ساخت لینک
                   </button>
@@ -389,7 +389,7 @@
                 <div class="col-lg-12" *ngIf="
                     modelTargetSetResponceSetDescription &&
                     modelTargetSetResponceSetDescription.key &&
-                    modelTargetSetResponceSetDescription.key.length > 0
+                    modelTargetSetResponceSetDescription.key?.length > 0
                   ">
                   <h4 class="card-title mb-2">
                     Key: {{ modelTargetSetResponceSetDescription.key }}

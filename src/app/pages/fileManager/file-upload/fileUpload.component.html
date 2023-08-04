@@ -12,15 +12,15 @@
   <ng-container #flow="flow" [flowConfig]="flowOption"></ng-container>
 
   <!--[flowAttributes]="{accept: 'image/*'}"-->
-  <div class="drop-area well my-drop-zone"
-       style="text-align: center;display: flex;margin: 13px;" flowDrop [flow]="flow.flowJs">
+  <div class="drop-area well my-drop-zone" style="text-align: center;display: flex;margin: 13px;" flowDrop
+    [flow]="flow.flowJs">
 
     <input type="file" flowButton [flow]="flow.flowJs">
   </div>
 
   <div class="transfers">
     <div class="transfer" [ngClass]="{'transfer--error': transfer.error, 'transfer--success': transfer.success}"
-         *ngFor="let transfer of (flow.transfers$ | async).transfers; trackBy: trackTransfer">
+      *ngFor="let transfer of (flow.transfers$ | async).transfers; ">
       <div class="name">name: {{transfer.name}}</div>
       <div>progress: {{transfer.progress | percent}}</div>
       <div>size: {{transfer.size | number: '1.0'}} bytes</div>
@@ -33,12 +33,12 @@
 
   <div style="margin: 14px">
     <button type="button" (click)="flow.upload()" [disabled]="!(flow.somethingToUpload$ | async).valueOf()"
-            class="btn btn-success btn-xs">
+      class="btn btn-success btn-xs">
       <span _ngcontent-mnn-c53="" class="glyphicon glyphicon-upload"></span>
       شروع آپلود
     </button>
-    <button type="button" (click)="flow.cancel()" [disabled]="!(flow.transfers$ | async).transfers.length"
-            class="btn btn-warning btn-xs">
+    <button type="button" (click)="flow.cancel()" [disabled]="!(flow.transfers$ | async).transfers?.length"
+      class="btn btn-warning btn-xs">
       <span _ngcontent-eab-c53="" class="glyphicon glyphicon-ban-circle"></span>
       لغو همه
     </button>

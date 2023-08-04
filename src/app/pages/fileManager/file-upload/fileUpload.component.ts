@@ -51,7 +51,7 @@ export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
         flowFile.myparams = {
           Filename: flowChunk.fileObj.name,
           Identifier: flowChunk.fileObj.uniqueIdentifier,
-          TotalChunks: flowChunk.fileObj.chunks.length,
+          TotalChunks: flowChunk.fileObj.chunks?.length,
         };
         return flowFile.myparams;
       },
@@ -89,9 +89,9 @@ export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
       }
     }
   }
-  trackTransfer(transfer: Transfer): string {
-    return transfer.id;
-  }
+  // trackTransfer(transfer: Transfer): TrackByFunction {
+  //   return transfer.id;
+  // }
 
   ngOnDestroy(): void {
     this.autoUploadSubscription.unsubscribe();
