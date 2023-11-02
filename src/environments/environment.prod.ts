@@ -1,7 +1,7 @@
 import { DeviceTypeEnum, OperatingSystemTypeEnum } from 'ntk-cms-api';
 export const environment = {
   production: false,
-  appVersion: '10.1.0809.1',
+  appVersion: '10.2.0811.1',
   cmsServerConfig: {
     configApiRetry: 1,
     configApiServerPath: 'https://apicms.ir/api/v2/',
