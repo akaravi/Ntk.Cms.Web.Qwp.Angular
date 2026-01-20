@@ -15,56 +15,49 @@ import * as Flow from '@flowjs/flow.js';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreAboutUsComponent } from './pages/core/core-about-us/core-about-us.component';
 import { CoreContactUsComponent } from './pages/core/core-contact-us/core-contact-us.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NewsContentListComponent } from './pages/news/news-content-list/news-content-list.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { AuthInterceptor } from './core/interceptor/auth-interceptor.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { TicketingDepartemenService } from 'ntk-cms-api';
 import { SharedModule } from './shared/shared.module';
-@NgModule({
-  declarations: [
-    AppComponent,
-    LinkManagementShortLinkComponent,
-    FileUploadComponent,
-    CoreAboutUsComponent,
-    CoreContactUsComponent,
-    NewsContentListComponent,
-
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRouting,
-    ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-    }),
-    ToastrModule.forRoot(),
-    NgxFlowModule,
-    HttpClientModule,
-    SharedModule,
-    ReactiveFormsModule,
-    BrowserAnimationsModule,
-  ],
-  providers: [
-    ToastrService,
-    CoreAuthService,
-    LinkManagementTargetService,
-    NewsContentService,
-    TicketingTaskService,
-    TicketingDepartemenService,
-    {
-      provide: FlowInjectionToken,
-      useValue: Flow,
-    },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true,
-    }
-  ],
-  bootstrap: [AppComponent],
-})
+@NgModule({ declarations: [
+        AppComponent,
+        LinkManagementShortLinkComponent,
+        FileUploadComponent,
+        CoreAboutUsComponent,
+        CoreContactUsComponent,
+        NewsContentListComponent,
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        FormsModule,
+        AppRouting,
+        ServiceWorkerModule.register('ngsw-worker.js', {
+            enabled: environment.production,
+        }),
+        ToastrModule.forRoot(),
+        NgxFlowModule,
+        SharedModule,
+        ReactiveFormsModule,
+        BrowserAnimationsModule], providers: [
+        ToastrService,
+        CoreAuthService,
+        LinkManagementTargetService,
+        NewsContentService,
+        TicketingTaskService,
+        TicketingDepartemenService,
+        {
+            provide: FlowInjectionToken,
+            useValue: Flow,
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: AuthInterceptor,
+            multi: true,
+        },
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class AppModule {
 
   constructor(private coreAuthService: CoreAuthService) {

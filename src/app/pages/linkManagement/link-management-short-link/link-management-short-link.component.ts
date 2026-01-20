@@ -21,9 +21,10 @@ import { ComponentOptionModel } from '../../../core/cmsModels/componentOptionMod
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-link-management-short-link',
-  templateUrl: './link-management-short-link.component.html',
-  styleUrls: ['./link-management-short-link.component.css'],
+    selector: 'app-link-management-short-link',
+    templateUrl: './link-management-short-link.component.html',
+    styleUrls: ['./link-management-short-link.component.css'],
+    standalone: false
 })
 export class LinkManagementShortLinkComponent implements OnInit {
   constructor(

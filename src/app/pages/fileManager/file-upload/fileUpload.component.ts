@@ -16,10 +16,11 @@ import { environment } from 'src/environments/environment';
 
 
 @Component({
-  selector: 'app-file-upload',
-  templateUrl: './fileUpload.component.html',
-  styleUrls: ['./fileUpload.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: 'app-file-upload',
+    templateUrl: './fileUpload.component.html',
+    styleUrls: ['./fileUpload.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    standalone: false
 })
 export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private cd: ChangeDetectorRef) { }
