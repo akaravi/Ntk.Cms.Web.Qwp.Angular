@@ -1,45 +1,6 @@
-/* Vazirmatn Font - Local Files */
-@font-face {
-  font-family: 'Vazirmatn';
-  font-style: normal;
-  font-weight: 300;
-  font-display: swap;
-  src: url('./Vazirmatn-Light.woff2') format('woff2'),
-       url('./Vazirmatn-Light.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Vazirmatn';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url('./Vazirmatn-Regular.woff2') format('woff2'),
-       url('./Vazirmatn-Regular.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Vazirmatn';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url('./Vazirmatn-Medium.woff2') format('woff2'),
-       url('./Vazirmatn-Medium.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Vazirmatn';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url('./Vazirmatn-SemiBold.woff2') format('woff2'),
-       url('./Vazirmatn-SemiBold.woff') format('woff');
-}
-
-@font-face {
-  font-family: 'Vazirmatn';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url('./Vazirmatn-Bold.woff2') format('woff2'),
-       url('./Vazirmatn-Bold.woff') format('woff');
-}
+/* Vazirmatn font loaded from packaged files (no CDN). */
+@import "~@fontsource/vazirmatn/300.css";
+@import "~@fontsource/vazirmatn/400.css";
+@import "~@fontsource/vazirmatn/500.css";
+@import "~@fontsource/vazirmatn/600.css";
+@import "~@fontsource/vazirmatn/700.css";

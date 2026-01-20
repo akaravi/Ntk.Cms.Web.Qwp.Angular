@@ -1,5 +1,5 @@
 /* Global Styles - Modern Professional Design */
-/* Note: Vazirmatn font is loaded from assets/fonts/vazirmatn/vazirmatn.css */
+/* Note: Vazirmatn font is loaded locally via assets/fonts/vazirmatn/vazirmatn.css (using @fontsource package). */
 html, body {
   height: 100%;
   margin: 0;

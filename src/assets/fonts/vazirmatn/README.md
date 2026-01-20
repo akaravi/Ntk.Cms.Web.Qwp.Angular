@@ -1,29 +1,24 @@
 # Vazirmatn Font Files
 
-این پوشه باید شامل فایل‌های فونت Vazirmatn باشد.
+این پوشه حاوی فایل پیکربندی فونت است و فونت از بسته‌ی npm بدون نیاز به CDN بارگذاری می‌شود.
 
-## فایل‌های مورد نیاز:
+## بارگذاری فعلی (آفلاین):
 
-برای استفاده کامل از فونت Vazirmatn، لطفا فایل‌های زیر را دانلود کرده و در این پوشه قرار دهید:
+* `src/assets/fonts/vazirmatn/vazirmatn.css` وزن‌های 300، 400، 500، 600 و 700 را از بسته `@fontsource/vazirmatn` ایمپورت می‌کند. این بسته حین `npm install` دانلود می‌شود و در زمان اجرا نیاز به اینترنت ندارد.
 
-1. Vazirmatn-Light.woff2
-2. Vazirmatn-Light.woff
-3. Vazirmatn-Regular.woff2
-4. Vazirmatn-Regular.woff
-5. Vazirmatn-Medium.woff2
-6. Vazirmatn-Medium.woff
-7. Vazirmatn-SemiBold.woff2
-8. Vazirmatn-SemiBold.woff
-9. Vazirmatn-Bold.woff2
-10. Vazirmatn-Bold.woff
+## در صورت نیاز به نسخه آفلاین:
 
-## نحوه دانلود:
+در صورت نیاز به بسته‌بندی فونت‌ها داخل ریپازیتوری (مثلاً برای محیط‌های بدون اینترنت)، فایل‌های زیر را دانلود کرده و در همین پوشه قرار دهید، سپس `vazirmatn.css` را به مسیرهای محلی به‌روزرسانی کنید:
 
-1. از https://github.com/rastikerdar/vazirmatn/releases آخرین نسخه را دانلود کنید
+1. Vazirmatn-Light.woff2 / Vazirmatn-Light.woff
+2. Vazirmatn-Regular.woff2 / Vazirmatn-Regular.woff
+3. Vazirmatn-Medium.woff2 / Vazirmatn-Medium.woff
+4. Vazirmatn-SemiBold.woff2 / Vazirmatn-SemiBold.woff
+5. Vazirmatn-Bold.woff2 / Vazirmatn-Bold.woff
+
+### نحوه دانلود:
+
+1. آخرین نسخه را از https://github.com/rastikerdar/vazirmatn/releases دانلود کنید
 2. یا از https://fonts.google.com/specimen/Vazirmatn استفاده کنید
 3. فایل‌های woff2 و woff را از پوشه dist استخراج کنید
-4. فایل‌ها را در این پوشه (src/assets/fonts/vazirmatn/) قرار دهید
-
-## یادداشت:
-
-در صورت عدم وجود فایل‌های فونت، مرورگر از فونت‌های جایگزین (Roboto, Tahoma, Arial) استفاده خواهد کرد.
+4. فایل‌ها را در این پوشه (src/assets/fonts/vazirmatn/) قرار دهید و `vazirmatn.css` را به مسیرهای محلی تنظیم کنید.
