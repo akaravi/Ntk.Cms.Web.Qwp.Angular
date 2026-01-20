@@ -29,7 +29,7 @@
     "hammerjs": "^2.0.8",
     "material-icons": "^1.13.14",
     "ngx-toastr": "^16.1.1",
-    "ntk-cms-api": "^1.2.212",
+    "ntk-cms-api": "^1.2.262",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "typeface-roboto": "^1.1.13",
