@@ -1,12 +1,145 @@
-.footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
+/* Toolbar Styles */
+.expanded-toolbar {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  padding: 0 16px;
+}
+
+.toolbar-content {
+  display: flex;
   width: 100%;
-  background-color: #3f51b5;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  font-family: 'Vazirmatn', 'Roboto', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.toolbar-title {
+  font-weight: 700;
+  font-family: 'Vazirmatn', 'Roboto', sans-serif;
+}
+
+.desktop-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.desktop-nav button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.desktop-nav button.active {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.mobile-menu-button {
+  display: none;
+}
+
+/* Main Container */
+.main-container {
+  min-height: calc(100vh - 64px - 80px);
+  padding: 24px 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.content-wrapper {
+  width: 100%;
+  max-width: 1200px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Ad Container */
+.ad-container {
+  margin: 32px 0;
+  text-align: center;
+  min-height: 100px;
+}
+
+/* Modern Footer */
+.modern-footer {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
+  padding: 24px 16px;
+  margin-top: 48px;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
   text-align: center;
 }
-a {
-  color: white;
+
+.footer-text {
+  margin-top: 16px;
+}
+
+.footer-text p {
+  margin: 0;
+  font-size: 0.95rem;
+  font-family: 'Vazirmatn', 'Roboto', sans-serif;
+  font-weight: 400;
+}
+
+.footer-text a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 0 4px;
+}
+
+.footer-text a:hover {
+  color: #ffeb3b;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: block;
+  }
+
+  .toolbar-title {
+    font-size: 1rem;
+  }
+
+  .main-container {
+    padding: 16px 8px;
+  }
+
+  .modern-footer {
+    padding: 16px 8px;
+    margin-top: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .toolbar-title {
+    display: none;
+  }
+
+  .logo-button mat-icon {
+    margin: 0;
+  }
 }

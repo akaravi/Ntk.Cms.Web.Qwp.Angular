@@ -1,54 +1,81 @@
+<!-- Modern Navigation Bar -->
 <mat-toolbar color="primary" class="expanded-toolbar">
-  <span>
-    <button mat-button routerLink="/">{{title}}</button>
-    <!-- <button mat-button routerLink="/"><mat-icon>home</mat-icon></button> -->
-  </span>
-  <!-- <div fxLayout="row" fxShow="false" fxShow.gt-sm>
-      <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
-        <div class="input-group">
-          <input class="input-group-field" type="search" value="" placeholder="Search" formControlName="search">
-          <div class="input-group-button"><button mat-flat-button color="accent"><mat-icon>search</mat-icon></button></div>
-        </div>
-      </form>
-  </div> -->
-  <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
-    <mat-icon>menu</mat-icon>
-  </button>
-</mat-toolbar>
-<mat-menu x-position="before" #menu="matMenu">
-  <button mat-menu-item routerLink="/"><mat-icon>home</mat-icon> خانه</button>
-  <button mat-menu-item routerLink="/news"><mat-icon>history_edu</mat-icon> اخبار</button>
-  <button mat-menu-item routerLink="/contactus"><mat-icon>contact_mail</mat-icon> تماس با ما</button>
-  <button mat-menu-item routerLink="/aboutus"><mat-icon>home_work</mat-icon> درباره ما</button>
-  <!-- <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
-    <div class="input-group">
-      <input class="input-group-field" type="search" value="" placeholder="Search" formControlName="search">
-      <div class="input-group-button"><button mat-button routerLink="/"><mat-icon>magnify</mat-icon></button></div>
+  <div class="toolbar-content">
+    <button mat-button routerLink="/" class="logo-button">
+      <mat-icon>link</mat-icon>
+      <span class="toolbar-title">{{title}}</span>
+    </button>
+    
+    <!-- Desktop Navigation -->
+    <div class="desktop-nav">
+      <button mat-button routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <mat-icon>home</mat-icon>
+        <span>خانه</span>
+      </button>
+      <button mat-button routerLink="/news" routerLinkActive="active">
+        <mat-icon>article</mat-icon>
+        <span>اخبار</span>
+      </button>
+      <button mat-button routerLink="/contactus" routerLinkActive="active">
+        <mat-icon>contact_mail</mat-icon>
+        <span>تماس با ما</span>
+      </button>
+      <button mat-button routerLink="/aboutus" routerLinkActive="active">
+        <mat-icon>info</mat-icon>
+        <span>درباره ما</span>
+      </button>
     </div>
-  </form> -->
-</mat-menu>
-<div style="text-align: center;" class="col-lg-3 col-md-2 col-md-none  col-sm-none"></div>
-<div style="text-align: center;" class="col-lg-6 col-md-8 col-md-12 col-sm-12">
-  <router-outlet></router-outlet>
-  <div style="text-align: center;">
-    <ins data-revive-zoneid="3" data-revive-id="b693742677202eaf8c8eadc1ececa7e8"></ins>
 
+    <!-- Mobile Menu Button -->
+    <button mat-icon-button [mat-menu-trigger-for]="menu" class="mobile-menu-button">
+      <mat-icon>menu</mat-icon>
+    </button>
   </div>
-  <div class="footer">
-    <ins data-revive-zoneid="4" data-revive-id="b693742677202eaf8c8eadc1ececa7e8"></ins>
+</mat-toolbar>
 
-    <div style="direction:rt1">
-      طراحی و پشتیبانی با 
-      <a href="http://ntk.ir"> نگین تجارت کاروی
+<!-- Mobile Menu -->
+<mat-menu x-position="before" #menu="matMenu" class="mobile-menu">
+  <button mat-menu-item routerLink="/">
+    <mat-icon>home</mat-icon>
+    <span>خانه</span>
+  </button>
+  <button mat-menu-item routerLink="/news">
+    <mat-icon>article</mat-icon>
+    <span>اخبار</span>
+  </button>
+  <button mat-menu-item routerLink="/contactus">
+    <mat-icon>contact_mail</mat-icon>
+    <span>تماس با ما</span>
+  </button>
+  <button mat-menu-item routerLink="/aboutus">
+    <mat-icon>info</mat-icon>
+    <span>درباره ما</span>
+  </button>
+</mat-menu>
 
-      </a>
-
-      <a href="https://karavi.ca">
-
-        Karavi Developer
-
-      </a>
+<!-- Main Content Area -->
+<div class="main-container">
+  <div class="content-wrapper">
+    <router-outlet></router-outlet>
+    
+    <!-- Ad Space -->
+    <div class="ad-container">
+      <ins data-revive-zoneid="3" data-revive-id="b693742677202eaf8c8eadc1ececa7e8"></ins>
     </div>
   </div>
 </div>
-<div style="text-align: center;" class="col-lg-3 col-md-2 col-md-none col-sm-none"></div>
+
+<!-- Modern Footer -->
+<footer class="modern-footer">
+  <div class="footer-content">
+    <ins data-revive-zoneid="4" data-revive-id="b693742677202eaf8c8eadc1ececa7e8"></ins>
+    <div class="footer-text">
+      <p>
+        طراحی و پشتیبانی با
+        <a href="http://ntk.ir" target="_blank" rel="noopener">نگین تجارت کاروی</a>
+        و
+        <a href="https://karavi.ca" target="_blank" rel="noopener">Karavi Developer</a>
+      </p>
+    </div>
+  </div>
+</footer>

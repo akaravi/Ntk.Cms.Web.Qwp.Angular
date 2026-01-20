@@ -280,6 +280,17 @@ export class LinkManagementShortLinkComponent implements OnInit {
       }
     }
   }
+
+  onTabChange(event): void {
+    const tabIndex = event.index + 1; // Material tabs are 0-indexed, our tabs are 1-indexed
+    const selectedTab = this.tabs.find(tab => tab.key === tabIndex);
+    if (selectedTab) {
+      this.tabChange(selectedTab);
+    } else {
+      // Fallback: set selectedUserTab directly
+      this.selectedUserTab = tabIndex;
+    }
+  }
   /* To copy Text from Textbox */
   copyInputMessage(inputElement): void {
     inputElement.select();

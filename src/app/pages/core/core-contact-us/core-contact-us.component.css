@@ -1,0 +1,260 @@
+/* Contact Us Page Styles */
+.contact-us-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* RTL/LTR fixes for contact form */
+.email-text,
+.phone-number {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+/* Material form field RTL adjustments */
+mat-form-field[dir="ltr"] input,
+mat-form-field .ltr-input {
+  direction: ltr;
+  text-align: left;
+}
+
+.page-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  color: #3f51b5;
+  font-size: 2.5rem;
+  font-weight: 700;
+  font-family: 'Vazirmatn', 'Roboto', sans-serif;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  color: #666;
+  font-size: 1.1rem;
+  font-family: 'Vazirmatn', 'Roboto', sans-serif;
+  font-weight: 400;
+  margin-top: 0;
+  line-height: 1.6;
+}
+
+.contact-content {
+  margin-top: 24px;
+}
+
+.contact-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.contact-card mat-card-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 24px;
+  margin: -16px -16px 24px -16px;
+}
+
+.contact-card mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 1.5rem;
+  margin: 0;
+  color: white;
+}
+
+.contact-card mat-card-title mat-icon {
+  font-size: 32px;
+  width: 32px;
+  height: 32px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Info Card */
+.info-card {
+  background-color: #e3f2fd;
+  border-right: 4px solid #2196f3;
+  margin-bottom: 16px;
+}
+
+.info-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: #1976d2;
+}
+
+.info-icon {
+  color: #2196f3;
+  margin-top: 4px;
+}
+
+/* Captcha Section */
+.captcha-section {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  margin: 16px 0;
+  flex-wrap: wrap;
+}
+
+.captcha-image-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.captcha-image {
+  cursor: pointer;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  padding: 8px;
+  background-color: white;
+  transition: all 0.3s ease;
+  max-width: 200px;
+}
+
+.captcha-image:hover {
+  border-color: #3f51b5;
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.captcha-hint {
+  font-size: 0.85rem;
+  color: #666;
+  text-align: center;
+}
+
+.captcha-input {
+  flex: 1;
+  min-width: 250px;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: flex-start;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 1px solid #e0e0e0;
+}
+
+.submit-button,
+.cancel-button {
+  min-width: 120px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Message Cards */
+.message-card {
+  margin-top: 16px;
+}
+
+.message-success {
+  background-color: #4caf50;
+  color: white;
+}
+
+.message-error {
+  background-color: #f44336;
+  color: white;
+}
+
+.message-card mat-card-content {
+  margin: 0;
+  padding: 12px 16px;
+  color: white;
+}
+
+/* Progress Bar */
+mat-progress-bar {
+  margin: 16px 0;
+  height: 4px;
+  border-radius: 2px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .contact-us-container {
+    padding: 16px;
+  }
+
+  .page-header h1 {
+    font-size: 2rem;
+  }
+
+  .contact-card mat-card-title {
+    font-size: 1.25rem;
+  }
+
+  .contact-card mat-card-title mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .captcha-section {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .captcha-image-wrapper {
+    align-items: center;
+  }
+
+  .captcha-input {
+    width: 100%;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .submit-button,
+  .cancel-button {
+    width: 100%;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.contact-card {
+  animation: fadeIn 0.5s ease-out;
+}

@@ -1,12 +1,223 @@
-
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-h1, h2 {
-  text-align: center;
+/* Global Styles - Modern Professional Design */
+/* Note: Vazirmatn font is loaded from assets/fonts/vazirmatn/vazirmatn.css */
+html, body {
+  height: 100%;
+  margin: 0;
+  direction: rtl;
+  /* Fallback fonts if Vazirmatn is not available */
+  font-family: 'Vazirmatn', 'Roboto', 'Tahoma', 'Arial', sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background-attachment: fixed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+body {
+  margin: 0;
+  /* Fallback fonts if Vazirmatn is not available */
+  font-family: 'Vazirmatn', 'Roboto', 'Tahoma', 'Arial', sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Vazirmatn', 'Roboto', sans-serif;
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+  color: #2c3e50;
+  letter-spacing: -0.02em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  color: #3f51b5;
+}
+
+h3 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+h4 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+h5 {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+h6 {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+p {
+  font-family: 'Vazirmatn', 'Roboto', sans-serif;
+  line-height: 1.8;
+  margin-bottom: 1rem;
+  color: #4a5568;
+}
+
+a {
+  font-family: 'Vazirmatn', 'Roboto', sans-serif;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+button, input, textarea, select {
+  font-family: 'Vazirmatn', 'Roboto', sans-serif;
+}
+
+/* RTL/LTR Direction Rules */
+/* Default RTL for Persian text */
+input[type="text"],
+textarea {
+  direction: rtl;
+  text-align: right;
+}
+
+/* LTR for URLs, Emails, and technical content */
+input[type="url"],
+input[type="email"],
+input[type="tel"],
+.url-text,
+.email-text,
+.technical-text,
+.monospace-text {
+  direction: ltr !important;
+  text-align: left !important;
+}
+
+/* Key/Code inputs should be LTR */
+input[name*="key"],
+input[name*="Key"],
+input[name*="captcha"],
+.captcha-input input,
+.url-input {
+  direction: ltr !important;
+  text-align: left !important;
+  font-family: 'Courier New', 'Roboto Mono', monospace;
+}
+
+/* Links with URLs should be LTR */
+a[href^="http"],
+a[href^="https"],
+a[href^="mailto:"],
+.url-link {
+  direction: ltr;
+  display: inline-block;
+  text-align: left;
+}
+
+/* Numbers and codes */
+.code-text,
+.key-text,
+.short-link {
+  direction: ltr;
+  text-align: left;
+  font-family: 'Courier New', 'Roboto Mono', monospace;
+}
+
+/* Phone numbers */
+.phone-number {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Material form fields RTL/LTR */
+mat-form-field {
+  direction: rtl;
+}
+
+mat-form-field[dir="ltr"],
+mat-form-field .ltr-input {
+  direction: ltr;
+}
+
+mat-form-field .mat-form-field-label {
+  direction: rtl;
+}
+
+/* Input types that should be LTR */
+input[type="email"] + .mat-form-field-label,
+input[type="url"] + .mat-form-field-label,
+input[type="tel"] + .mat-form-field-label {
+  direction: rtl;
+}
+
+/* Value display for URLs and emails in results */
+.url-value,
+.email-value,
+.key-value {
+  direction: ltr !important;
+  text-align: left !important;
+  font-family: 'Courier New', 'Roboto Mono', monospace;
+  display: inline-block;
+  unicode-bidi: embed;
+}
+
+/* Material Card Enhancements */
+mat-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 12px !important;
+  transition: all 0.3s ease;
+}
+
+mat-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+  transform: translateY(-2px);
+}
+
+/* Form Enhancements */
+mat-form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.mat-form-field-appearance-outline .mat-form-field-outline {
+  color: rgba(0, 0, 0, 0.12);
+}
+
+.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+  color: #3f51b5;
+}
+
+/* Button Enhancements */
+button[mat-raised-button],
+button[mat-flat-button] {
+  border-radius: 24px !important;
+  padding: 8px 24px !important;
+  font-weight: 500;
+  text-transform: none !important;
+  transition: all 0.3s ease;
+}
+
+button[mat-raised-button]:hover,
+button[mat-flat-button]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Input Group Styles */
 .input-group {
   display: flex;
   align-items: stretch;
@@ -14,6 +225,7 @@ h1, h2 {
 
 .input-group-field {
   margin-right: 0;
+  border-radius: 4px;
 }
 
 .input-group .input-group-button {
@@ -22,5 +234,99 @@ h1, h2 {
 }
 
 .input-group .mat-flat-button {
-  border-radius: 0;
+  border-radius: 4px;
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Persian/Arabic Text Improvements */
+[dir="rtl"] {
+  text-align: right;
+}
+
+/* Better Text Rendering */
+body, p, span, div, label, input, textarea, button {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Persian Numbers */
+.persian-numbers {
+  font-variant-numeric: normal;
+  direction: ltr;
+  display: inline-block;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  html, body {
+    font-size: 14px;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+
+  .container {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  html, body {
+    font-size: 13px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
 }

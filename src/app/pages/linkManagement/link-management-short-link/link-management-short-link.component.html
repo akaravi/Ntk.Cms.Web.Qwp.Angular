@@ -1,19 +1,114 @@
-<div class="col-md-12">
-  <!-- {{modelTargetSetDto | json}} -->
-  <div class="col-xs-3" style="padding-left: 4px; padding-right: 0px">
-    <ul class="nav nav-tabs tabs-left">
-      <li [ngClass]="{ active: tab.active }" *ngFor="let tab of tabs">
-        <a (click)="tabChange(tab)" [innerHTML]="tab.name"> </a>
-      </li>
-    </ul>
+<div class="link-shortener-container">
+  <div class="page-header">
+    <h1>سرویس کوتاه‌کننده لینک و فایل</h1>
+    <p class="subtitle">به راحتی لینک‌ها و فایل‌های خود را به اشتراک بگذارید</p>
   </div>
 
-  <div class="col-xs-9" style="padding-left: 2px; padding-right: 2px">
-    <div class="tab-content">
-      <div class="tab-pane" [ngClass]="{
-          showTab: selectedUserTab == 1,
-          hideTab: selectedUserTab != 1
-        }">
+  <!-- Modern Material Tabs -->
+  <mat-card class="tabs-card">
+    <mat-tab-group [selectedIndex]="selectedUserTab - 1" (selectedTabChange)="onTabChange($event)" class="modern-tabs">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>cloud_upload</mat-icon>
+          <span>ارسال فایل</span>
+        </ng-template>
+        <div class="tab-content-wrapper">
+          <!-- Admin tab -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <i class="color">ارسال </i>
+              <i class="color">لینک کوتاه فایل</i>
+            </div>
+            <div class="panel-body">
+              <form #registerForm="ngForm" (ngSubmit)="onSubmitSetFile()">
+                <div class="row m-0">
+                  <div class="col-lg-12" *ngIf="
+                      !modelTargetSetResponceSetFile.key ||
+                      modelTargetSetResponceSetFile.key?.length == 0
+                    ">
+                    <label for="uploadedfileKey"> با کلیک بر روی دکمه زیر فایل مورد نظر خود را انتخاب کنید</label>
+                    <div *ngIf="uploadedfileKey?.length == 0">
+                      <app-file-upload [options]="optionsUploadFile"></app-file-upload>
+                    </div>
+                    <div *ngIf="uploadedfileKey?.length > 0">
+                      ✅ Uploaded you file.
+                      <br />
+                      {{ uploadedfileName }}
+                    </div>
+
+                    <!-- Captcha -->
+                    <div class="captcha-section">
+                      <div class="captcha-image-wrapper">
+                        <img [src]="captchaModel.image" (click)="onCaptchaOrder()" class="captcha-image" alt="کپچا">
+                        <span class="captcha-hint">برای تغییر تصویر کلیک کنید</span>
+                      </div>
+                      <mat-form-field appearance="outline" class="captcha-input">
+                        <mat-label>متن تصویر امنیتی</mat-label>
+                        <input matInput [(ngModel)]="modelTargetSetDto.captchaText" name="captchaText"
+                               #captchaTextSetFile="ngModel" autocomplete="off" required dir="ltr">
+                        <mat-error *ngIf="captchaTextSetFile.invalid && (captchaTextSetFile.dirty || captchaTextSetFile.touched)">
+                          <span *ngIf="captchaTextSetFile.errors?.required">پر کردن این فیلد الزامی است</span>
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <button mat-raised-button color="primary" [disabled]="!modelTargetSetDto.uploadFileGUID || modelTargetSetDto.uploadFileGUID?.length < 5"
+                      class="action-button" type="button" (click)="onSubmitSetFile()">
+                      <mat-icon>cloud_upload</mat-icon>
+                      ساخت لینک
+                    </button>
+                    <p style="color: deeppink">{{ messageShortLinkSetFile }}</p>
+                    <p>
+                      <strong style="color: deeppink">{{ message }}</strong>
+                    </p>
+                  </div>
+                  <!--View Set-->
+                  <div class="col-lg-12" *ngIf="
+                      modelTargetSetResponceSetFile &&
+                      modelTargetSetResponceSetFile.key &&
+                      modelTargetSetResponceSetFile.key.length > 0
+                    ">
+                    <h4 class="card-title mb-2">
+                      <span style="direction: rtl;">کلید:</span> <span class="key-value">{{ modelTargetSetResponceSetFile.key }}</span>
+                      <svg (click)="copyText(modelTargetSetResponceSetFile.key)" viewBox="0 0 16 16" version="1.1"
+                        width="16" height="16" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
+                        </path>
+                      </svg>
+                    </h4>
+                    <h4 class="card-title mb-2" *ngIf="modelTargetSetResponceSetFile.shortLinkUrl">
+                      <a href="{{ modelTargetSetResponceSetFile.shortLinkUrl }}" target="_blank" class="url-link" dir="ltr">
+                        {{ modelTargetSetResponceSetFile.shortLinkUrl }}
+                      </a>
+                      <svg (click)="copyText(modelTargetSetResponceSetFile.shortLinkUrl)
+                        " viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
+                        <path fill-rule="evenodd"
+                          d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
+                        </path>
+                      </svg>
+                    </h4>
+                    <div *ngIf="modelTargetSetResponceSetFile.shortLinkQRCodeBase64">
+                      <a href="{{ modelTargetSetResponceSetFile.shortLinkUrl }}" target="_blank">
+                        <img src="{{ modelTargetSetResponceSetFile.shortLinkQRCodeBase64 }}" style="width: 200px" />
+                      </a>
+                    </div>
+                  </div>
+                  <!--View Set-->
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>get_app</mat-icon>
+          <span>دریافت لینک</span>
+        </ng-template>
+
+        <div class="tab-content-wrapper">
         <div class="panel panel-default">
           <div class="panel-heading">
             <i class="color">دریافت </i>
@@ -27,7 +122,7 @@
                   <h3> شما میتوانید با وارد کردن کلید دریافتی لینک مورد نظر را دریافت کنید</h3>
                   <label for="key"> کلید لینک کوتاه شما</label>
                   <input [(ngModel)]="modelTargetGetDto.key" id="key" name="Key" type="text"
-                    class="form-control input-ntk mb-3" placeholder="***@*****" #Key="ngModel" minlength="8" required />
+                    class="form-control input-ntk mb-3 key-text" placeholder="***@*****" #Key="ngModel" minlength="8" required dir="ltr" />
                   <div *ngIf="Key.invalid && (Key.dirty || Key.touched)" class="alert alert-danger">
                     <div *ngIf="Key.errors.required">! پر کردن این فیلد الزامی است</div>
                     <div *ngIf="Key.errors.minlength">
@@ -35,18 +130,25 @@
                     </div>
                   </div>
 
-                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()" />
-                  <input [(ngModel)]="modelTargetGetDto.captchaText" type="captchaText" name="captchaText"
-                    #captchaTextGet="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
-                    placeholder="محتوای عکس امنیتی" required />
-                  <div *ngIf="captchaTextGet.invalid && (captchaTextGet.dirty || captchaTextGet.touched) "
-                    class="alert alert-danger">
-                    <div *ngIf="captchaTextGet.errors.required">
-                      ! پر کردن این فیلد الزامی است
+                  <!-- Captcha -->
+                  <div class="captcha-section">
+                    <div class="captcha-image-wrapper">
+                      <img [src]="captchaModel.image" (click)="onCaptchaOrder()" class="captcha-image" alt="کپچا">
+                      <span class="captcha-hint">برای تغییر تصویر کلیک کنید</span>
                     </div>
+                    <mat-form-field appearance="outline" class="captcha-input">
+                      <mat-label>متن تصویر امنیتی</mat-label>
+                      <input matInput [(ngModel)]="modelTargetGetDto.captchaText" name="captchaText"
+                             #captchaTextGet="ngModel" autocomplete="off" required dir="ltr">
+                      <mat-error *ngIf="captchaTextGet.invalid && (captchaTextGet.dirty || captchaTextGet.touched)">
+                        <span *ngIf="captchaTextGet.errors?.required">پر کردن این فیلد الزامی است</span>
+                      </mat-error>
+                    </mat-form-field>
                   </div>
-                  <button [disabled]="!modelTargetGetDto.key || modelTargetGetDto.key.length < 8"
-                    class="btn btn-primary" style="width: 100%">
+
+                  <button mat-raised-button color="primary" [disabled]="!modelTargetGetDto.key || modelTargetGetDto.key.length < 8"
+                    class="action-button" type="button" (click)="onSubmitGet()">
+                    <mat-icon>get_app</mat-icon>
                     دریافت لینک
                   </button>
 
@@ -64,7 +166,7 @@
                   ">
                   <div class="input-group-button">
                     <h4 class="card-title mb-2">
-                      Key: {{ modelTargetGetResponce.key }}
+                      <span style="direction: rtl;">کلید:</span> <span class="key-value">{{ modelTargetGetResponce.key }}</span>
                       <svg (click)="copyText(modelTargetGetResponce.key)" viewBox="0 0 16 16" version="1.1" width="16"
                         height="16" aria-hidden="true">
                         <path fill-rule="evenodd"
@@ -86,8 +188,8 @@
                   </h4>
                   <h4 class="card-title mb-2" *ngIf="modelTargetGetResponce.urlAddress">
                     <input value="{{ modelTargetGetResponce.urlAddress }}" type="text" readonly
-                      class="form-control input-ntk mb-3" />
-                    <a href="{{ modelTargetGetResponce.urlAddress }}" target="”_blank”">
+                      class="form-control input-ntk mb-3 url-value" dir="ltr" />
+                    <a href="{{ modelTargetGetResponce.urlAddress }}" target="_blank" class="url-link" dir="ltr">
                       <svg viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
                         <path fill-rule="evenodd"
                           d="M1.5 8a6.5 6.5 0 1113 0 6.5 6.5 0 01-13 0zM8 0a8 8 0 100 16A8 8 0 008 0zM6.379 5.227A.25.25 0 006 5.442v5.117a.25.25 0 00.379.214l4.264-2.559a.25.25 0 000-.428L6.379 5.227z">
@@ -105,12 +207,12 @@
                       modelTargetGetResponce.filesSrc &&
                       modelTargetGetResponce.filesSrc.length > 0
                     ">
-                    <a *ngFor="let file of modelTargetGetResponce.filesSrc" href="{{ file }}" target="”_blank”">
+                    <a *ngFor="let file of modelTargetGetResponce.filesSrc" href="{{ file }}" target="_blank" class="url-link" dir="ltr">
                       {{ file }}
                     </a>
                   </div>
                   <h4 class="card-title mb-2" *ngIf="modelTargetGetResponce.shortLinkUrl">
-                    <a class="subLink" href="{{ modelTargetGetResponce.shortLinkUrl }}" target="”_blank”">
+                    <a class="subLink url-link" href="{{ modelTargetGetResponce.shortLinkUrl }}" target="_blank" dir="ltr">
                       {{ modelTargetGetResponce.shortLinkUrl }}
                     </a>
                     <svg (click)="copyText(modelTargetGetResponce.shortLinkUrl)" viewBox="0 0 16 16" version="1.1"
@@ -121,7 +223,7 @@
                     </svg>
                   </h4>
                   <div *ngIf="modelTargetGetResponce.shortLinkQRCodeBase64">
-                    <a href="{{ modelTargetGetResponce.shortLinkUrl }}" target="”_blank”">
+                    <a href="{{ modelTargetGetResponce.shortLinkUrl }}" target="_blank">
                       <img src="{{ modelTargetGetResponce.shortLinkQRCodeBase64 }}" style="width: 195px" />
                     </a>
                   </div>
@@ -131,13 +233,15 @@
             </form>
           </div>
         </div>
-        <!-- Profile tab -->
       </div>
+    </mat-tab>
 
-      <div class="tab-pane" [ngClass]="{
-          showTab: selectedUserTab == 2,
-          hideTab: selectedUserTab != 2
-        }">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>send</mat-icon>
+        <span>ارسال لینک</span>
+      </ng-template>
+      <div class="tab-content-wrapper">
         <!-- Change password tab -->
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -155,7 +259,7 @@
                   <h3>  شما میتوانید با وارد کردن آدرس url خود لینک کوتاه شده بسازید و آن را با دیگران به اشتراک بگذارید</h3>
                   <label for="UrlAddress"> آدرس url</label>
                   <input [(ngModel)]="modelTargetSetDto.urlAddress" name="UrlAddress" #UrlAddress="ngModel" required
-                    minlength="6" type="text" class="form-control input-ntk mb-3" placeholder="Url Address" required />
+                    minlength="6" type="url" class="form-control input-ntk mb-3 url-input" placeholder="https://example.com" required dir="ltr" />
 
                   <div *ngIf="
                       UrlAddress.invalid &&
@@ -168,23 +272,26 @@
                       طول آدرس باید حداقل 6 کارکتر باشد
                     </div>
                   </div>
-                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()" />
-                  <input [(ngModel)]="modelTargetSetDto.captchaText" type="captchaText" name="captchaText"
-                    #captchaTextSetUrlAddress="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
-                    placeholder="محتوای عکس امنیتی" required />
-                  <div *ngIf="
-                      captchaTextSetUrlAddress.invalid &&
-                      (captchaTextSetUrlAddress.dirty ||
-                        captchaTextSetUrlAddress.touched)
-                    " class="alert alert-danger">
-                    <div *ngIf="captchaTextSetUrlAddress.errors.required">
-                      ! پر کردن این فیلد الزامی است
+
+                  <!-- Captcha -->
+                  <div class="captcha-section">
+                    <div class="captcha-image-wrapper">
+                      <img [src]="captchaModel.image" (click)="onCaptchaOrder()" class="captcha-image" alt="کپچا">
+                      <span class="captcha-hint">برای تغییر تصویر کلیک کنید</span>
                     </div>
+                    <mat-form-field appearance="outline" class="captcha-input">
+                      <mat-label>متن تصویر امنیتی</mat-label>
+                      <input matInput [(ngModel)]="modelTargetSetDto.captchaText" name="captchaText"
+                             #captchaTextSetUrlAddress="ngModel" autocomplete="off" required dir="ltr">
+                      <mat-error *ngIf="captchaTextSetUrlAddress.invalid && (captchaTextSetUrlAddress.dirty || captchaTextSetUrlAddress.touched)">
+                        <span *ngIf="captchaTextSetUrlAddress.errors?.required">پر کردن این فیلد الزامی است</span>
+                      </mat-error>
+                    </mat-form-field>
                   </div>
-                  <button [disabled]="
-                      !modelTargetSetDto.urlAddress ||
-                      modelTargetSetDto.urlAddress?.length < 5
-                    " class="btn btn-primary" style="width: 100%">
+
+                  <button mat-raised-button color="primary" [disabled]="!modelTargetSetDto.urlAddress || modelTargetSetDto.urlAddress?.length < 5"
+                    class="action-button" type="button" (click)="onSubmitSetLink()">
+                    <mat-icon>send</mat-icon>
                     ارسال لینک
                   </button>
 
@@ -200,7 +307,7 @@
                     modelTargetSetResponceSetLink.key.length > 0
                   ">
                   <h4 class="card-title mb-2">
-                    Key: {{ modelTargetSetResponceSetLink.key }}
+                    <span style="direction: rtl;">کلید:</span> <span class="key-value">{{ modelTargetSetResponceSetLink.key }}</span>
                     <svg (click)="copyText(modelTargetSetResponceSetLink.key)" viewBox="0 0 16 16" version="1.1"
                       width="16" height="16" aria-hidden="true">
                       <path fill-rule="evenodd"
@@ -209,7 +316,7 @@
                     </svg>
                   </h4>
                   <h4 class="card-title mb-2" *ngIf="modelTargetSetResponceSetLink.shortLinkUrl">
-                    <a href="{{ modelTargetSetResponceSetLink.shortLinkUrl }}" target="”_blank”">
+                    <a href="{{ modelTargetSetResponceSetLink.shortLinkUrl }}" target="_blank" class="url-link" dir="ltr">
                       {{ modelTargetSetResponceSetLink.shortLinkUrl }}
                     </a>
                     <svg (click)="
@@ -221,10 +328,8 @@
                     </svg>
                   </h4>
                   <div *ngIf="modelTargetSetResponceSetLink.shortLinkQRCodeBase64">
-                    <a href="{{ modelTargetSetResponceSetLink.shortLinkUrl }}" target="”_blank”">
-                      <img src="{{
-                          modelTargetSetResponceSetLink.shortLinkQRCodeBase64
-                        }}" style="width: 200px" />
+                    <a href="{{ modelTargetSetResponceSetLink.shortLinkUrl }}" target="_blank">
+                      <img src="{{ modelTargetSetResponceSetLink.shortLinkQRCodeBase64 }}" style="width: 200px" />
                     </a>
                   </div>
                 </div>
@@ -234,102 +339,14 @@
           </div>
         </div>
       </div>
+    </mat-tab>
 
-      <div class="tab-pane" [ngClass]="{
-          showTab: selectedUserTab == 3,
-          hideTab: selectedUserTab != 3
-        }">
-        <!-- Admin tab -->
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <i class="color">ارسال </i>
-            <i class="color">لینک کوتاه فایل</i>
-          </div>
-          <div class="panel-body">
-            <form #registerForm="ngForm" (ngSubmit)="onSubmitSetFile()">
-              <div class="row m-0">
-                <div class="col-lg-12" *ngIf="
-                    !modelTargetSetResponceSetFile.key ||
-                    modelTargetSetResponceSetFile.key?.length == 0
-                  ">
-                  <label for="uploadedfileKey"> با کلیک بر روی دکمه زیر فایل مورد نظر خود را انتخاب کنید</label>
-                  <div *ngIf="uploadedfileKey?.length == 0">
-                    <app-file-upload [options]="optionsUploadFile"></app-file-upload>
-                  </div>
-                  <div *ngIf="uploadedfileKey?.length > 0">
-                    ✅ Uploaded you file.
-                    <br />
-                    {{ uploadedfileName }}
-                  </div>
-
-                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()" />
-                  <input [(ngModel)]="modelTargetSetDto.captchaText" type="captchaText" name="captchaText"
-                    #captchaTextSetFile="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
-                    placeholder="محتوای عکس امنیتی" required />
-                  <div *ngIf="
-                      captchaTextSetFile.invalid &&
-                      (captchaTextSetFile.dirty || captchaTextSetFile.touched)
-                    " class="alert alert-danger">
-                    <div *ngIf="captchaTextSetFile.errors.required">
-                      ! پر کردن این فیلد الزامی است
-                    </div>
-                  </div>
-                  <button [disabled]="
-                      !modelTargetSetDto.uploadFileGUID ||
-                      modelTargetSetDto.uploadFileGUID?.length < 5
-                    " class="btn btn-primary" style="width: 100%">
-                    ساخت لینک
-                  </button>
-                  <p style="color: deeppink">{{ messageShortLinkSetFile }}</p>
-                  <p>
-                    <strong style="color: deeppink">{{ message }}</strong>
-                  </p>
-                </div>
-                <!--View Set-->
-                <div class="col-lg-12" *ngIf="
-                    modelTargetSetResponceSetFile &&
-                    modelTargetSetResponceSetFile.key &&
-                    modelTargetSetResponceSetFile.key.length > 0
-                  ">
-                  <h4 class="card-title mb-2">
-                    Key: {{ modelTargetSetResponceSetFile.key }}
-                    <svg (click)="copyText(modelTargetSetResponceSetFile.key)" viewBox="0 0 16 16" version="1.1"
-                      width="16" height="16" aria-hidden="true">
-                      <path fill-rule="evenodd"
-                        d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
-                      </path>
-                    </svg>
-                  </h4>
-                  <h4 class="card-title mb-2" *ngIf="modelTargetSetResponceSetFile.shortLinkUrl">
-                    <a href="{{ modelTargetSetResponceSetFile.shortLinkUrl }}" target="”_blank”">
-                      {{ modelTargetSetResponceSetFile.shortLinkUrl }}
-                    </a>
-                    <svg (click)="copyText(modelTargetSetResponceSetFile.shortLinkUrl)
-                      " viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
-                      <path fill-rule="evenodd"
-                        d="M5.75 1a.75.75 0 00-.75.75v3c0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75v-3a.75.75 0 00-.75-.75h-4.5zm.75 3V2.5h3V4h-3zm-2.874-.467a.75.75 0 00-.752-1.298A1.75 1.75 0 002 3.75v9.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0014 13.25v-9.5a1.75 1.75 0 00-.874-1.515.75.75 0 10-.752 1.298.25.25 0 01.126.217v9.5a.25.25 0 01-.25.25h-8.5a.25.25 0 01-.25-.25v-9.5a.25.25 0 01.126-.217z">
-                      </path>
-                    </svg>
-                  </h4>
-                  <div *ngIf="modelTargetSetResponceSetFile.shortLinkQRCodeBase64">
-                    <a href="{{ modelTargetSetResponceSetFile.shortLinkUrl }}" target="”_blank”">
-                      <img src="{{
-                          modelTargetSetResponceSetFile.shortLinkQRCodeBase64
-                        }}" style="width: 200px" />
-                    </a>
-                  </div>
-                </div>
-                <!--View Set-->
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-
-      <div class="tab-pane" [ngClass]="{
-          showTab: selectedUserTab == 4,
-          hideTab: selectedUserTab != 4
-        }">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>message</mat-icon>
+        <span>ارسال پیام</span>
+      </ng-template>
+      <div class="tab-content-wrapper">
         <!-- stripe account tab -->
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -359,23 +376,26 @@
                       طول پیام باید حداقل 6 کارکتر باشد
                     </div>
                   </div>
-                  <img src="{{ captchaModel.image }}" (click)="onCaptchaOrder()" />
-                  <input [(ngModel)]="modelTargetSetDto.captchaText" type="captchaText" name="captchaText"
-                    #captchaTextSetDescription="ngModel" autocomplete="off" class="form-control input-ntk mb-3"
-                    placeholder="محتوای عکس امنیتی" required />
-                  <div *ngIf="
-                      captchaTextSetDescription.invalid &&
-                      (captchaTextSetDescription.dirty ||
-                        captchaTextSetDescription.touched)
-                    " class="alert alert-danger">
-                    <div *ngIf="captchaTextSetDescription.errors.required">
-                      ! پر کردن این فیلد الزامی است
+
+                  <!-- Captcha -->
+                  <div class="captcha-section">
+                    <div class="captcha-image-wrapper">
+                      <img [src]="captchaModel.image" (click)="onCaptchaOrder()" class="captcha-image" alt="کپچا">
+                      <span class="captcha-hint">برای تغییر تصویر کلیک کنید</span>
                     </div>
+                    <mat-form-field appearance="outline" class="captcha-input">
+                      <mat-label>متن تصویر امنیتی</mat-label>
+                      <input matInput [(ngModel)]="modelTargetSetDto.captchaText" name="captchaText"
+                             #captchaTextSetDescription="ngModel" autocomplete="off" required dir="ltr">
+                      <mat-error *ngIf="captchaTextSetDescription.invalid && (captchaTextSetDescription.dirty || captchaTextSetDescription.touched)">
+                        <span *ngIf="captchaTextSetDescription.errors?.required">پر کردن این فیلد الزامی است</span>
+                      </mat-error>
+                    </mat-form-field>
                   </div>
-                  <button [disabled]="
-                      !modelTargetSetDto.description ||
-                      modelTargetSetDto.description?.length < 5
-                    " class="btn btn-primary" style="width: 100%">
+
+                  <button mat-raised-button color="primary" [disabled]="!modelTargetSetDto.description || modelTargetSetDto.description?.length < 5"
+                    class="action-button" type="button" (click)="onSubmitSetDescription()">
+                    <mat-icon>message</mat-icon>
                     ساخت لینک
                   </button>
                   <p style="color: deeppink">
@@ -392,7 +412,7 @@
                     modelTargetSetResponceSetDescription.key?.length > 0
                   ">
                   <h4 class="card-title mb-2">
-                    Key: {{ modelTargetSetResponceSetDescription.key }}
+                    <span style="direction: rtl;">کلید:</span> <span class="key-value">{{ modelTargetSetResponceSetDescription.key }}</span>
                     <svg (click)="
                         copyText(modelTargetSetResponceSetDescription.key)
                       " viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true">
@@ -402,9 +422,7 @@
                     </svg>
                   </h4>
                   <h4 class="card-title mb-2" *ngIf="modelTargetSetResponceSetDescription.shortLinkUrl">
-                    <a href="{{
-                        modelTargetSetResponceSetDescription.shortLinkUrl
-                      }}" target="”_blank”">
+                    <a href="{{ modelTargetSetResponceSetDescription.shortLinkUrl }}" target="_blank" class="url-link" dir="ltr">
                       {{ modelTargetSetResponceSetDescription.shortLinkUrl }}
                     </a>
                     <svg (click)="
@@ -417,15 +435,9 @@
                       </path>
                     </svg>
                   </h4>
-                  <div *ngIf="
-                      modelTargetSetResponceSetDescription.shortLinkQRCodeBase64
-                    ">
-                    <a href="{{
-                        modelTargetSetResponceSetDescription.shortLinkUrl
-                      }}" target="”_blank”">
-                      <img src="{{
-                          modelTargetSetResponceSetDescription.shortLinkQRCodeBase64
-                        }}" style="width: 200px" />
+                  <div *ngIf="modelTargetSetResponceSetDescription.shortLinkQRCodeBase64">
+                    <a href="{{ modelTargetSetResponceSetDescription.shortLinkUrl }}" target="_blank">
+                      <img src="{{ modelTargetSetResponceSetDescription.shortLinkQRCodeBase64 }}" style="width: 200px" />
                     </a>
                   </div>
                 </div>
@@ -435,16 +447,18 @@
           </div>
         </div>
       </div>
+    </mat-tab>
 
-      <div class="tab-pane" [ngClass]="{
-          showTab: selectedUserTab == 5,
-          hideTab: selectedUserTab != 5
-        }">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon>history</mat-icon>
+        <span>تاریخچه</span>
+      </ng-template>
+      <div class="tab-content-wrapper">
         <!-- stripe account tab -->
         <div class="panel panel-default">
           <div class="panel-heading">
             <i class="color">تاریخچه</i>
-
           </div>
           <div class="panel-body">
             <h3> شما میتوانید تاریخچه لیست لینک های ساخته شده خود را مشاهده نمایید</h3>
@@ -460,6 +474,7 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
+    </mat-tab>
+    </mat-tab-group>
+  </mat-card>
 </div>

@@ -30,6 +30,7 @@
               "node_modules/material-icons/iconfont/material-icons.css",
               "@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/ngx-toastr/toastr.css",
+              "src/assets/fonts/vazirmatn/vazirmatn.css",
               "src/styles.css"
             ],
             "scripts": [],

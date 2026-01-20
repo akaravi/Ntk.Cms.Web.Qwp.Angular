@@ -22,6 +22,7 @@ import { AuthInterceptor } from './core/interceptor/auth-interceptor.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { TicketingDepartemenService } from 'ntk-cms-api';
 import { SharedModule } from './shared/shared.module';
+import { NewsDialogComponent } from './pages/news/news-dialog/news-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,6 +31,7 @@ import { SharedModule } from './shared/shared.module';
     CoreAboutUsComponent,
     CoreContactUsComponent,
     NewsContentListComponent,
+    NewsDialogComponent,
 
   ],
   imports: [

@@ -1,3 +1,33 @@
-<div *ngFor="let item of dataModelResult.listItems">
-{{item.title}}
+<div class="news-container">
+  <div class="page-header">
+    <h1>اخبار</h1>
+    <p class="subtitle">آخرین اخبار و مطالب</p>
+  </div>
+
+  <div class="news-content" *ngIf="dataModelResult?.listItems && dataModelResult.listItems.length > 0">
+    <mat-card class="news-card" *ngFor="let item of dataModelResult.listItems">
+      <mat-card-header>
+        <mat-card-title>{{item.title}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content *ngIf="item.body || item.bodyHtml">
+        <div class="news-body" [innerHTML]="sanitizeHtml(item.bodyHtml || item.body)"></div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="viewFullNews(item)">
+          <mat-icon>visibility</mat-icon>
+          مشاهده
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+
+  <div class="empty-state" *ngIf="!dataModelResult?.listItems || dataModelResult.listItems.length === 0">
+    <mat-card class="empty-card">
+      <mat-card-content>
+        <mat-icon class="empty-icon">article</mat-icon>
+        <h2>خبری یافت نشد</h2>
+        <p>در حال حاضر خبری برای نمایش وجود ندارد</p>
+      </mat-card-content>
+    </mat-card>
+  </div>
 </div>
