@@ -10,7 +10,8 @@ import { CmsToastrService } from 'src/app/core/base/cmsToastr.service';
 @Component({
   selector: 'app-core-contact-us',
   templateUrl: './core-contact-us.component.html',
-  styleUrls: ['./core-contact-us.component.css']
+  styleUrls: ['./core-contact-us.component.css'],
+  standalone: false
 })
 export class CoreContactUsComponent implements OnInit {
 

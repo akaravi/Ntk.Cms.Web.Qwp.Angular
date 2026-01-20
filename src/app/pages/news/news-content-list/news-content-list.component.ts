@@ -9,6 +9,7 @@ import {
   selector: 'app-news-content-list',
   templateUrl: './news-content-list.component.html',
   styleUrls: ['./news-content-list.component.css'],
+  standalone: false
 })
 export class NewsContentListComponent implements OnInit {
   filterModelContent = new FilterModel();

@@ -77,7 +77,7 @@ export class AppModule {
       const model: TokenDeviceClientInfoDtoModel = {
         securityKey: environment.cmsTokenConfig.SecurityKey,
         clientMACAddress: '',
-        oSType: OperatingSystemTypeEnum.none,
+        osType: OperatingSystemTypeEnum.none,
         deviceType: DeviceTypeEnum.WebSite,
         packageName: '',
         appBuildVer: 0,

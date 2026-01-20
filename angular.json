@@ -32,7 +32,10 @@
               "node_modules/ngx-toastr/toastr.css",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "@flowjs/flow.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -82,7 +85,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ntk-cms-web-qwp:build"
+            "buildTarget": "ntk-cms-web-qwp:build"
           }
         },
         "test": {
@@ -122,7 +125,6 @@
       }
     }
   },
-  "defaultProject": "ntk-cms-web-qwp",
   "cli": {
     "analytics": "fdb06ea5-71ce-45f2-87ca-fa994e45e6a6"
   }
