@@ -42,13 +42,16 @@ jobs:
     - name: Install dependencies
       run: npm ci --legacy-peer-deps
 
+    - name: Check Angular version
+      run: npx ng version
+
     - name: Run tests
       run: npm test -- --watch=false --browsers=ChromeHeadless
       continue-on-error: true
       timeout-minutes: 10
 
-    - name: Build
-      run: npm run build
+    - name: Build (production)
+      run: npm run build -- --configuration production
 
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
