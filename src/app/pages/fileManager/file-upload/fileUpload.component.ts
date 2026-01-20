@@ -8,7 +8,7 @@ import {
   Input,
   OnDestroy,
 } from '@angular/core';
-import { FlowDirective, Transfer, } from '@flowjs/ngx-flow';
+import { FlowConfig, Transfer, } from '@flowjs/ngx-flow';
 import { ErrorExceptionResult, FileUploadedModel } from 'ntk-cms-api';
 import { Subscription } from 'rxjs';
 import { ComponentOptionModel } from 'src/app/core/cmsModels/componentOptionModel';
@@ -33,7 +33,7 @@ export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
   private dateOptionInput: ComponentOptionModel = new ComponentOptionModel();
 
   @ViewChild('flow', { static: false })
-  flow: FlowDirective;
+  flow: FlowConfig;
   autoUploadSubscription: Subscription;
   flowOption: flowjs.FlowOptions;
   uploadViewImage = false;

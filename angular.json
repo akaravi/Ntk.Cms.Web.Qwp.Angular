@@ -122,7 +122,6 @@
       }
     }
   },
-  "defaultProject": "ntk-cms-web-qwp",
   "cli": {
     "analytics": "fdb06ea5-71ce-45f2-87ca-fa994e45e6a6"
   }
