@@ -3,7 +3,7 @@ git push
 git merge publish
 git switch publish
 git pull
-git merge main
+git merge master
 git push
-git switch main
+git switch master
 git status
