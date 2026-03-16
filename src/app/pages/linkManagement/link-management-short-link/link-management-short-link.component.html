@@ -4,6 +4,7 @@
     <p class="subtitle">به راحتی لینک‌ها و فایل‌های خود را به اشتراک بگذارید</p>
   </div>
 
+
   <!-- Modern Material Tabs -->
   <mat-card class="tabs-card">
     <mat-tab-group [selectedIndex]="selectedUserTab - 1" (selectedTabChange)="onTabChange($event)" class="modern-tabs">
@@ -36,21 +37,14 @@
                       {{ uploadedfileName }}
                     </div>
 
-                    <!-- Captcha -->
-                    <div class="captcha-section">
-                      <div class="captcha-image-wrapper">
-                        <img [src]="captchaModel.image" (click)="onCaptchaOrder()" class="captcha-image" alt="کپچا">
-                        <span class="captcha-hint">برای تغییر تصویر کلیک کنید</span>
-                      </div>
-                      <mat-form-field appearance="outline" class="captcha-input">
-                        <mat-label>متن تصویر امنیتی</mat-label>
-                        <input matInput [(ngModel)]="modelTargetSetDto.captchaText" name="captchaText"
-                               #captchaTextSetFile="ngModel" autocomplete="off" required dir="ltr">
-                        <mat-error *ngIf="captchaTextSetFile.invalid && (captchaTextSetFile.dirty || captchaTextSetFile.touched)">
-                          <span *ngIf="captchaTextSetFile.errors?.required">پر کردن این فیلد الزامی است</span>
-                        </mat-error>
-                      </mat-form-field>
-                    </div>
+
+ <!--captcha Field-->
+ <app-cms-captcha
+ [(model)]="captchaModel"
+ [refreshTrigger]="captchaRefreshTrigger"
+ (captchaKeyChange)="onCaptchaKeyChange($event)"
+ (codeChange)="onCaptchaCodeChange($event)"
+></app-cms-captcha>
 
                     <button mat-raised-button color="primary" [disabled]="!modelTargetSetDto.uploadFileGUID || modelTargetSetDto.uploadFileGUID?.length < 5"
                       class="action-button" type="button" (click)="onSubmitSetFile()">
@@ -130,21 +124,15 @@
                     </div>
                   </div>
 
-                  <!-- Captcha -->
-                  <div class="captcha-section">
-                    <div class="captcha-image-wrapper">
-                      <img [src]="captchaModel.image" (click)="onCaptchaOrder()" class="captcha-image" alt="کپچا">
-                      <span class="captcha-hint">برای تغییر تصویر کلیک کنید</span>
-                    </div>
-                    <mat-form-field appearance="outline" class="captcha-input">
-                      <mat-label>متن تصویر امنیتی</mat-label>
-                      <input matInput [(ngModel)]="modelTargetGetDto.captchaText" name="captchaText"
-                             #captchaTextGet="ngModel" autocomplete="off" required dir="ltr">
-                      <mat-error *ngIf="captchaTextGet.invalid && (captchaTextGet.dirty || captchaTextGet.touched)">
-                        <span *ngIf="captchaTextGet.errors?.required">پر کردن این فیلد الزامی است</span>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
+
+
+ <!--captcha Field-->
+ <app-cms-captcha
+ [(model)]="captchaModel"
+ [refreshTrigger]="captchaRefreshTrigger"
+ (captchaKeyChange)="onCaptchaKeyChange($event)"
+ (codeChange)="onCaptchaCodeChange($event)"
+></app-cms-captcha>
 
                   <button mat-raised-button color="primary" [disabled]="!modelTargetGetDto.key || modelTargetGetDto.key.length < 8"
                     class="action-button" type="button" (click)="onSubmitGet()">
@@ -273,21 +261,15 @@
                     </div>
                   </div>
 
-                  <!-- Captcha -->
-                  <div class="captcha-section">
-                    <div class="captcha-image-wrapper">
-                      <img [src]="captchaModel.image" (click)="onCaptchaOrder()" class="captcha-image" alt="کپچا">
-                      <span class="captcha-hint">برای تغییر تصویر کلیک کنید</span>
-                    </div>
-                    <mat-form-field appearance="outline" class="captcha-input">
-                      <mat-label>متن تصویر امنیتی</mat-label>
-                      <input matInput [(ngModel)]="modelTargetSetDto.captchaText" name="captchaText"
-                             #captchaTextSetUrlAddress="ngModel" autocomplete="off" required dir="ltr">
-                      <mat-error *ngIf="captchaTextSetUrlAddress.invalid && (captchaTextSetUrlAddress.dirty || captchaTextSetUrlAddress.touched)">
-                        <span *ngIf="captchaTextSetUrlAddress.errors?.required">پر کردن این فیلد الزامی است</span>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
+
+
+ <!--captcha Field-->
+ <app-cms-captcha
+ [(model)]="captchaModel"
+ [refreshTrigger]="captchaRefreshTrigger"
+ (captchaKeyChange)="onCaptchaKeyChange($event)"
+ (codeChange)="onCaptchaCodeChange($event)"
+></app-cms-captcha>
 
                   <button mat-raised-button color="primary" [disabled]="!modelTargetSetDto.urlAddress || modelTargetSetDto.urlAddress?.length < 5"
                     class="action-button" type="button" (click)="onSubmitSetLink()">
@@ -377,21 +359,14 @@
                     </div>
                   </div>
 
-                  <!-- Captcha -->
-                  <div class="captcha-section">
-                    <div class="captcha-image-wrapper">
-                      <img [src]="captchaModel.image" (click)="onCaptchaOrder()" class="captcha-image" alt="کپچا">
-                      <span class="captcha-hint">برای تغییر تصویر کلیک کنید</span>
-                    </div>
-                    <mat-form-field appearance="outline" class="captcha-input">
-                      <mat-label>متن تصویر امنیتی</mat-label>
-                      <input matInput [(ngModel)]="modelTargetSetDto.captchaText" name="captchaText"
-                             #captchaTextSetDescription="ngModel" autocomplete="off" required dir="ltr">
-                      <mat-error *ngIf="captchaTextSetDescription.invalid && (captchaTextSetDescription.dirty || captchaTextSetDescription.touched)">
-                        <span *ngIf="captchaTextSetDescription.errors?.required">پر کردن این فیلد الزامی است</span>
-                      </mat-error>
-                    </mat-form-field>
-                  </div>
+
+ <!--captcha Field-->
+ <app-cms-captcha
+ [(model)]="captchaModel"
+ [refreshTrigger]="captchaRefreshTrigger"
+ (captchaKeyChange)="onCaptchaKeyChange($event)"
+ (codeChange)="onCaptchaCodeChange($event)"
+></app-cms-captcha>
 
                   <button mat-raised-button color="primary" [disabled]="!modelTargetSetDto.description || modelTargetSetDto.description?.length < 5"
                     class="action-button" type="button" (click)="onSubmitSetDescription()">

@@ -117,29 +117,7 @@ export class LinkManagementShortLinkComponent implements OnInit {
       this.uploadedfileKey = this.uploadedfileKey + model.item.fileKey;
     }
   }
-  onCaptchaOrder(): void {
-    this.modelTargetSetDto.captchaText = '';
-    this.modelTargetGetDto.captchaText = '';
-    this.coreAuthService.ServiceCaptcha().subscribe(
-      (next) => {
-        this.captchaModel = next.item;
-        this.modelTargetSetDto.captchaKey = this.captchaModel.key;
-        const startDate = new Date();
-        const endDate = new Date(next.item.expire);
-        const seconds = (endDate.getTime() - startDate.getTime());
-        if (this.aoutoCaptchaOrder < 10) {
-          this.aoutoCaptchaOrder = this.aoutoCaptchaOrder + 1;
-          setTimeout(() => { this.onCaptchaOrder(); }, seconds);
-        }
-      },
-      () => {
-        this.message = 'خطا در دریافت عکس کپچا';
-        this.modelTargetSetDto.captchaKey = '';
-        this.captchaModel = new CaptchaModel();
-      }
-    );
 
-  }
 
   onSubmitGet(): void {
     this.submitted = true;
@@ -147,7 +125,7 @@ export class LinkManagementShortLinkComponent implements OnInit {
     this.modelTargetSetResponceSetFile = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetSetResponceSetDescription = new LinkManagementTargetShortLinkSetResponceModel();
     this.modelTargetGetResponce = new LinkManagementTargetShortLinkGetResponceModel();
-    this.modelTargetGetDto.captchaKey = this.captchaModel.key;
+
     const res = this.modelTargetGetDto.key.split('@');
     if (res?.length < 2) {
       this.messageShortLinkGet = 'Key Is Worng.';
@@ -344,5 +322,20 @@ export class LinkManagementShortLinkComponent implements OnInit {
     history = '';
     localStorage.setItem('history', history);
     this.modelHistoryList = history.split(',');
+  }
+  captchaRefreshTrigger=0;
+  onCaptchaOrder(): void {
+    this.modelTargetSetDto.captchaText = "";
+    this.modelTargetGetDto.captchaText = "";
+    this.captchaRefreshTrigger++;
+  }
+  onCaptchaKeyChange(key: string): void {
+    this.modelTargetSetDto.captchaKey = key;
+    this.modelTargetGetDto.captchaKey = key;
+
+  }
+  onCaptchaCodeChange(code: string): void {
+    this.modelTargetSetDto.captchaText = code;
+    this.modelTargetGetDto.captchaText = code;
   }
 }

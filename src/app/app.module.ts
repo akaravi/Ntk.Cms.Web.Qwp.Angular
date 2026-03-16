@@ -32,7 +32,7 @@ import { NewsDialogComponent } from './pages/news/news-dialog/news-dialog.compon
     CoreContactUsComponent,
     NewsContentListComponent,
     NewsDialogComponent,
-
+  
   ],
   imports: [
     BrowserModule,

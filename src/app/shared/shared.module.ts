@@ -4,6 +4,9 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 import { MaterialModule } from './material/material.module';
+import { NgOtpInputModule } from '../core/ng-otp-input/ng-otp-input.module';
+import { CoreAuthService } from 'ntk-cms-api';
+import { CmsCaptchaComponent } from './cms-captcha/cms-captcha.component';
 
 
 @NgModule({
@@ -12,12 +15,13 @@ import { MaterialModule } from './material/material.module';
     FormsModule,
     HttpClientModule,
     MaterialModule,
+    NgOtpInputModule,
 
   ],
 
   declarations: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
-
+  CmsCaptchaComponent,
   ],
   exports: [
     // common and shared components/directives/pipes between more than one module and components will be listed here.
@@ -25,9 +29,12 @@ import { MaterialModule } from './material/material.module';
     FormsModule,
     HttpClientModule,
     MaterialModule,
-
+    CmsCaptchaComponent,
   ],
-  /* No providers here! Since they’ll be already provided in AppModule. */
+
+  providers:[
+    CoreAuthService
+  ]
 })
 export class SharedModule {
   static forRoot(): ModuleWithProviders<SharedModule> {

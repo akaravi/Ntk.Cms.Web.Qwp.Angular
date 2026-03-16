@@ -12,10 +12,10 @@
           فرم تماس با ما
         </mat-card-title>
       </mat-card-header>
-      
+
       <mat-card-content>
         <form #contactForm="ngForm" (ngSubmit)="onFormSubmit()" class="contact-form">
-          
+
           <!-- Info Alert -->
           <mat-card class="info-card" *ngIf="dataModelResultDepartemen && dataModelResultDepartemen.isSuccess">
             <mat-card-content>
@@ -33,7 +33,7 @@
           <mat-form-field appearance="outline" *ngIf="dataModelResultDepartemen && dataModelResultDepartemen.isSuccess">
             <mat-label>دپارتمان</mat-label>
             <mat-select [(ngModel)]="dataModel.linkTicketingDepartemenId" name="linkTicketingDepartemenId">
-              <mat-option *ngFor="let item of dataModelResultDepartemen.listItems; let i = index" 
+              <mat-option *ngFor="let item of dataModelResultDepartemen.listItems; let i = index"
                           [value]="item.id">
                 {{item.title}}
               </mat-option>
@@ -68,21 +68,16 @@
             <mat-icon matPrefix>message</mat-icon>
           </mat-form-field>
 
-          <!-- Captcha -->
-          <div class="captcha-section">
-            <div class="captcha-image-wrapper">
-              <img [src]="captchaModel.image" (click)="onCaptchaOrder()" class="captcha-image" alt="کپچا">
-              <span class="captcha-hint">برای تغییر تصویر کلیک کنید</span>
-            </div>
-            <mat-form-field appearance="outline" class="captcha-input">
-              <mat-label>متن تصویر امنیتی</mat-label>
-              <input matInput [(ngModel)]="dataModel.captchaText" name="captchaText" 
-                     #captchaTextGet="ngModel" autocomplete="off" required>
-              <mat-error *ngIf="captchaTextGet.invalid && (captchaTextGet.dirty || captchaTextGet.touched)">
-                <span *ngIf="captchaTextGet.errors?.required">پر کردن این فیلد الزامی است</span>
-              </mat-error>
-            </mat-form-field>
-          </div>
+
+
+
+ <!--captcha Field-->
+ <app-cms-captcha
+ [refreshTrigger]="captchaRefreshTrigger"
+ (captchaKeyChange)="onCaptchaKeyChange($event)"
+ (codeChange)="onCaptchaCodeChange($event)"
+></app-cms-captcha>
+
 
           <!-- Loading Indicator -->
           <mat-progress-bar *ngIf="loadingStatus" mode="indeterminate"></mat-progress-bar>
@@ -102,7 +97,7 @@
 
           <!-- Action Buttons -->
           <div class="form-actions">
-            <button mat-raised-button color="primary" type="submit" 
+            <button mat-raised-button color="primary" type="submit"
                     [disabled]="loadingStatus || !contactForm.valid" class="submit-button">
               <mat-icon>send</mat-icon>
               ارسال

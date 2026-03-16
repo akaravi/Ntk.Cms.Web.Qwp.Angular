@@ -33,28 +33,9 @@ export class CoreContactUsComponent implements OnInit {
 
     });
     this.getDataDepartemen();
-    this.onCaptchaOrder();
-  }
-  onCaptchaOrder(): void {
-    this.dataModel.captchaText = '';
-    this.coreAuthService.ServiceCaptcha().subscribe(
-      (next) => {
-        this.captchaModel = next.item;
-        this.dataModel.captchaKey = this.captchaModel.key;
-        const startDate = new Date();
-        const endDate = new Date(next.item.expire);
-        const seconds = (endDate.getTime() - startDate.getTime());
-        setTimeout(() => {
-          this.onCaptchaOrder();
-        }, seconds);
-      },
-      (error) => {
-        this.dataModel.captchaKey = '';
-        this.captchaModel = new CaptchaModel();
-      }
-    );
 
   }
+
   getDataDepartemen(): void {
     this.ticketingDepartemenService.ServiceGetAll(null).subscribe((next) => {
       this.loadingStatus = false;
@@ -103,5 +84,14 @@ export class CoreContactUsComponent implements OnInit {
           this.toasterService.typeError(error);
         }
       );
+  }
+  captchaRefreshTrigger=0;
+  onCaptchaKeyChange(key: string): void {
+    this.dataModel.captchaKey = key;
+
+  }
+  onCaptchaCodeChange(code: string): void {
+    this.dataModel.captchaText = code;
+
   }
 }
