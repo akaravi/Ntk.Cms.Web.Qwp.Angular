@@ -1,6 +1,8 @@
-<div class="captcha-section">
-  <div class="captcha-group">
-    <div class="captcha-image-wrapper">
+<div class="content captcha-section">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
+      <div class=" captcha-group">
+    <div class=" captcha-image-wrapper">
       <img
         [src]="captchaModel.image"
         class="captcha-image"
@@ -16,7 +18,9 @@
         ⟳
       </button>
     </div>
-    <div class="captcha-input">
+  </div>
+</div>
+<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12" >
       <ng-otp-input
         [config]="config || otpConfig"
         (onInputChange)="onInputChange($event)"
@@ -24,4 +28,3 @@
       ></ng-otp-input>
     </div>
   </div>
-</div>
