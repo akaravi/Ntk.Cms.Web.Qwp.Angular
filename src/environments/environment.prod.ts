@@ -6,6 +6,8 @@ export const environment = {
     configApiRetry: 1,
     configApiServerPath: 'https://apicms.ir/api/v2/',
     configRouteUploadFileContent: 'https://apifile.ir/api/v2/upload/',
+    configUploadSimultaneousFiles: 1,
+    configUploadSingleFile: true,
   },
   cmsTokenConfig: {
     SecurityKey: 'qwp123456',

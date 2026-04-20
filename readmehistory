@@ -1,0 +1,18 @@
+## 2026-04-20 13:23:31
+
+- محدودسازی آپلود فایل در `FileUploadComponent` انجام شد.
+- تنظیمات `flowOption` به‌روزرسانی شد:
+  - `simultaneousUploads: 1`
+  - `singleFile: true`
+- نتیجه: در هر نوبت آپلود فقط یک فایل قابل ارسال است و آپلود همزمان غیرفعال شد.
+
+## 2026-04-20 13:24:30
+
+- قابلیت کنترل آپلود همزمان از `environment` اضافه شد.
+- پارامترهای جدید در `cmsServerConfig` تعریف شدند:
+  - `configUploadSimultaneousFiles`
+  - `configUploadSingleFile`
+- کامپوننت `FileUploadComponent` به پارامترهای محیطی متصل شد.
+- راهنمای مقداردهی:
+  - حالت تک‌فایل: `configUploadSimultaneousFiles: 1` و `configUploadSingleFile: true`
+  - حالت ۵ فایل همزمان: `configUploadSimultaneousFiles: 5` و `configUploadSingleFile: false`
