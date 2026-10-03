@@ -1,0 +1,8 @@
+{
+  "productId": "Ntk.Cms.Web.Qwp.Angular",
+  "portRange": { "min": 51751, "max": 51751 },
+  "hosts": {
+    "frontend": { "host": "localhost", "port": 51751, "note": "Angular app — ng serve" }
+  },
+  "notes": { "portRange": "All application local-dev ports allocated in 51751 (canonical range for this project)" }
+}

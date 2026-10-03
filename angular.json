@@ -75,7 +75,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "ntk-cms-web-qwp:build"
+            "buildTarget": "ntk-cms-web-qwp:build",
+            "port": 51751
           },
           "configurations": {
             "production": {
