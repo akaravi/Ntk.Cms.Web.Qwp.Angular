@@ -57,6 +57,8 @@ export class FileUploadComponent implements OnInit, OnDestroy, AfterViewInit {
         return flowFile.myparams;
       },
       allowDuplicateUploads: false,
+      simultaneousUploads: environment.cmsServerConfig.configUploadSimultaneousFiles,
+      singleFile: environment.cmsServerConfig.configUploadSingleFile,
     };
   }
 

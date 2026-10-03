@@ -16,3 +16,40 @@
 - ساختار پروژه، وابستگی‌ها و لایه UI اصلی با موفقیت بررسی شد.
 - تم کلی پروژه مدرن، RTL و ریسپانسیو است و برای توسعه‌های بعدی (به‌ویژه UI/UX و موبایل) آماده است.
 - در تغییرات بعدی باید هماهنگی کامل با این ساختار، استایل‌ها و الگوی ناوبری فعلی حفظ شود.
+
+## Part 2 - Limit upload concurrency (2026-04-20)
+
+- بررسی فایل‌های مرتبط با آپلود:
+  - مطالعه `src/app/pages/fileManager/file-upload/fileUpload.component.ts`
+  - مطالعه `src/app/pages/fileManager/file-upload/fileUpload.component.html`
+- اعمال تغییر در تنظیمات `Flow` برای کنترل صف و همزمانی آپلود:
+  - تنظیم `simultaneousUploads: 1`
+  - تنظیم `singleFile: true`
+- هدف:
+  - در هر نوبت فقط یک فایل ارسال شود و آپلود همزمان چندفایل غیرفعال باشد.
+
+## Result 2
+
+- محدودیت آپلود با موفقیت اعمال شد.
+- از این پس کامپوننت آپلود به صورت تک‌فایل و با همزمانی ۱ فایل عمل می‌کند.
+
+## Part 3 - Environment based upload concurrency (2026-04-20)
+
+- نیازمندی جدید بررسی شد:
+  - امکان تغییر تعداد آپلود همزمان از طریق `environment`
+  - حفظ رفتار فعلی پروژه به صورت پیش‌فرض
+- تغییرات اعمال‌شده:
+  - افزودن پارامترهای تنظیمی به `cmsServerConfig` در هر دو فایل محیط:
+    - `configUploadSimultaneousFiles`
+    - `configUploadSingleFile`
+  - اتصال `FileUploadComponent` به این پارامترها در `flowOption`
+- مقدار پیش‌فرض:
+  - همزمانی: `1`
+  - حالت تک‌فایل: `true`
+
+## Result 3
+
+- تعداد آپلود همزمان اکنون از طریق `environment` قابل مدیریت است.
+- برای آپلود همزمان ۵ فایل، کافی است:
+  - `configUploadSimultaneousFiles: 5`
+  - `configUploadSingleFile: false`

@@ -7,6 +7,8 @@ export const environment = {
     configApiServerPath: 'https://apicms.ir/api/v2/',
     configApiServerPath_: 'https://1b4c3712df1f.ngrok.io/api/v2/',
     configRouteUploadFileContent: 'https://apifile.ir/api/v2/upload/',
+    configUploadSimultaneousFiles: 1,
+    configUploadSingleFile: true,
   },
   cmsTokenConfig: {
     SecurityKey: 'qwp123456',
